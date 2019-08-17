@@ -4,6 +4,7 @@ import java.lang.RuntimeException;
 class Parser {
     public static Command parseInput(String rawInput) throws DukeException {
         String commandPhrase = rawInput.split(" ", 2)[0];
+        int index;
 
         switch (commandPhrase) {
         case "bye":
@@ -12,10 +13,17 @@ class Parser {
             return new ListCommand();
         case "done":
             try {
-                int index = Integer.parseInt(rawInput.split(" ", 2)[1]) - 1;
+                index = Integer.parseInt(rawInput.split(" ", 2)[1]) - 1;
                 return new DoneCommand(index);
             } catch (NumberFormatException e) {
                 throw new DukeException("Please use 'done i' to mark completion of the i-th task in the list.");
+            }
+        case "delete":
+            try {
+                index = Integer.parseInt(rawInput.split(" ", 2)[1]) - 1;
+                return new DeleteCommand(index);
+            } catch (NumberFormatException e) {
+                throw new DukeException("Please use 'delete i' to delete the i-th task in the list.");
             }
         case "todo":
         case "event":

@@ -1,0 +1,21 @@
+done a
+todo
+todo 1
+deadline
+deadline a
+deadline a /by
+deadline /by www
+deadline 2 /by 3
+done 5
+done -10000000
+list
+event
+event a
+event a /by
+event a /at
+event /at www
+event 4 /at 5
+list
+done 2
+list
+bye

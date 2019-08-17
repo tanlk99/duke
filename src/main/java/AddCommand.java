@@ -18,7 +18,8 @@ class AddCommand extends Command {
         Formatter.printHorizontalLine();
         Formatter.formatLine("Got it. I've added this task:");
         Formatter.formatLine("  " + newTask);
-        Formatter.formatLine("Now you have " + taskList.size() + " tasks in the list.");
+        Formatter.formatLine("Now you have " + taskList.size() + " task" +
+            (taskList.size() == 1 ? "" : "s") + " in the list.");
         Formatter.printHorizontalLine();
     }
 }

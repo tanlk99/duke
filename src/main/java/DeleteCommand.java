@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
-class DoneCommand extends Command {
+class DeleteCommand extends Command {
     int index;
 
-    public DoneCommand(int index) {
+    public DeleteCommand(int index) {
         this.index = index;
     }
 
@@ -16,11 +16,14 @@ class DoneCommand extends Command {
             throw new DukeException("That is not a valid task number.");
         }
 
-        taskList.get(index).markAsDone();
+        Task toRemove = taskList.get(index);
+        taskList.remove(index);
 
         Formatter.printHorizontalLine();
-        Formatter.formatLine("Nice! I've marked this task as done:");
-        Formatter.formatLine("  " + taskList.get(index));
+        Formatter.formatLine("Noted. I've removed this task.");
+        Formatter.formatLine("  " + toRemove);
+        Formatter.formatLine("Now you have " + taskList.size() + " task" +
+            (taskList.size() == 1 ? "" : "s") + " in the list.");
         Formatter.printHorizontalLine();
     }
 }
