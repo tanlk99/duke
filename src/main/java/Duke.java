@@ -9,12 +9,18 @@ public class Duke {
 
         Scanner sc = new Scanner(System.in);
         while (sc.hasNext()) {
-            String rawInput = sc.nextLine();
-            Command parsedCommand = Parser.parseInput(rawInput);
-            parsedCommand.execute(taskList);
+            try {
+                String rawInput = sc.nextLine();
+                Command parsedCommand = Parser.parseInput(rawInput);
+                parsedCommand.execute(taskList);
 
-            if (parsedCommand.terminate()) {
-                return;
+                if (parsedCommand.terminate()) {
+                    return;
+                }
+            } catch (DukeException e) {
+                Formatter.printHorizontalLine();
+                Formatter.formatLine("Sorry! " + e);
+                Formatter.printHorizontalLine();
             }
         }
     }

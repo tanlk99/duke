@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.lang.ArrayIndexOutOfBoundsException;
 
 class DoneCommand extends Command {
     int index;
@@ -11,7 +12,11 @@ class DoneCommand extends Command {
         return false;
     }
 
-    public void execute(ArrayList<Task> taskList) {
+    public void execute(ArrayList<Task> taskList) throws DukeException {
+        if (index < 0 || index >= taskList.size()) {
+            throw new DukeException("That is not a valid task number.");
+        }
+
         taskList.get(index).markAsDone();
 
         Formatter.printHorizontalLine();
