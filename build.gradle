@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'checkstyle'
 }
 
 group 'seedu.duke'
@@ -10,7 +11,16 @@ repositories {
     mavenCentral()
 }
 
+checkstyle {
+    toolVersion = '8.23'
+}
+
 application {
     // Change this to your main class.
     mainClassName = "Duke"
+}
+
+task runTests(type:Exec) {
+    workingDir = "text-ui-test"
+    commandLine = "./runtest.sh"
 }
