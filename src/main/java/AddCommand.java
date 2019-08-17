@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
 class AddCommand extends Command {
-    String toAdd;
+    String rawDesc;
 
-    public AddCommand(String toAdd) {
-        this.toAdd = toAdd;
+    public AddCommand(String rawDesc) {
+        this.rawDesc = rawDesc;
     }
 
     public boolean terminate() {
@@ -12,10 +12,13 @@ class AddCommand extends Command {
     }
 
     public void execute(ArrayList<Task> taskList) {
-        taskList.add(new Task(toAdd));
+        Task newTask = Parser.parseTask(rawDesc);
+        taskList.add(newTask);
 
         Formatter.printHorizontalLine();
-        Formatter.formatLine("added: " + toAdd);
+        Formatter.formatLine("Got it. I've added this task:");
+        Formatter.formatLine("  " + newTask);
+        Formatter.formatLine("Now you have " + taskList.size() + " tasks in the list.");
         Formatter.printHorizontalLine();
     }
 }

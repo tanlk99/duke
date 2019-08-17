@@ -10,27 +10,12 @@ public class Duke {
         Scanner sc = new Scanner(System.in);
         while (sc.hasNext()) {
             String rawInput = sc.nextLine();
-            Command parsedCommand = parseInput(rawInput);
+            Command parsedCommand = Parser.parseInput(rawInput);
             parsedCommand.execute(taskList);
 
             if (parsedCommand.terminate()) {
                 return;
             }
-        }
-    }
-
-    private Command parseInput(String rawInput) {
-        String commandPhrase = rawInput.split(" ", 2)[0];
-        switch (commandPhrase) {
-        case "bye":
-            return new ExitCommand();
-        case "list":
-            return new ListCommand();
-        case "done":
-            int index = Integer.parseInt(rawInput.split(" ", 2)[1]) - 1;
-            return new DoneCommand(index);
-        default:
-            return new AddCommand(rawInput);
         }
     }
 
