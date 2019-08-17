@@ -11,7 +11,7 @@ class ListCommand extends Command {
             Formatter.formatLine("You have no tasks right now.");
         } else {
             for (int i = 0; i < taskList.size(); i++) {
-                Formatter.formatLine((i + 1) + ". " + taskList.get(i));
+                Formatter.formatLine((i + 1) + "." + taskList.get(i));
             }
         }
         Formatter.printHorizontalLine();

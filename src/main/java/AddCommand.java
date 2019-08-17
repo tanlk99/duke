@@ -12,10 +12,10 @@ class AddCommand extends Command {
     }
 
     public void execute(ArrayList<Task> taskList) {
+        taskList.add(new Task(toAdd));
+
         Formatter.printHorizontalLine();
         Formatter.formatLine("added: " + toAdd);
         Formatter.printHorizontalLine();
-
-        taskList.add(new Task(toAdd));
     }
 }

@@ -26,6 +26,9 @@ public class Duke {
             return new ExitCommand();
         case "list":
             return new ListCommand();
+        case "done":
+            int index = Integer.parseInt(rawInput.split(" ", 2)[1]) - 1;
+            return new DoneCommand(index);
         default:
             return new AddCommand(rawInput);
         }
