@@ -1,6 +1,9 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
+    private ArrayList<Task> taskList = new ArrayList<Task>();
+
     private void init() {
         greetUser();
 
@@ -8,9 +11,9 @@ public class Duke {
         while (sc.hasNext()) {
             String rawInput = sc.nextLine();
             Command parsedCommand = parseInput(rawInput);
-            parsedCommand.execute();
+            parsedCommand.execute(taskList);
 
-            if (parsedCommand.getType() == Command.Type.EXIT) {
+            if (parsedCommand.terminate()) {
                 return;
             }
         }
@@ -21,8 +24,10 @@ public class Duke {
         switch (commandPhrase) {
         case "bye":
             return new ExitCommand();
+        case "list":
+            return new ListCommand();
         default:
-            return new EchoCommand(rawInput);
+            return new AddCommand(rawInput);
         }
     }
 

@@ -1,9 +1,7 @@
+import java.util.ArrayList;
+
 abstract class Command {
-    public enum Type {
-        EXIT, ECHO
-    }
+    abstract public boolean terminate();
 
-    abstract public Type getType();
-
-    abstract public void execute();
+    abstract public void execute(ArrayList<Task> taskList);
 }
