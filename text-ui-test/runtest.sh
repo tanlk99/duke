@@ -6,12 +6,6 @@ then
     mkdir ../bin
 fi
 
-# delete output from previous run
-if [ -e "./ACTUAL.TXT" ]
-then
-    rm ACTUAL.TXT
-fi
-
 # compile the code into the bin folder, terminates if error occurred
 if ! javac -cp ../src -Xlint:none -d ../bin ../src/main/java/*.java
 then
@@ -19,12 +13,12 @@ then
     exit 1
 fi
 
-for i in {1..2}
-do
-    # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-    java -classpath ../bin Duke < testcases/input-$i > temp-$i
+# count the number of testcases
+testNo=$( ls testcases/input* 2>/dev/null -Ubad1 -- log* | wc -l )
 
-    # compare the output to the expected output
+for (( i = 1; i <= testNo; i++ ))
+do
+    java -classpath ../bin Duke < testcases/input-$i > temp-$i
     diff temp-$i testcases/output-$i
 
     if [ $? -eq 0 ]

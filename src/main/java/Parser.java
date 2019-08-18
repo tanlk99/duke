@@ -28,13 +28,13 @@ class Parser {
         case "todo":
         case "event":
         case "deadline":
-            return new AddCommand(rawInput);
+            return new AddCommand(parseTask(rawInput));
         default:
             throw new DukeException("I don't understand that command.");
         }
     }
 
-    public static Task parseTask(String rawInput) throws DukeException {
+    private static Task parseTask(String rawInput) throws DukeException {
         String taskType = rawInput.split(" ", 2)[0];
         String taskRawDesc;
         String taskDesc;
