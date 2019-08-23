@@ -1,50 +1,46 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class Duke {
     private Storage storage;
     private Parser parser;
+    private Ui ui;
+    private TaskList taskList;
+
+    public Duke(String filePath) {
+        ui = new Ui();
+        parser = new Parser();
+
+        try {
+            storage = new Storage(filePath);
+            taskList = new TaskList(storage.readCache());
+        } catch (DukeException e) {
+            ui.showLoadingError();
+            taskList = new TaskList();
+        }
+    }
 
     private void init() {
-        storage = new Storage("../duke-cache.txt");
-        parser = new Parser();
-        greetUser();
+        ui.showGreetings();
 
         Scanner sc = new Scanner(System.in);
         while (sc.hasNext()) {
             try {
                 String rawInput = sc.nextLine();
                 Command parsedCommand = parser.parseInput(rawInput);
-                parsedCommand.execute(storage);
+                parsedCommand.execute(storage, ui, taskList);
 
                 if (parsedCommand.terminate()) {
                     return;
                 }
             } catch (DukeException e) {
-                Formatter.printHorizontalLine();
-                Formatter.formatLine("Sorry! " + e);
-                Formatter.printHorizontalLine();
+                ui.printHorizontalLine();
+                ui.formatLine("Sorry! " + e);
+                ui.printHorizontalLine();
             }
         }
     }
 
     public static void main(String[] args) {
-        new Duke().init();
-    }
-
-    private void greetUser() {
-        String[] greeting = {" ____        _        ",
-            "|  _ \\ _   _| | _____ ",
-            "| | | | | | | |/ / _ \\",
-            "| |_| | |_| |   <  __/",
-            "|____/ \\__,_|_|\\_\\___|\n",
-            "Hello! I'm Duke.",
-            "What can I do for you?"};
-
-        Formatter.printHorizontalLine();
-        for (String line : greeting) {
-            Formatter.formatLine(line);
-        }
-        Formatter.printHorizontalLine();
+        new Duke("data/duke-cache.txt").init();
     }
 }

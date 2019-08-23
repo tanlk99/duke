@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 class DeleteCommand extends Command {
-    int index;
+    private int index;
 
     public DeleteCommand(int index) {
         this.index = index;
@@ -11,23 +11,26 @@ class DeleteCommand extends Command {
         return false;
     }
 
-    public void execute(Storage storage) throws DukeException {
-        ArrayList<Task> taskList = storage.getTaskList();
-
-        if (index < 0 || index >= taskList.size()) {
+    public void execute(Storage storage, Ui ui, TaskList taskList) throws DukeException {
+        if (index <= 0 || index > taskList.getSize()) {
             throw new DukeException("That is not a valid task number.");
         }
 
-        Task toRemove = taskList.get(index);
-        taskList.remove(index);
+        Task toRemove = taskList.getTask(index);
+        taskList.deleteTask(index);
 
-        Formatter.printHorizontalLine();
-        Formatter.formatLine("Noted. I've removed this task.");
-        Formatter.formatLine("  " + toRemove);
-        Formatter.formatLine("Now you have " + taskList.size() + " task" +
-            (taskList.size() == 1 ? "" : "s") + " in the list.");
-        Formatter.printHorizontalLine();
+        ui.printHorizontalLine();
+        ui.formatLine("Noted. I've removed this task.");
+        ui.formatLine("  " + toRemove);
+        ui.formatLine("Now you have " + taskList.getSize() + " task" +
+            (taskList.getSize() == 1 ? "" : "s") + " in the list.");
 
-        storage.writeCache();
+        try {
+            storage.writeCache(taskList);
+        } catch (DukeException e) {
+            ui.formatLine("Sorry! I was unable to save this update in storage. I'll try again next time.");
+        }
+
+        ui.printHorizontalLine();
     }
 }

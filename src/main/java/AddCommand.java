@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 class AddCommand extends Command {
-    Task toAdd;
+    private Task toAdd;
 
     public AddCommand(Task toAdd) {
         this.toAdd = toAdd;
@@ -11,17 +11,21 @@ class AddCommand extends Command {
         return false;
     }
 
-    public void execute(Storage storage) {
-        ArrayList<Task> taskList = storage.getTaskList();
-        taskList.add(toAdd);
+    public void execute(Storage storage, Ui ui, TaskList taskList) {
+        taskList.addNewTask(toAdd);
 
-        Formatter.printHorizontalLine();
-        Formatter.formatLine("Got it. I've added this task:");
-        Formatter.formatLine("  " + toAdd);
-        Formatter.formatLine("Now you have " + taskList.size() + " task" +
-            (taskList.size() == 1 ? "" : "s") + " in the list.");
-        Formatter.printHorizontalLine();
+        ui.printHorizontalLine();
+        ui.formatLine("Got it. I've added this task:");
+        ui.formatLine("  " + toAdd);
+        ui.formatLine("Now you have " + taskList.getSize() + " task" +
+            (taskList.getSize() == 1 ? "" : "s") + " in the list.");
 
-        storage.writeCache();
+        try {
+            storage.writeCache(taskList);
+        } catch (DukeException e) {
+            ui.formatLine("Sorry! I was unable to save this update in storage. I'll try again next time.");
+        }
+
+        ui.printHorizontalLine();
     }
 }

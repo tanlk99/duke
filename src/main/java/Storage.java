@@ -4,28 +4,25 @@ import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.ClassNotFoundException;
-import java.lang.RuntimeException;
 
 public class Storage {
-    String cacheAddr;
-    ArrayList<Task> taskList;
+    private String cacheAddr;
 
     public Storage(String cacheAddr) {
         this.cacheAddr = cacheAddr;
-        taskList = new ArrayList<Task>();
         initializeCache();
-        readCache();
     }
 
     private void initializeCache() {
         try {
             File file = new File(cacheAddr);
+            System.out.println(file.getAbsolutePath());
             if (!file.exists()) {
                 file.createNewFile();
-                ArrayList<Task> emptyList = new ArrayList<Task>();
+                System.out.println("File created!");
+                ArrayList<Task> emptyList = new ArrayList<>();
 
                 FileOutputStream fileOut = new FileOutputStream(cacheAddr, false);
                 ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
@@ -36,40 +33,43 @@ public class Storage {
                 fileOut.close();
             }
         } catch (IOException e) {
-            throw new RuntimeException("Could not load cache file.");
+            throw new DukeException("Could not load cache file.");
         }
     }
 
-    private void readCache() {
+    public ArrayList<Task> readCache() {
         try {
             FileInputStream fileIn = new FileInputStream(cacheAddr);
             ObjectInputStream objIn = new ObjectInputStream(fileIn);
 
-            taskList = (ArrayList<Task>)objIn.readObject();
+            ArrayList<Task> taskArrayList = (ArrayList<Task>)objIn.readObject();
 
             objIn.close();
             fileIn.close();
+
+            return taskArrayList;
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e);
-            throw new RuntimeException("Could not load cache file.");
+            throw new DukeException("Could not load cache file.");
         }
     }
 
-    public void writeCache() {
+    /**
+     * Writes the contents of a task list to the cache file.
+     *
+     * @param taskList      the TaskList to write
+     */
+    public void writeCache(TaskList taskList) {
         try {
             FileOutputStream fileOut = new FileOutputStream(cacheAddr, false);
             ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
 
-            objOut.writeObject((ArrayList<Task>)taskList);
+            objOut.writeObject(taskList.getFullTaskList());
 
             objOut.close();
             fileOut.close();
         } catch (IOException e) {
-            throw new RuntimeException("Could not write to cache file.");
+            throw new DukeException("Could not write to cache file.");
         }
-    }
-
-    public ArrayList<Task> getTaskList() {
-        return taskList;
     }
 }

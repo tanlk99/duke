@@ -5,18 +5,16 @@ class ListCommand extends Command {
         return false;
     }
 
-    public void execute(Storage storage) {
-        ArrayList<Task> taskList = storage.getTaskList();
-
-        Formatter.printHorizontalLine();
-        if (taskList.size() == 0) {
-            Formatter.formatLine("You have no tasks right now.");
+    public void execute(Storage storage, Ui ui, TaskList taskList) {
+        ui.printHorizontalLine();
+        if (taskList.getSize() == 0) {
+            ui.formatLine("You have no tasks right now.");
         } else {
-            Formatter.formatLine("Here are the tasks in your list:");
-            for (int i = 0; i < taskList.size(); i++) {
-                Formatter.formatLine((i + 1) + "." + taskList.get(i));
+            ui.formatLine("Here are the tasks in your list:");
+            for (int i = 1; i <= taskList.getSize(); i++) {
+                ui.formatLine(i + "." + taskList.getTask(i));
             }
         }
-        Formatter.printHorizontalLine();
+        ui.printHorizontalLine();
     }
 }

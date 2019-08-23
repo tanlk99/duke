@@ -14,4 +14,4 @@ src/main/resources/docs/
 bin/
 
 # Cache files
-duke-cache.txt
+data/*

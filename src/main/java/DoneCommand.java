@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 class DoneCommand extends Command {
-    int index;
+    private int index;
 
     public DoneCommand(int index) {
         this.index = index;
@@ -11,20 +11,23 @@ class DoneCommand extends Command {
         return false;
     }
 
-    public void execute(Storage storage) throws DukeException {
-        ArrayList<Task> taskList = storage.getTaskList();
-
-        if (index < 0 || index >= taskList.size()) {
+    public void execute(Storage storage, Ui ui, TaskList taskList) throws DukeException {
+        if (index <= 0 || index > taskList.getSize()) {
             throw new DukeException("That is not a valid task number.");
         }
 
-        taskList.get(index).markAsDone();
+        taskList.getTask(index).markAsDone();
 
-        Formatter.printHorizontalLine();
-        Formatter.formatLine("Nice! I've marked this task as done:");
-        Formatter.formatLine("  " + taskList.get(index));
-        Formatter.printHorizontalLine();
+        ui.printHorizontalLine();
+        ui.formatLine("Nice! I've marked this task as done:");
+        ui.formatLine("  " + taskList.getTask(index));
 
-        storage.writeCache();
+        try {
+            storage.writeCache(taskList);
+        } catch (DukeException e) {
+            ui.formatLine("Sorry! I was unable to save this update in storage. I'll try again next time.");
+        }
+
+        ui.printHorizontalLine();
     }
 }
