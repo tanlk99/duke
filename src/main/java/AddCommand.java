@@ -11,7 +11,8 @@ class AddCommand extends Command {
         return false;
     }
 
-    public void execute(ArrayList<Task> taskList) {
+    public void execute(Storage storage) {
+        ArrayList<Task> taskList = storage.getTaskList();
         taskList.add(toAdd);
 
         Formatter.printHorizontalLine();
@@ -20,5 +21,7 @@ class AddCommand extends Command {
         Formatter.formatLine("Now you have " + taskList.size() + " task" +
             (taskList.size() == 1 ? "" : "s") + " in the list.");
         Formatter.printHorizontalLine();
+
+        storage.writeCache();
     }
 }

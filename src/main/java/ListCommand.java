@@ -5,7 +5,9 @@ class ListCommand extends Command {
         return false;
     }
 
-    public void execute(ArrayList<Task> taskList) {
+    public void execute(Storage storage) {
+        ArrayList<Task> taskList = storage.getTaskList();
+
         Formatter.printHorizontalLine();
         if (taskList.size() == 0) {
             Formatter.formatLine("You have no tasks right now.");

@@ -5,7 +5,7 @@ class ExitCommand extends Command {
         return true;
     }
 
-    public void execute(ArrayList<Task> taskList) {
+    public void execute(Storage storage) {
         Formatter.printHorizontalLine();
         Formatter.formatLine("Bye. Hope to see you again soon!");
         Formatter.printHorizontalLine();

@@ -2,17 +2,20 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
-    private ArrayList<Task> taskList = new ArrayList<Task>();
+    private Storage storage;
+    private Parser parser;
 
     private void init() {
+        storage = new Storage("../duke-cache.txt");
+        parser = new Parser();
         greetUser();
 
         Scanner sc = new Scanner(System.in);
         while (sc.hasNext()) {
             try {
                 String rawInput = sc.nextLine();
-                Command parsedCommand = Parser.parseInput(rawInput);
-                parsedCommand.execute(taskList);
+                Command parsedCommand = parser.parseInput(rawInput);
+                parsedCommand.execute(storage);
 
                 if (parsedCommand.terminate()) {
                     return;

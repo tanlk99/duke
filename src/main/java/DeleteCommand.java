@@ -11,7 +11,9 @@ class DeleteCommand extends Command {
         return false;
     }
 
-    public void execute(ArrayList<Task> taskList) throws DukeException {
+    public void execute(Storage storage) throws DukeException {
+        ArrayList<Task> taskList = storage.getTaskList();
+
         if (index < 0 || index >= taskList.size()) {
             throw new DukeException("That is not a valid task number.");
         }
@@ -25,5 +27,7 @@ class DeleteCommand extends Command {
         Formatter.formatLine("Now you have " + taskList.size() + " task" +
             (taskList.size() == 1 ? "" : "s") + " in the list.");
         Formatter.printHorizontalLine();
+
+        storage.writeCache();
     }
 }

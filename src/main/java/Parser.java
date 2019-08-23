@@ -1,8 +1,10 @@
 import java.lang.NumberFormatException;
 import java.lang.RuntimeException;
+import java.lang.ArrayIndexOutOfBoundsException;
 
 class Parser {
-    public static Command parseInput(String rawInput) throws DukeException {
+
+    public Command parseInput(String rawInput) throws DukeException {
         String commandPhrase = rawInput.split(" ", 2)[0];
         int index;
 
@@ -15,14 +17,14 @@ class Parser {
             try {
                 index = Integer.parseInt(rawInput.split(" ", 2)[1]) - 1;
                 return new DoneCommand(index);
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                 throw new DukeException("Please use 'done i' to mark completion of the i-th task in the list.");
             }
         case "delete":
             try {
                 index = Integer.parseInt(rawInput.split(" ", 2)[1]) - 1;
                 return new DeleteCommand(index);
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                 throw new DukeException("Please use 'delete i' to delete the i-th task in the list.");
             }
         case "todo":
@@ -34,7 +36,7 @@ class Parser {
         }
     }
 
-    private static Task parseTask(String rawInput) throws DukeException {
+    private Task parseTask(String rawInput) throws DukeException {
         String taskType = rawInput.split(" ", 2)[0];
         String taskRawDesc;
         String taskDesc;
