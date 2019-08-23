@@ -1,5 +1,12 @@
 import java.lang.NumberFormatException;
 import java.lang.RuntimeException;
+import java.text.ParseException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Arrays;
 
 class Parser {
     public static Command parseInput(String rawInput) throws DukeException {
@@ -38,7 +45,7 @@ class Parser {
         String taskType = rawInput.split(" ", 2)[0];
         String taskRawDesc;
         String taskDesc;
-        String taskTime;
+        String taskRawTime;
 
         if (!rawInput.contains(" ")) {
             throw new DukeException("The description of a " + taskType + " cannot be empty.");
@@ -55,32 +62,75 @@ class Parser {
             }
 
             taskDesc = taskRawDesc.split(" /by ", 2)[0];
-            taskTime = taskRawDesc.split(" /by ", 2)[1];
+            taskRawTime = taskRawDesc.split(" /by ", 2)[1];
 
             if (taskDesc.length() == 0) {
                 throw new DukeException("The description of a deadline cannot be empty.");
-            } if (taskTime.length() == 0) {
+            } if (taskRawTime.length() == 0) {
                 throw new DukeException("Please specify the deadline using /by (with spaces preceding and following).");
             }
 
-            return new Deadline(taskDesc, taskTime);
+            try {
+                return new Deadline(taskDesc, parseTime(taskRawTime));
+            } catch (DukeException e) {
+                assert e.getMessage().equals("Internal exception: no date format found");
+                return new Deadline(taskDesc, taskRawTime);
+            }
         case "event":
             if (!taskRawDesc.contains(" /at ")) {
                 throw new DukeException("Please specify the event time using /at (with spaces preceding and following).");
             }
 
             taskDesc = taskRawDesc.split(" /at ", 2)[0];
-            taskTime = taskRawDesc.split(" /at ", 2)[1];
+            taskRawTime = taskRawDesc.split(" /at ", 2)[1];
 
             if (taskDesc.length() == 0) {
                 throw new DukeException("The description of an event cannot be empty.");
-            } if (taskTime.length() == 0) {
+            } if (taskRawTime.length() == 0) {
                 throw new DukeException("Please specify the event time using /at (with spaces preceding and following).");
             }
 
-            return new Event(taskDesc, taskTime);
+            try {
+                return new Event(taskDesc, parseTime(taskRawTime));
+            } catch (DukeException e) {
+                assert e.getMessage().equals("Internal exception: no date format found");
+                return new Event(taskDesc, taskRawTime);
+            }
         default:
             throw new RuntimeException("Our parser encountered a fatal error.");
         }
+    }
+
+    private static final List<String> dateFormatStrings = Arrays.asList(
+        "dd/MM/yyyy HH:mm", "dd-MM-yyyy HH:mm", "yyyy/MM/dd HH:mm", "yyyy-MM-dd HH:mm",
+        "dd/MM/yyyy", "dd-MM-yyyy", "yyyy/MM/dd", "yyyy-MM-dd",
+        "dd/MM HH:mm", "dd-MM HH:mm", "dd/MM", "dd-MM");
+
+    private static Calendar parseTime(String rawTime) throws DukeException {
+        DateFormat dateFormat;
+
+        for (String dateFormatString : dateFormatStrings) {
+            dateFormat = new SimpleDateFormat(dateFormatString);
+            dateFormat.setLenient(false);
+
+            try {
+                Date dateTime = dateFormat.parse(rawTime);
+                Calendar calendarTime = Calendar.getInstance();
+                calendarTime.setTime(dateTime);
+
+                if (!dateFormatString.contains("yyyy")) {
+                    Calendar currentTime = Calendar.getInstance();
+                    int currentYear = currentTime.get(Calendar.YEAR);
+                    calendarTime.set(Calendar.YEAR, currentYear);
+                    if (calendarTime.before(currentTime)) {
+                        calendarTime.set(Calendar.YEAR, currentYear + 1);
+                    }
+                }
+                return calendarTime;
+            } catch (ParseException e) {}
+        }
+
+        //no date format worked
+        throw new DukeException("Internal exception: no date format found");
     }
 }
