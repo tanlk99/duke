@@ -11,7 +11,9 @@ class DoneCommand extends Command {
         return false;
     }
 
-    public void execute(ArrayList<Task> taskList) throws DukeException {
+    public void execute(Storage storage) throws DukeException {
+        ArrayList<Task> taskList = storage.getTaskList();
+
         if (index < 0 || index >= taskList.size()) {
             throw new DukeException("That is not a valid task number.");
         }
@@ -22,5 +24,7 @@ class DoneCommand extends Command {
         Formatter.formatLine("Nice! I've marked this task as done:");
         Formatter.formatLine("  " + taskList.get(index));
         Formatter.printHorizontalLine();
+
+        storage.writeCache();
     }
 }

@@ -3,9 +3,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 class Deadline extends Task {
-    String timeString;
-    Calendar time;
-    boolean hasCalendar;
+    protected String timeString;
+    protected Calendar time;
+    protected boolean hasCalendar;
 
     public Deadline(String description, String timeString) {
         super(description);

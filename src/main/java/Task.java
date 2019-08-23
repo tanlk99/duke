@@ -1,9 +1,11 @@
-public class Task {
-    String desc;
-    boolean isDone;
+import java.io.Serializable;
 
-    public Task(String desc) {
-        this.desc = desc;
+abstract public class Task implements Serializable {
+    protected String description;
+    protected boolean isDone;
+
+    public Task(String description) {
+        this.description = description;
         this.isDone = false;
     }
 
@@ -17,6 +19,6 @@ public class Task {
 
     @Override
     public String toString() {
-        return getStatusIcon() + " " + desc;
+        return getStatusIcon() + " " + description;
     }
 }
