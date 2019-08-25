@@ -1,12 +1,19 @@
+package duke.command;
+
+import duke.util.Storage;
+import duke.util.TaskList;
+import duke.util.Ui;
+import duke.exception.DukeException;
+
 /**
  * Represents a command given by the user. Can have a variety of functions,
  * including exiting, adding tasks and deleting tasks.
  */
-abstract class Command {
+abstract public class Command {
     /**
      * Indicates whether Duke needs to exit after this command.
      *
-     * @returns true if Duke needs to terminate
+     * @return true if Duke needs to terminate
      */
     abstract public boolean terminate();
 

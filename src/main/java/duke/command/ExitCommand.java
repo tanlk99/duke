@@ -1,9 +1,13 @@
-import java.util.ArrayList;
+package duke.command;
+
+import duke.util.Storage;
+import duke.util.TaskList;
+import duke.util.Ui;
 
 /**
  * Represents a command to quit the system.
  */
-class ExitCommand extends Command {
+public class ExitCommand extends Command {
     public boolean terminate() {
         return true;
     }

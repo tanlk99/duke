@@ -1,9 +1,15 @@
-import java.util.ArrayList;
+package duke.command;
+
+import duke.util.Storage;
+import duke.util.TaskList;
+import duke.util.Ui;
+import duke.task.Task;
+import duke.exception.DukeException;
 
 /**
  * Represents a command to add a task to the task list.
  */
-class AddCommand extends Command {
+public class AddCommand extends Command {
     private Task toAdd;
 
     /**

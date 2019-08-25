@@ -1,12 +1,14 @@
-import java.util.Calendar;
+package duke.task;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Represents a future event.
  * Events have a date associated with them, and can be marked as complete.
  */
-class Event extends Task {
+public class Event extends Task {
     protected String timeString;
     protected Calendar time;
     protected boolean hasCalendar;
@@ -15,7 +17,7 @@ class Event extends Task {
      * Creates a new Event object using a string to represent time.
      *
      * @param   description description of the Event
-     * @param   timsString  a String describing the time of the Event
+     * @param   timeString  a String describing the time of the Event
      */
     public Event(String description, String timeString) {
         super(description);
@@ -35,13 +37,7 @@ class Event extends Task {
         this.hasCalendar = true;
     }
 
-    /**
-     * Returns a String of the event time.
-     * If a Calendar was provided, the time will be formatted as "dd-MM-yyyy HH:mm".
-     *
-     * @returns a String of the event time
-     */
-    public String getTime() {
+    private String getTime() {
         if (hasCalendar) {
             DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
             return dateFormat.format(time.getTime());

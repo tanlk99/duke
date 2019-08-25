@@ -1,9 +1,14 @@
-import java.util.ArrayList;
+package duke.command;
+
+import duke.util.Storage;
+import duke.util.TaskList;
+import duke.util.Ui;
+import duke.exception.DukeException;
 
 /**
  * Represents a command to mark a task in the task list as done.
  */
-class DoneCommand extends Command {
+public class DoneCommand extends Command {
     private int index;
 
     /**

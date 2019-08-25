@@ -1,4 +1,7 @@
+package duke.util;
+
 import java.util.ArrayList;
+import duke.task.Task;
 
 /**
  * Handles all operations on the task list and tasks in the task list.
@@ -38,7 +41,7 @@ public class TaskList {
      * @param index     1-indexed value indicating position in the task list to return
      * @return          Task object at position index
      */
-    public Task getTask(int index) throws DukeException {
+    public Task getTask(int index) {
         assert index > 0 && index <= taskList.size();
         return taskList.get(index - 1);
     }
@@ -58,7 +61,7 @@ public class TaskList {
      *
      * @param index     1-indexed value indicating position of the task to delete
      */
-    public void deleteTask(int index) throws DukeException {
+    public void deleteTask(int index) {
         assert index > 0 && index <= taskList.size();
         taskList.remove(index - 1);
     }
@@ -68,7 +71,7 @@ public class TaskList {
      *
      * @return      an ArrayList containing the current task list
      */
-    public ArrayList<Task> getFullTaskList() {
+    ArrayList<Task> getFullTaskList() {
         return taskList;
     }
 }

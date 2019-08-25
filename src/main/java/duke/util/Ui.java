@@ -1,3 +1,5 @@
+package duke.util;
+
 /**
  * Handles the output done by Duke through wrapper functions.
  */

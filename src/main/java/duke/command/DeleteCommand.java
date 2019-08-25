@@ -1,9 +1,15 @@
-import java.util.ArrayList;
+package duke.command;
+
+import duke.util.Storage;
+import duke.util.TaskList;
+import duke.util.Ui;
+import duke.task.Task;
+import duke.exception.DukeException;
 
 /**
  * Represents a command to delete a task in the task list.
  */
-class DeleteCommand extends Command {
+public class DeleteCommand extends Command {
     private int index;
 
     /**

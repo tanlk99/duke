@@ -1,12 +1,14 @@
-import java.util.Calendar;
+package duke.task;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
- * Represents a deadeline.
+ * Represents a deadline.
  * Deadline have a date associated with them, and can be marked as done.
  */
-class Deadline extends Task {
+public class Deadline extends Task {
     protected String timeString;
     protected Calendar time;
     protected boolean hasCalendar;
@@ -15,7 +17,7 @@ class Deadline extends Task {
      * Creates a new Deadline object using a string to represent time.
      *
      * @param   description description of the Deadline
-     * @param   timsString  a String describing the due date
+     * @param   timeString  a String describing the due date
      */
     public Deadline(String description, String timeString) {
         super(description);
@@ -35,13 +37,7 @@ class Deadline extends Task {
         this.hasCalendar = true;
     }
 
-    /**
-     * Returns a String of the due date.
-     * If a Calendar was provided, the time will be formatted as "dd-MM-yyyy HH:mm".
-     *
-     * @returns a String of the due date
-     */
-    public String getTime() {
+    private String getTime() {
         if (hasCalendar) {
             DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
             return dateFormat.format(time.getTime());

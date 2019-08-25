@@ -1,20 +1,30 @@
-import java.lang.NumberFormatException;
-import java.lang.RuntimeException;
-import java.text.ParseException;
+package duke.util;
+
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Calendar;
-import java.util.List;
 import java.util.Arrays;
-import java.lang.ArrayIndexOutOfBoundsException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.ToDo;
+import duke.command.AddCommand;
+import duke.command.Command;
+import duke.command.DeleteCommand;
+import duke.command.DoneCommand;
+import duke.command.ExitCommand;
+import duke.command.ListCommand;
+import duke.exception.DukeException;
 
 /**
  * Interprets and converts raw input to various classes used by Duke.
  */
-class Parser {
+public class Parser {
     /**
-     * Interprets a command input string to create a Command object.
+     * Interprets a command input string to create a duke.command.Command object.
      *
      * @param   rawInput    raw input passed into command line
      */
@@ -54,7 +64,6 @@ class Parser {
         String taskType = rawInput.split(" ", 2)[0];
         String taskRawDesc;
         String taskDesc;
-        String taskRawTime;
 
         if (!rawInput.contains(" ")) {
             throw new DukeException("The description of a " + taskType + " cannot be empty.");
@@ -62,6 +71,7 @@ class Parser {
 
         taskRawDesc = rawInput.split(" ", 2)[1];
 
+        String taskRawTime;
         switch (taskType) {
         case "todo":
             return new ToDo(taskRawDesc);

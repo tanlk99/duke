@@ -1,8 +1,10 @@
+package duke.task;
+
 /**
  * Represents a Todo task.
  * Todos can be marked as done.
  */
-class ToDo extends Task {
+public class ToDo extends Task {
     /**
      * Creates a new ToDo object.
      *
