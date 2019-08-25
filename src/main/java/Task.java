@@ -1,5 +1,9 @@
 import java.io.Serializable;
 
+/**
+ * Represents a task in the task list.
+ * Can be marked as done.
+ */
 abstract public class Task implements Serializable {
     protected String description;
     protected boolean isDone;
