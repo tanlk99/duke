@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * Represents a command to list all tasks in the task list.
+ */
 class ListCommand extends Command {
     public boolean terminate() {
         return false;

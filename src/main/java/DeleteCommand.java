@@ -1,8 +1,16 @@
 import java.util.ArrayList;
 
+/**
+ * Represents a command to delete a task in the task list.
+ */
 class DeleteCommand extends Command {
     private int index;
 
+    /**
+     * Creates a new DeleteCommand.
+     *
+     * @param   index   the index of the task to delete
+     */
     public DeleteCommand(int index) {
         this.index = index;
     }

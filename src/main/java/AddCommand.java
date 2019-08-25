@@ -1,8 +1,16 @@
 import java.util.ArrayList;
 
+/**
+ * Represents a command to add a task to the task list.
+ */
 class AddCommand extends Command {
     private Task toAdd;
 
+    /**
+     * Creates a new AddCommand with a task to add.
+     *
+     * @param   toAdd   the Task object to add to task list
+     */
     public AddCommand(Task toAdd) {
         this.toAdd = toAdd;
     }

@@ -7,9 +7,18 @@ import java.io.ObjectInputStream;
 import java.io.IOException;
 import java.lang.ClassNotFoundException;
 
+/**
+ * Handles I/O between Duke and an external cache file. This object can load the task list from
+ * the cache file, or write the task list to the cache file.
+ */
 public class Storage {
     private String cacheAddr;
 
+    /**
+     * Creates a Storage object.
+     *
+     * @param   cacheAddr   relative path to cache file
+     */
     public Storage(String cacheAddr) {
         this.cacheAddr = cacheAddr;
         initializeCache();
@@ -37,6 +46,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Retrieves the saved task list from the cache file.
+     *
+     * @returns an ArrayList containing the retrieved task list
+     */
     public ArrayList<Task> readCache() {
         try {
             FileInputStream fileIn = new FileInputStream(cacheAddr);

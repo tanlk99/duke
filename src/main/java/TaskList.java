@@ -1,7 +1,10 @@
 import java.util.ArrayList;
 
+/**
+ * Handles all operations on the task list and tasks in the task list.
+ */
 public class TaskList {
-    ArrayList<Task> taskList;
+    protected ArrayList<Task> taskList;
 
     /**
      * Initializes an empty TaskList.

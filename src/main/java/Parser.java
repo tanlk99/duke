@@ -9,7 +9,15 @@ import java.util.List;
 import java.util.Arrays;
 import java.lang.ArrayIndexOutOfBoundsException;
 
+/**
+ * Interprets and converts raw input to various classes used by Duke.
+ */
 class Parser {
+    /**
+     * Interprets a command input string to create a Command object.
+     *
+     * @param   rawInput    raw input passed into command line
+     */
     public Command parseInput(String rawInput) throws DukeException {
         String commandPhrase = rawInput.split(" ", 2)[0];
         int index;
@@ -107,7 +115,7 @@ class Parser {
         "dd/MM/yyyy", "dd-MM-yyyy", "yyyy/MM/dd", "yyyy-MM-dd",
         "dd/MM HH:mm", "dd-MM HH:mm", "dd/MM", "dd-MM");
 
-    private static Calendar parseTime(String rawTime) throws DukeException {
+    private Calendar parseTime(String rawTime) throws DukeException {
         DateFormat dateFormat;
 
         for (String dateFormatString : dateFormatStrings) {

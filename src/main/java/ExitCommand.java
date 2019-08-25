@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * Represents a command to quit the system.
+ */
 class ExitCommand extends Command {
     public boolean terminate() {
         return true;
