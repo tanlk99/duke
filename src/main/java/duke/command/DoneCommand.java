@@ -20,10 +20,23 @@ public class DoneCommand extends Command {
         this.index = index;
     }
 
+    /**
+     * Indicates whether Duke needs to exit after this command.
+     * DoneCommand instances will always return false.
+     *
+     * @return true if Duke needs to terminate
+     */
     public boolean terminate() {
         return false;
     }
 
+    /**
+     * Marks the task given by <i>index</i> as done.
+     *
+     * @param   storage     a Storage object to cache task list
+     * @param   ui          a Ui object to display Duke's output
+     * @param   taskList    a TaskList object which stores the task list
+     */
     public void execute(Storage storage, Ui ui, TaskList taskList) throws DukeException {
         if (index <= 0 || index > taskList.getSize()) {
             throw new DukeException("That is not a valid task number.");

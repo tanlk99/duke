@@ -9,9 +9,10 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import duke.task.Task;
 import duke.exception.DukeException;
+
 /**
- * Handles I/O between Duke and an external cache file. This object can load the task list from
- * the cache file, or write the task list to the cache file.
+ * Handles I/O between Duke and an external cache file. Storage instances can load the
+ * task list from the cache file, or write the task list to the cache file.
  */
 public class Storage {
     private String cacheAddr;
@@ -23,10 +24,14 @@ public class Storage {
      */
     public Storage(String cacheAddr) throws DukeException {
         this.cacheAddr = cacheAddr;
-        initializeCache();
+        createCacheIfNotExists();
     }
 
-    private void initializeCache() throws DukeException {
+    /**
+     * Creates and initializes the cache file if it does not exist.
+     * Throws a DukeException if the creation or initialization failed.
+     */
+    private void createCacheIfNotExists() throws DukeException {
         try {
             File file = new File(cacheAddr);
 
@@ -43,12 +48,13 @@ public class Storage {
                 fileOut.close();
             }
         } catch (IOException e) {
-            throw new DukeException("Could not load cache file.");
+            throw new DukeException("Could not create cache file.");
         }
     }
 
     /**
      * Retrieves the saved task list from the cache file.
+     * If unable to read or the cache file is corrupted, throws a DukeException.
      *
      * @return  an ArrayList containing the retrieved task list
      */
@@ -75,6 +81,7 @@ public class Storage {
 
     /**
      * Writes the contents of a task list to the cache file.
+     * If unable to write, throws a DukeException.
      *
      * @param taskList      the TaskList to write
      */

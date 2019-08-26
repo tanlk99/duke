@@ -16,7 +16,7 @@ public class Deadline extends Task {
     /**
      * Creates a new Deadline object using a string to represent time.
      *
-     * @param   description description of the Deadline
+     * @param   description description of the deadline
      * @param   timeString  a String describing the due date
      */
     public Deadline(String description, String timeString) {
@@ -28,7 +28,7 @@ public class Deadline extends Task {
     /**
      * Creates a new Deadline object using a Calendar to represent time.
      *
-     * @param   description description of the Deadline
+     * @param   description description of the deadline
      * @param   time        a Calendar describing the due data
      */
     public Deadline(String description, Calendar time) {

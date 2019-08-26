@@ -2,7 +2,7 @@ package duke.exception;
 
 /**
  * Exception class for Duke. Meant to be thrown as an internal exception and
- * must be caught to be declared.
+ * must be caught to be thrown in a method.
  */
 public class DukeException extends Exception {
     String message;
