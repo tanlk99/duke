@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Test;
 class DummyTest {
     @Test
     void testArithmetic() {
-        int a = 2, b = 5;
+        int a = 2;
+        int b = 5;
 
         assertEquals(7, a + b);
         assertEquals(10, a * b);

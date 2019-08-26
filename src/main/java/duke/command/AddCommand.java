@@ -31,8 +31,8 @@ public class AddCommand extends Command {
         ui.printHorizontalLine();
         ui.formatLine("Got it. I've added this task:");
         ui.formatLine("  " + toAdd);
-        ui.formatLine("Now you have " + taskList.getSize() + " task" +
-            (taskList.getSize() == 1 ? "" : "s") + " in the list.");
+        ui.formatLine("Now you have " + taskList.getSize() + " task"
+                + (taskList.getSize() == 1 ? "" : "s") + " in the list.");
 
         try {
             storage.writeCache(taskList);

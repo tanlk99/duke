@@ -5,7 +5,7 @@ package duke.exception;
  * must be caught to be declared.
  */
 public class DukeException extends Exception {
-    String message;
+    private String message;
 
     /**
      * Creates a new DukeException.
