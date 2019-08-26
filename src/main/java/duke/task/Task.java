@@ -28,6 +28,15 @@ abstract public class Task implements Serializable {
         isDone = true;
     }
 
+    /**
+     * Returns the description of the task
+     *
+     * @return  description of the task
+     */
+    public String getDescription() {
+        return description;
+    }
+
     private String getStatusIcon() {
         return (isDone ? "[O]" : "[X]"); //can't display unicode
     }

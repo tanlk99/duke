@@ -67,6 +67,21 @@ public class TaskList {
     }
 
     /**
+     * Checks if the description of a task given by index contains a given filter string.
+     * If the index is invalid, this method will throw an assertion error. This search is
+     * case-insensitive.
+     *
+     * @param index     1-indexed value indicating position of the task to check
+     * @param filter    the string to check
+     * @return          true if task description contains filter string
+     */
+    public boolean taskDescriptionContains(int index, String filter) {
+        assert index > 0 && index <= taskList.size();
+        String descriptionLower = taskList.get(index - 1).getDescription().toLowerCase();
+        return descriptionLower.contains(filter.toLowerCase());
+    }
+
+    /**
      * Returns the entire task list. This method is intended for storage purposes only.
      *
      * @return      an ArrayList containing the current task list

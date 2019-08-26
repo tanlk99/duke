@@ -16,6 +16,7 @@ import duke.command.Command;
 import duke.command.DeleteCommand;
 import duke.command.DoneCommand;
 import duke.command.ExitCommand;
+import duke.command.FindCommand;
 import duke.command.ListCommand;
 import duke.exception.DukeException;
 
@@ -24,12 +25,13 @@ import duke.exception.DukeException;
  */
 public class Parser {
     /**
-     * Interprets a command input string to create a duke.command.Command object.
+     * Interprets a command input string to create a Command object.
+     * Leading and trailing spaces are ignored.
      *
      * @param   rawInput    raw input passed into command line
      */
     public Command parseInput(String rawInput) throws DukeException {
-        String commandPhrase = rawInput.split(" ", 2)[0];
+        String commandPhrase = rawInput.trim().split(" ", 2)[0];
         int index;
 
         switch (commandPhrase) {
@@ -51,6 +53,12 @@ public class Parser {
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                 throw new DukeException("Please use 'delete i' to delete the i-th task in the list.");
             }
+        case "find":
+            if (!rawInput.contains(" ")) {
+                throw new DukeException("Your search string cannot be empty. To see all tasks, use \"list\" instead.");
+            }
+
+            return new FindCommand(rawInput.split(" ", 2)[1]);
         case "todo":
         case "event":
         case "deadline":
