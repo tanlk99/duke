@@ -12,7 +12,7 @@ public abstract class Task implements Serializable {
 
     /**
      * Creates a new Task.
-     * New tasks are created as un-done.
+     * New tasks are created as incomplete.
      *
      * @param   description a description of the task
      */
@@ -29,7 +29,7 @@ public abstract class Task implements Serializable {
     }
 
     /**
-     * Returns the description of the task
+     * Returns the description of the task.
      *
      * @return  description of the task
      */

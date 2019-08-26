@@ -8,12 +8,22 @@ import duke.util.Ui;
 import duke.command.Command;
 import duke.exception.DukeException;
 
+/**
+ * Duke is an interactive task scheduler. Users can interact with Duke through its command-line interface.
+ * Duke can add tasks, delete tasks and mark tasks as complete. Duke caches its task list at default location
+ * "[project root]/data/duke-cache.txt".
+ */
 public class Duke {
     private Storage storage;
     private Parser parser;
     private Ui ui;
     private TaskList taskList;
 
+    /**
+     * Creates a new Duke instance and initializes Duke's utility classes.
+     *
+     * @param   filePath    location of the cache file
+     */
     public Duke(String filePath) {
         ui = new Ui();
         parser = new Parser();
@@ -27,6 +37,9 @@ public class Duke {
         }
     }
 
+    /**
+     * Initializes the command-line interface.
+     */
     private void init() {
         ui.showGreetings();
 
@@ -48,6 +61,9 @@ public class Duke {
         }
     }
 
+    /**
+     * Starts up a new Duke instance.
+     */
     public static void main(String[] args) {
         new Duke("data/duke-cache.txt").init();
     }

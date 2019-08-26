@@ -16,8 +16,8 @@ public class Event extends Task {
     /**
      * Creates a new Event object using a string to represent time.
      *
-     * @param   description description of the Event
-     * @param   timeString  a String describing the time of the Event
+     * @param   description description of the event
+     * @param   timeString  a String describing the time of the event
      */
     public Event(String description, String timeString) {
         super(description);
@@ -28,8 +28,8 @@ public class Event extends Task {
     /**
      * Creates a new Event object using a Calendar to represent time.
      *
-     * @param   description description of the Event
-     * @param   time        a Calendar describing the time of the Event
+     * @param   description description of the event
+     * @param   time        a Calendar describing the time of the event
      */
     public Event(String description, Calendar time) {
         super(description);

@@ -21,7 +21,10 @@ import duke.command.ListCommand;
 import duke.exception.DukeException;
 
 /**
- * Interprets and converts raw input to various classes used by Duke.
+ * Parses Duke's commands.
+ *
+ * <p>Interprets and converts raw input from the command line to instances of
+ * {@link duke.command.Command Command} to be executed by Duke.</p>
  */
 public class Parser {
     private static final List<String> dateFormatStrings = Arrays.asList(
@@ -31,9 +34,45 @@ public class Parser {
 
     /**
      * Interprets a command input string to create a Command object.
-     * Leading and trailing spaces are ignored.
+     * Leading and trailing spaces are ignored. Below is a table of all accepted commands:
+     *
+     * <table border="1">
+     *   <tr><td>Command</td><td>Function</td></tr>
+     *   <tr>
+     *     <td>todo <i>name</i></td>
+     *     <td>Add a new to-do with description <i>name</i> to the task list.</td>
+     *   </tr>
+     *   <tr>
+     *     <td>deadline <i>name</i> /by <i>time</i></td>
+     *     <td>Add a new deadline with description <i>name</i> and due date <i>time</i> to the task list.</td>
+     *   </tr>
+     *   <tr>
+     *     <td>event <i>name</i> /at <i>time</i></td>
+     *     <td>Add a new event with description <i>name</i> which occurs at time <i>time</i> to the task list.</td>
+     *   </tr>
+     *   <tr>
+     *     <td>list</td>
+     *     <td>List all the events in order indicating their completion status, type, and time (if applicable).</td>
+     *   </tr>
+     *   <tr>
+     *     <td>done <i>index</i></td>
+     *     <td>Mark the <i>index</i>-th task in the task list as complete (<i>index</i> must be a valid integer).</td>
+     *   </tr>
+     *   <tr>
+     *     <td>delete <i>index</i></td>
+     *     <td>Delete the <i>index</i>-th task in the task list (<i>index</i> must be a valid integer).</td>
+     *   </tr>
+     *   <tr>
+     *     <td>find <i>substring</i></td>
+     *     <td>Finds and lists all tasks with description containing <i>substring</i>.</td>
+     *   <tr>
+     *     <td>bye</td>
+     *     <td>Exit Duke.</td>
+     *   </tr>
+     * </table>
      *
      * @param   rawInput    raw input passed into command line
+     * @return  a Command object representing the command
      */
     public Command parseInput(String rawInput) throws DukeException {
         String commandPhrase = rawInput.trim().split(" ", 2)[0];
@@ -73,6 +112,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Interprets a todo, deadline or event command and creates the corresponding Task object.
+     *
+     * @param   rawInput    raw input passed into command line
+     * @return  a Task object to add to the task list
+     */
     private Task parseTask(String rawInput) throws DukeException {
         String taskType = rawInput.split(" ", 2)[0];
         String taskRawDesc;
@@ -137,6 +182,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Attempts to interpret a string representing time using a list of date formats.
+     * If there was no suitable format, throws a {@link duke.exception.DukeException DukeException}.
+     *
+     * @param   rawTime substring of command representing a time
+     * @return  a Date object if the command can be parsed
+     */
     private Calendar parseTime(String rawTime) throws DukeException {
         DateFormat dateFormat;
 

@@ -5,6 +5,9 @@ import duke.util.Storage;
 import duke.util.TaskList;
 import duke.util.Ui;
 
+/**
+ * Represents a command to search for all tasks in the task list with descriptions containing a string.
+ */
 public class FindCommand extends Command {
     private String filter;
 
@@ -17,10 +20,23 @@ public class FindCommand extends Command {
         this.filter = filter;
     }
 
+    /**
+     * Indicates whether Duke needs to exit after this command.
+     * FindCommand instances will always return false.
+     *
+     * @return true if Duke needs to terminate
+     */
     public boolean terminate() {
         return false;
     }
 
+    /**
+     * Finds all tasks with descriptions containing the filter and lists them.
+     *
+     * @param   storage     a Storage object to cache task list
+     * @param   ui          a Ui object to display Duke's output
+     * @param   taskList    a TaskList object which stores the task list
+     */
     public void execute(Storage storage, Ui ui, TaskList taskList) {
         ArrayList<Integer> matchIndices = new ArrayList<>();
 
