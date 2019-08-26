@@ -29,10 +29,9 @@ public class Storage {
     private void initializeCache() throws DukeException {
         try {
             File file = new File(cacheAddr);
-            System.out.println(file.getAbsolutePath());
+
             if (!file.exists()) {
                 file.createNewFile();
-                System.out.println("File created!");
                 ArrayList<Task> emptyList = new ArrayList<>();
 
                 FileOutputStream fileOut = new FileOutputStream(cacheAddr, false);
