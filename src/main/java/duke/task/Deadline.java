@@ -22,7 +22,7 @@ public class Deadline extends Task {
     public Deadline(String description, String timeString) {
         super(description);
         this.timeString = timeString;
-        this.hasCalendar = false;
+        hasCalendar = false;
     }
 
     /**
@@ -34,7 +34,7 @@ public class Deadline extends Task {
     public Deadline(String description, Calendar time) {
         super(description);
         this.time = time;
-        this.hasCalendar = true;
+        hasCalendar = true;
     }
 
     private String getTime() {

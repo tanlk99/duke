@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Represents a task in the task list.
  * Can be marked as done.
  */
-abstract public class Task implements Serializable {
+public abstract class Task implements Serializable {
     protected String description;
     protected boolean isDone;
 
@@ -18,7 +18,7 @@ abstract public class Task implements Serializable {
      */
     public Task(String description) {
         this.description = description;
-        this.isDone = false;
+        isDone = false;
     }
 
     /**

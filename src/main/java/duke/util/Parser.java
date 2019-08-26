@@ -23,8 +23,13 @@ import duke.exception.DukeException;
  * Interprets and converts raw input to various classes used by Duke.
  */
 public class Parser {
+    private static final List<String> dateFormatStrings = Arrays.asList(
+        "dd/MM/yyyy HH:mm", "dd-MM-yyyy HH:mm", "yyyy/MM/dd HH:mm", "yyyy-MM-dd HH:mm",
+        "dd/MM/yyyy", "dd-MM-yyyy", "yyyy/MM/dd", "yyyy-MM-dd",
+        "dd/MM HH:mm", "dd-MM HH:mm", "dd/MM", "dd-MM");
+
     /**
-     * Interprets a command input string to create a duke.command.Command object.
+     * Interprets a command input string to create a Command object.
      *
      * @param   rawInput    raw input passed into command line
      */
@@ -51,8 +56,8 @@ public class Parser {
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                 throw new DukeException("Please use 'delete i' to delete the i-th task in the list.");
             }
-        case "todo":
-        case "event":
+        case "todo": //Fallthrough
+        case "event": //Fallthrough
         case "deadline":
             return new AddCommand(parseTask(rawInput));
         default:
@@ -85,7 +90,8 @@ public class Parser {
 
             if (taskDesc.length() == 0) {
                 throw new DukeException("The description of a deadline cannot be empty.");
-            } if (taskRawTime.length() == 0) {
+            }
+            if (taskRawTime.length() == 0) {
                 throw new DukeException("Please specify the deadline using /by (with spaces preceding and following).");
             }
 
@@ -97,7 +103,8 @@ public class Parser {
             }
         case "event":
             if (!taskRawDesc.contains(" /at ")) {
-                throw new DukeException("Please specify the event time using /at (with spaces preceding and following).");
+                throw new DukeException("Please specify the event time using /at"
+                        + "(with spaces preceding and following).");
             }
 
             taskDesc = taskRawDesc.split(" /at ", 2)[0];
@@ -105,8 +112,10 @@ public class Parser {
 
             if (taskDesc.length() == 0) {
                 throw new DukeException("The description of an event cannot be empty.");
-            } if (taskRawTime.length() == 0) {
-                throw new DukeException("Please specify the event time using /at (with spaces preceding and following).");
+            }
+            if (taskRawTime.length() == 0) {
+                throw new DukeException("Please specify the event time using /at"
+                        + "(with spaces preceding and following).");
             }
 
             try {
@@ -119,11 +128,6 @@ public class Parser {
             throw new RuntimeException("Our parser encountered a fatal error.");
         }
     }
-
-    private static final List<String> dateFormatStrings = Arrays.asList(
-        "dd/MM/yyyy HH:mm", "dd-MM-yyyy HH:mm", "yyyy/MM/dd HH:mm", "yyyy-MM-dd HH:mm",
-        "dd/MM/yyyy", "dd-MM-yyyy", "yyyy/MM/dd", "yyyy-MM-dd",
-        "dd/MM HH:mm", "dd-MM HH:mm", "dd/MM", "dd-MM");
 
     private Calendar parseTime(String rawTime) throws DukeException {
         DateFormat dateFormat;
@@ -146,7 +150,9 @@ public class Parser {
                     }
                 }
                 return calendarTime;
-            } catch (ParseException ignored) {}
+            } catch (ParseException ignored) {
+                continue;
+            }
         }
 
         //no date format worked
