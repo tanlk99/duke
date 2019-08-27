@@ -14,10 +14,10 @@ public class Event extends Task {
     protected boolean hasCalendar;
 
     /**
-     * Creates a new Event object using a string to represent time.
+     * Creates a new Event instance using a string to represent time.
      *
-     * @param   description description of the event
-     * @param   timeString  a String describing the time of the event
+     * @param   description Description of the event
+     * @param   timeString  A String describing the time of the event
      */
     public Event(String description, String timeString) {
         super(description);
@@ -26,10 +26,10 @@ public class Event extends Task {
     }
 
     /**
-     * Creates a new Event object using a Calendar to represent time.
+     * Creates a new Event instance using a {@link Calendar} to represent time.
      *
-     * @param   description description of the event
-     * @param   time        a Calendar describing the time of the event
+     * @param   description Description of the event
+     * @param   time  A {@link Calendar} describing the time of the event
      */
     public Event(String description, Calendar time) {
         super(description);

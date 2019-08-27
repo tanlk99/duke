@@ -13,16 +13,16 @@ public abstract class Command {
     /**
      * Indicates whether Duke needs to exit after this command.
      *
-     * @return true if Duke needs to terminate
+     * @return True if Duke needs to terminate
      */
     public abstract boolean terminate();
 
     /**
      * Executes the command.
      *
-     * @param   storage     a Storage object to cache the task list
-     * @param   ui          a Ui object to display Duke's output
-     * @param   taskList    a TaskList object which stores the task list
+     * @param   storage     A {@link Storage} object to cache task list
+     * @param   ui          A {@link Ui} object to display Duke's output
+     * @param   taskList    A {@link TaskList} object which stores the task list
      */
     public abstract void execute(Storage storage, Ui ui, TaskList taskList) throws DukeException;
 }

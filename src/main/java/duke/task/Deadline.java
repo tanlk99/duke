@@ -14,10 +14,10 @@ public class Deadline extends Task {
     protected boolean hasCalendar;
 
     /**
-     * Creates a new Deadline object using a string to represent time.
+     * Creates a new Deadline instance using a string to represent time.
      *
-     * @param   description description of the deadline
-     * @param   timeString  a String describing the due date
+     * @param   description Description of the deadline
+     * @param   timeString  A String describing the due date
      */
     public Deadline(String description, String timeString) {
         super(description);
@@ -26,10 +26,10 @@ public class Deadline extends Task {
     }
 
     /**
-     * Creates a new Deadline object using a Calendar to represent time.
+     * Creates a new Deadline instance using a {@link Calendar} to represent time.
      *
-     * @param   description description of the deadline
-     * @param   time        a Calendar describing the due data
+     * @param   description Description of the deadline
+     * @param   time  A {@link Calendar} describing the due data
      */
     public Deadline(String description, Calendar time) {
         super(description);

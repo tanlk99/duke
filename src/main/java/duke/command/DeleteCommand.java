@@ -15,7 +15,7 @@ public class DeleteCommand extends Command {
     /**
      * Creates a new DeleteCommand.
      *
-     * @param   index   the index of the task to delete
+     * @param   index   Index of the task to delete
      */
     public DeleteCommand(int index) {
         this.index = index;
@@ -25,7 +25,7 @@ public class DeleteCommand extends Command {
      * Indicates whether Duke needs to exit after this command.
      * DeleteCommand instances will always return false.
      *
-     * @return true if Duke needs to terminate
+     * @return True if Duke needs to terminate
      */
     public boolean terminate() {
         return false;
@@ -34,9 +34,10 @@ public class DeleteCommand extends Command {
     /**
      * Deletes the task given by <i>index</i>.
      *
-     * @param   storage     a Storage object to cache task list
-     * @param   ui          a Ui object to display Duke's output
-     * @param   taskList    a TaskList object which stores the task list
+     * @param   storage     A {@link Storage} object to cache task list
+     * @param   ui          A {@link Ui} object to display Duke's output
+     * @param   taskList    A {@link TaskList} object which stores the task list
+     * @throws  DukeException   If index is invalid
      */
     public void execute(Storage storage, Ui ui, TaskList taskList) throws DukeException {
         if (index <= 0 || index > taskList.getSize()) {

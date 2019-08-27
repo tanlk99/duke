@@ -15,7 +15,7 @@ public class AddCommand extends Command {
     /**
      * Creates a new AddCommand with a task to add.
      *
-     * @param   toAdd   the Task object to add to task list
+     * @param   toAdd   Task object to add to task list
      */
     public AddCommand(Task toAdd) {
         this.toAdd = toAdd;
@@ -25,7 +25,7 @@ public class AddCommand extends Command {
      * Indicates whether Duke needs to exit after this command.
      * AddCommand instances will always return false.
      *
-     * @return true if Duke needs to terminate
+     * @return True if Duke needs to terminate
      */
     public boolean terminate() {
         return false;
@@ -34,9 +34,9 @@ public class AddCommand extends Command {
     /**
      * Adds the task to the task list.
      *
-     * @param   storage     a Storage object to cache task list
-     * @param   ui          a Ui object to display Duke's output
-     * @param   taskList    a TaskList object which stores the task list
+     * @param   storage     A {@link Storage} object to cache task list
+     * @param   ui          A {@link Ui} object to display Duke's output
+     * @param   taskList    A {@link TaskList} object which stores the task list
      */
     public void execute(Storage storage, Ui ui, TaskList taskList) {
         taskList.addNewTask(toAdd);

@@ -22,7 +22,7 @@ public class Duke {
     /**
      * Creates a new Duke instance and initializes Duke's utility classes.
      *
-     * @param   filePath    location of the cache file
+     * @param   filePath    Location of the cache file
      */
     public Duke(String filePath) {
         ui = new Ui();
@@ -30,6 +30,7 @@ public class Duke {
 
         try {
             storage = new Storage(filePath);
+            storage.createCacheIfNotExists();
             taskList = new TaskList(storage.readCache());
         } catch (DukeException e) {
             ui.showLoadingError();

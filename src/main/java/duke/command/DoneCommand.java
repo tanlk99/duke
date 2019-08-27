@@ -14,7 +14,7 @@ public class DoneCommand extends Command {
     /**
      * Creates a new DoneCommand.
      *
-     * @param   index   index of task to mark as done
+     * @param   index   Index of task to mark as done
      */
     public DoneCommand(int index) {
         this.index = index;
@@ -24,7 +24,7 @@ public class DoneCommand extends Command {
      * Indicates whether Duke needs to exit after this command.
      * DoneCommand instances will always return false.
      *
-     * @return true if Duke needs to terminate
+     * @return True if Duke needs to terminate
      */
     public boolean terminate() {
         return false;
@@ -33,16 +33,17 @@ public class DoneCommand extends Command {
     /**
      * Marks the task given by <i>index</i> as done.
      *
-     * @param   storage     a Storage object to cache task list
-     * @param   ui          a Ui object to display Duke's output
-     * @param   taskList    a TaskList object which stores the task list
+     * @param   storage     A {@link Storage} object to cache task list
+     * @param   ui          A {@link Ui} object to display Duke's output
+     * @param   taskList    A {@link TaskList} object which stores the task list
+     * @throws  DukeException   If index is invalid
      */
     public void execute(Storage storage, Ui ui, TaskList taskList) throws DukeException {
         if (index <= 0 || index > taskList.getSize()) {
             throw new DukeException("That is not a valid task number.");
         }
 
-        taskList.getTask(index).markAsDone();
+        taskList.markTaskAsDone(index);
 
         ui.printHorizontalLine();
         ui.formatLine("Nice! I've marked this task as done:");

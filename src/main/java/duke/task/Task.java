@@ -14,7 +14,7 @@ public abstract class Task implements Serializable {
      * Creates a new Task.
      * New tasks are created as incomplete.
      *
-     * @param   description a description of the task
+     * @param   description A description of the task
      */
     public Task(String description) {
         this.description = description;
@@ -31,7 +31,7 @@ public abstract class Task implements Serializable {
     /**
      * Returns the description of the task.
      *
-     * @return  description of the task
+     * @return  Description of the task
      */
     public String getDescription() {
         return description;

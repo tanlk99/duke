@@ -1,14 +1,14 @@
 package duke.task;
 
 /**
- * Represents a Todo task.
+ * Represents a to-do task.
  * Todos can be marked as done.
  */
 public class ToDo extends Task {
     /**
-     * Creates a new ToDo object.
+     * Creates a new ToDo instance.
      *
-     * @param   description     description of the ToDo task
+     * @param   description     Description of the to-do task
      */
     public ToDo(String description) {
         super(description);

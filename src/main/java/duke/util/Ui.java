@@ -16,7 +16,7 @@ public class Ui {
      * Formats and prints a string as the output of Duke.
      * Currently, this function indents the output by 4 spaces and prints it.
      *
-     * @param   output  output string to print
+     * @param   output  Output string to print
      */
     public void formatLine(String output) {
         System.out.println("    " + output);

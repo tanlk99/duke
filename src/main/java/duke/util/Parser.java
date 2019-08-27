@@ -24,7 +24,7 @@ import duke.exception.DukeException;
  * Parses Duke's commands.
  *
  * <p>Interprets and converts raw input from the command line to instances of
- * {@link duke.command.Command Command} to be executed by Duke.</p>
+ * {@link Command} to be executed by Duke.</p>
  */
 public class Parser {
     private static final List<String> dateFormatStrings = Arrays.asList(
@@ -33,7 +33,7 @@ public class Parser {
         "dd/MM HH:mm", "dd-MM HH:mm", "dd/MM", "dd-MM");
 
     /**
-     * Interprets a command input string to create a Command object.
+     * Interprets a command input string to create a {@link Command} object.
      * Leading and trailing spaces are ignored. Below is a table of all accepted commands:
      *
      * <table border="1">
@@ -71,8 +71,9 @@ public class Parser {
      *   </tr>
      * </table>
      *
-     * @param   rawInput    raw input passed into command line
-     * @return  a Command object representing the command
+     * @param   rawInput    Raw input passed into command line
+     * @return  A {@link Command} object representing the command
+     * @throws  DukeException   If input is invalid (see above)
      */
     public Command parseInput(String rawInput) throws DukeException {
         String commandPhrase = rawInput.trim().split(" ", 2)[0];
@@ -113,10 +114,11 @@ public class Parser {
     }
 
     /**
-     * Interprets a todo, deadline or event command and creates the corresponding Task object.
+     * Interprets a todo, deadline or event command and creates the corresponding {@link Task} object.
      *
-     * @param   rawInput    raw input passed into command line
-     * @return  a Task object to add to the task list
+     * @param   rawInput    Raw input passed into command line
+     * @return  A Task object to add to the task list
+     * @throws  DukeException   If task description or time is invalid
      */
     private Task parseTask(String rawInput) throws DukeException {
         String taskType = rawInput.split(" ", 2)[0];
@@ -184,10 +186,11 @@ public class Parser {
 
     /**
      * Attempts to interpret a string representing time using a list of date formats.
-     * If there was no suitable format, throws a {@link duke.exception.DukeException DukeException}.
+     * If there was no suitable format, throws a {@link DukeException DukeException}.
      *
-     * @param   rawTime substring of command representing a time
-     * @return  a Date object if the command can be parsed
+     * @param   rawTime Substring of command representing a time
+     * @return  A {@link Calendar} object if the command can be parsed
+     * @throws  DukeException   If command cannot be parsed
      */
     private Calendar parseTime(String rawTime) throws DukeException {
         DateFormat dateFormat;
@@ -201,7 +204,7 @@ public class Parser {
                 Calendar calendarTime = Calendar.getInstance();
                 calendarTime.setTime(dateTime);
 
-                if (!dateFormatString.contains("yyyy")) {
+                if (!dateFormatString.contains("yyyy")) { //set year of calendar
                     Calendar currentTime = Calendar.getInstance();
                     int currentYear = currentTime.get(Calendar.YEAR);
                     calendarTime.set(Calendar.YEAR, currentYear);

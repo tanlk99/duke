@@ -14,7 +14,7 @@ public class FindCommand extends Command {
     /**
      * Creates a new FindCommand.
      *
-     * @param filter    the string to search for
+     * @param filter    String to search for
      */
     public FindCommand(String filter) {
         this.filter = filter;
@@ -24,7 +24,7 @@ public class FindCommand extends Command {
      * Indicates whether Duke needs to exit after this command.
      * FindCommand instances will always return false.
      *
-     * @return true if Duke needs to terminate
+     * @return True if Duke needs to terminate
      */
     public boolean terminate() {
         return false;
@@ -33,9 +33,9 @@ public class FindCommand extends Command {
     /**
      * Finds all tasks with descriptions containing the filter and lists them.
      *
-     * @param   storage     a Storage object to cache task list
-     * @param   ui          a Ui object to display Duke's output
-     * @param   taskList    a TaskList object which stores the task list
+     * @param   storage     A {@link Storage} object to cache task list
+     * @param   ui          A {@link Ui} object to display Duke's output
+     * @param   taskList    A {@link TaskList} object which stores the task list
      */
     public void execute(Storage storage, Ui ui, TaskList taskList) {
         ArrayList<Integer> matchIndices = new ArrayList<>();
