@@ -71,12 +71,13 @@ public class Parser {
      *   </tr>
      * </table>
      *
-     * @param   rawInput    Raw input passed into command line
+     * @param   untrimmedRawInput    Raw input passed into command line
      * @return  A {@link Command} object representing the command
      * @throws  DukeException   If input is invalid (see above)
      */
-    public Command parseInput(String rawInput) throws DukeException {
-        String commandPhrase = rawInput.trim().split(" ", 2)[0];
+    public Command parseInput(String untrimmedRawInput) throws DukeException {
+        String rawInput = untrimmedRawInput.trim();
+        String commandPhrase = rawInput.split(" ", 2)[0];
         int index;
 
         switch (commandPhrase) {
@@ -140,8 +141,8 @@ public class Parser {
                 throw new DukeException("Please specify the deadline using /by (with spaces preceding and following).");
             }
 
-            taskDesc = taskRawDesc.split(" /by ", 2)[0];
-            taskRawTime = taskRawDesc.split(" /by ", 2)[1];
+            taskDesc = taskRawDesc.split(" /by ", 2)[0].trim();
+            taskRawTime = taskRawDesc.split(" /by ", 2)[1].trim();
 
             if (taskDesc.length() == 0) {
                 throw new DukeException("The description of a deadline cannot be empty.");
