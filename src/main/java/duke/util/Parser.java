@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
@@ -31,6 +33,38 @@ public class Parser {
         "dd/MM/yyyy HH:mm", "dd-MM-yyyy HH:mm", "yyyy/MM/dd HH:mm", "yyyy-MM-dd HH:mm",
         "dd/MM/yyyy", "dd-MM-yyyy", "yyyy/MM/dd", "yyyy-MM-dd",
         "dd/MM HH:mm", "dd-MM HH:mm", "dd/MM", "dd-MM");
+
+    /**
+     * Enumerates all task types known to the parser.
+     */
+    private static enum TaskType {
+        TODO("todo", Optional.empty()),
+        DEADLINE("deadline", Optional.of("/by")),
+        EVENT("event", Optional.of("/at"));
+
+        public final String commandPhrase;
+        public final Optional<String> timeDivider;
+
+        TaskType(String commandPhrase, Optional<String> timeDivider) {
+            this.commandPhrase = commandPhrase;
+            this.timeDivider = timeDivider;
+        }
+
+        /**
+         * Gets the corresponding TaskType using its command phrase.
+         */
+        static TaskType getTaskType(String commandPhrase) {
+            Optional<TaskType> result = Arrays.stream(TaskType.values())
+                    .filter(t -> t.commandPhrase.equals(commandPhrase))
+                    .findFirst();
+
+            if (!result.isPresent()) {
+                throw new RuntimeException("Our parser encountered a fatal error.");
+            }
+
+            return result.get();
+        }
+    }
 
     /**
      * Interprets a command input string to create a {@link Command} object.
@@ -108,80 +142,99 @@ public class Parser {
         case "todo": //Fallthrough
         case "event": //Fallthrough
         case "deadline":
-            return new AddCommand(parseTask(rawInput));
+            if (!rawInput.contains(" ")) {
+                throw new DukeException("The description of a " + commandPhrase + " cannot be empty.");
+            }
+            String rawTaskDescription = rawInput.split(" ", 2)[1];
+            TaskType taskType = TaskType.getTaskType(commandPhrase);
+            return new AddCommand(parseTask(rawTaskDescription, taskType));
         default:
             throw new DukeException("I don't understand that command.");
         }
     }
 
     /**
-     * Interprets a todo, deadline or event command and creates the corresponding {@link Task} object.
+     * Interprets a command to add a task and creates the corresponding {@link Task} object.
      *
-     * @param   rawInput    Raw input passed into command line
+     * @param   rawTaskDescription    Raw description of task passed to command line
      * @return  A Task object to add to the task list
      * @throws  DukeException   If task description or time is invalid
      */
-    private Task parseTask(String rawInput) throws DukeException {
-        String taskType = rawInput.split(" ", 2)[0];
-        String taskRawDesc;
-        String taskDesc;
+    private Task parseTask(String rawTaskDescription, TaskType taskType) throws DukeException {
+        if (taskType.timeDivider.isPresent()) {
+            return parseTimedTask(rawTaskDescription, taskType);
+        } else {
+            return parseUntimedTask(rawTaskDescription, taskType);
+        }
+    }
 
-        if (!rawInput.contains(" ")) {
-            throw new DukeException("The description of a " + taskType + " cannot be empty.");
+    /**
+     * Interprets a command to add a timed task and creates the corresponding {@link Task} object.
+     * Timed tasks include {@link Todo} and {@link Deadline}.
+     *
+     * @param   rawTaskDescription    Raw description of task passed to command line
+     * @return  A Task object to add to the task list
+     * @throws  DukeException   If task description or time is invalid
+     */
+    private Task parseTimedTask(String rawTaskDescription, TaskType taskType) throws DukeException {
+        String divider = taskType.timeDivider.get();
+        String command = taskType.commandPhrase;
+
+        if (!rawTaskDescription.contains(" " + divider + " ")) {
+            throw new DukeException("Please specify the " + command + " using " + divider
+                    + " (with spaces preceding and following).");
         }
 
-        taskRawDesc = rawInput.split(" ", 2)[1];
+        String taskDescription = rawTaskDescription.split(" " + divider + " ", 2)[0].trim();
+        String rawTaskTime = rawTaskDescription.split(" " + divider + " ", 2)[1].trim();
 
-        String taskRawTime;
+        if (taskDescription.length() == 0) {
+            throw new DukeException("The description of a " + command + " cannot be empty.");
+        }
+        if (rawTaskTime.length() == 0) {
+            throw new DukeException("Please specify the " + command + " using " + divider
+                    + " (with spaces preceding and following).");
+        }
+
         switch (taskType) {
-        case "todo":
-            return new ToDo(taskRawDesc);
-        case "deadline":
-            if (!taskRawDesc.contains(" /by ")) {
-                throw new DukeException("Please specify the deadline using /by (with spaces preceding and following).");
-            }
-
-            taskDesc = taskRawDesc.split(" /by ", 2)[0].trim();
-            taskRawTime = taskRawDesc.split(" /by ", 2)[1].trim();
-
-            if (taskDesc.length() == 0) {
-                throw new DukeException("The description of a deadline cannot be empty.");
-            }
-            if (taskRawTime.length() == 0) {
-                throw new DukeException("Please specify the deadline using /by (with spaces preceding and following).");
-            }
-
+        case DEADLINE:
             try {
-                return new Deadline(taskDesc, parseTime(taskRawTime));
+                return new Deadline(taskDescription, parseTime(rawTaskTime));
             } catch (DukeException e) {
                 assert e.getMessage().equals("Internal exception: no date format found");
-                return new Deadline(taskDesc, taskRawTime);
+                return new Deadline(taskDescription, rawTaskTime);
             }
-        case "event":
-            if (!taskRawDesc.contains(" /at ")) {
-                throw new DukeException("Please specify the event time using /at"
-                        + "(with spaces preceding and following).");
-            }
-
-            taskDesc = taskRawDesc.split(" /at ", 2)[0];
-            taskRawTime = taskRawDesc.split(" /at ", 2)[1];
-
-            if (taskDesc.length() == 0) {
-                throw new DukeException("The description of an event cannot be empty.");
-            }
-            if (taskRawTime.length() == 0) {
-                throw new DukeException("Please specify the event time using /at"
-                        + "(with spaces preceding and following).");
-            }
-
+        case EVENT:
             try {
-                return new Event(taskDesc, parseTime(taskRawTime));
+                return new Event(taskDescription, parseTime(rawTaskTime));
             } catch (DukeException e) {
                 assert e.getMessage().equals("Internal exception: no date format found");
-                return new Event(taskDesc, taskRawTime);
+                return new Event(taskDescription, rawTaskTime);
             }
         default:
-            throw new RuntimeException("Our parser encountered a fatal error.");
+            throw new RuntimeException("Our parser encountered a fatal error."); //should not continue
+        }
+    }
+
+    /**
+     * Interprets a command to add an untimed task and creates the corresponding {@link Task} object.
+     * Untimed tasks include {@link Todo}.
+     *
+     * @param   rawTaskDescription    Raw description of task passed to command line
+     * @return  A Task object to add to the task list
+     * @throws  DukeException   If task description is invalid
+     */
+    private Task parseUntimedTask(String rawTaskDescription, TaskType taskType) throws DukeException {
+        String taskDescription = rawTaskDescription.trim();
+        if (taskDescription.length() == 0) {
+            throw new DukeException("The description of a " + taskType.commandPhrase + " cannot be empty.");
+        }
+
+        switch (taskType) {
+        case TODO:
+            return new ToDo(rawTaskDescription);
+        default:
+            throw new RuntimeException("Our parser encountered a fatal error."); //should not continue
         }
     }
 
