@@ -93,7 +93,7 @@ public class TaskList {
     }
 
     /**
-     * Returns the entire task list. This method is intended for storage purposes only.
+     * Returns the entire task list. This method is intended for file storage purposes only.
      *
      * @return      An ArrayList containing the current task list
      */

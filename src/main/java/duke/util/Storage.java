@@ -28,6 +28,7 @@ public class Storage {
 
     /**
      * Creates and initializes the cache file if it does not exist.
+     *
      * @throws  DukeException  If creation or initialization of the cache file failed.
      */
     public void createCacheIfNotExists() throws DukeException {

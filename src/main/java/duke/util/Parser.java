@@ -29,7 +29,7 @@ import duke.exception.DukeException;
  * {@link Command} to be executed by Duke.</p>
  */
 public class Parser {
-    private static final List<String> dateFormatStrings = Arrays.asList(
+    private static final List<String> DATE_FORMAT_STRINGS = Arrays.asList(
         "dd/MM/yyyy HH:mm", "dd-MM-yyyy HH:mm", "yyyy/MM/dd HH:mm", "yyyy-MM-dd HH:mm",
         "dd/MM/yyyy", "dd-MM-yyyy", "yyyy/MM/dd", "yyyy-MM-dd",
         "dd/MM HH:mm", "dd-MM HH:mm", "dd/MM", "dd-MM");
@@ -170,7 +170,7 @@ public class Parser {
 
     /**
      * Interprets a command to add a timed task and creates the corresponding {@link Task} object.
-     * Timed tasks include {@link Todo} and {@link Deadline}.
+     * Timed tasks include {@link Event} and {@link Deadline}.
      *
      * @param   rawTaskDescription    Raw description of task passed to command line
      * @return  A Task object to add to the task list
@@ -240,7 +240,7 @@ public class Parser {
 
     /**
      * Attempts to interpret a string representing time using a list of date formats.
-     * If there was no suitable format, throws a {@link DukeException DukeException}.
+     * If there was no suitable format, throws a {@link DukeException}.
      *
      * @param   rawTime Substring of command representing a time
      * @return  A {@link Calendar} object if the command can be parsed
@@ -249,7 +249,7 @@ public class Parser {
     private Calendar parseTime(String rawTime) throws DukeException {
         DateFormat dateFormat;
 
-        for (String dateFormatString : dateFormatStrings) {
+        for (String dateFormatString : DATE_FORMAT_STRINGS) {
             dateFormat = new SimpleDateFormat(dateFormatString);
             dateFormat.setLenient(false);
 
