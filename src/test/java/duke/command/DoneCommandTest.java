@@ -25,7 +25,7 @@ class DoneCommandTest {
 
         try {
             doneCommand.execute(storageStub, uiStub, taskListStub);
-            assertEquals("LINE#Nice! I've marked this task as done:#  O task3#LINE#",
+            assertEquals("Nice! I've marked this task as done:#  O task3#",
                     uiStub.getOutputString());
         } catch (DukeException e) { //shouldn't throw this exception
             assertEquals(0, 1);
@@ -41,8 +41,8 @@ class DoneCommandTest {
 
         try {
             doneCommand.execute(storageStub, uiStub, taskListStub);
-            assertEquals("LINE#Nice! I've marked this task as done:#  O task3#Sorry! I "
-                    + "was unable to save this update in storage. I'll try again next time.#LINE#",
+            assertEquals("Nice! I've marked this task as done:#  O task3#Sorry! I "
+                    + "was unable to save this update in storage. I'll try again next time.#",
                     uiStub.getOutputString());
         } catch (DukeException e) { //shouldn't throw this exception
             assertEquals(0, 1);

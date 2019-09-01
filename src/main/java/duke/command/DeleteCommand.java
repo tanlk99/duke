@@ -53,7 +53,6 @@ public class DeleteCommand extends Command {
             throw new DukeException("That is not a valid task number.");
         }
 
-        ui.printHorizontalLine();
         ui.formatLine("Noted. I've removed this task.");
 
         Task toRemove = taskList.getTask(index);
@@ -68,7 +67,5 @@ public class DeleteCommand extends Command {
         } catch (DukeException e) {
             ui.formatLine("Sorry! I was unable to save this update in storage. I'll try again next time.");
         }
-
-        ui.printHorizontalLine();
     }
 }

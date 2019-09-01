@@ -55,7 +55,6 @@ public class FindCommand extends Command {
             }
         }
 
-        ui.printHorizontalLine();
         if (matchIndices.size() == 0) {
             ui.formatLine("There were no tasks in the list that matched your search term.");
         } else {
@@ -64,7 +63,5 @@ public class FindCommand extends Command {
                 ui.formatLine(index + "." + taskList.getTask(index));
             }
         }
-
-        ui.printHorizontalLine();
     }
 }

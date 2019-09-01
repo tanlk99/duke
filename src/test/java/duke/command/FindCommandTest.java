@@ -23,8 +23,8 @@ class FindCommandTest {
         FindCommand findCommand = new FindCommand("nullity");
 
         findCommand.execute(storageStub, uiStub, taskListStub);
-        assertEquals("LINE#There were no tasks in the list that matched your search term.#"
-                + "LINE#", uiStub.getOutputString());
+        assertEquals("There were no tasks in the list that matched your search term.#"
+                + "", uiStub.getOutputString());
     }
 
     @Test
@@ -33,8 +33,8 @@ class FindCommandTest {
         FindCommand findCommand = new FindCommand("nullity");
 
         findCommand.execute(storageStub, uiStub, taskListStub);
-        assertEquals("LINE#Here are the matching tasks in your list:#"
-                + "1.X task1#2.X task2#3.X task3#LINE#", uiStub.getOutputString());
+        assertEquals("Here are the matching tasks in your list:#"
+                + "1.X task1#2.X task2#3.X task3#", uiStub.getOutputString());
     }
 
     @Test
@@ -44,8 +44,8 @@ class FindCommandTest {
         FindCommand findCommand = new FindCommand("nullity");
 
         findCommand.execute(storageStub, uiStub, taskListStub);
-        assertEquals("LINE#There were no tasks in the list that matched your search term.#"
-                + "LINE#", uiStub.getOutputString());
+        assertEquals("There were no tasks in the list that matched your search term.#"
+                + "", uiStub.getOutputString());
     }
 
     @Test
@@ -55,8 +55,8 @@ class FindCommandTest {
         FindCommand findCommand = new FindCommand("nullity");
 
         findCommand.execute(storageStub, uiStub, taskListStub);
-        assertEquals("LINE#Here are the matching tasks in your list:#"
-                + "1.X task1#3.X task3#LINE#", uiStub.getOutputString());
+        assertEquals("Here are the matching tasks in your list:#"
+                + "1.X task1#3.X task3#", uiStub.getOutputString());
     }
 
     @Test
@@ -66,7 +66,7 @@ class FindCommandTest {
         FindCommand findCommand = new FindCommand("nullity");
 
         findCommand.execute(storageStub, uiStub, taskListStub);
-        assertEquals("LINE#Here are the matching tasks in your list:#"
-                + "3.X task3#LINE#", uiStub.getOutputString());
+        assertEquals("Here are the matching tasks in your list:#"
+                + "3.X task3#", uiStub.getOutputString());
     }
 }

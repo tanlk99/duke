@@ -19,15 +19,12 @@ public class ExitCommand extends Command {
     }
 
     /**
-     * Prints Duke's goodbye message.
+     * Does nothing. Command occurs by checking terminate().
      *
      * @param   storage     A {@link Storage} object to cache task list
      * @param   ui          A {@link Ui} object to display Duke's output
      * @param   taskList    A {@link TaskList} object which stores the task list
      */
     public void execute(Storage storage, Ui ui, TaskList taskList) {
-        ui.printHorizontalLine();
-        ui.formatLine("Bye. Hope to see you again soon!");
-        ui.printHorizontalLine();
     }
 }

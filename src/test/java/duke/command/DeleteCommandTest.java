@@ -26,8 +26,8 @@ class DeleteCommandTest {
         try {
             deleteCommand.execute(storageStub, uiStub, taskListStub);
 
-            assertEquals("LINE#Noted. I've removed this task.#  X task3#"
-                    + "Now you have 4 tasks in the list.#LINE#", uiStub.getOutputString());
+            assertEquals("Noted. I've removed this task.#  X task3#"
+                    + "Now you have 4 tasks in the list.#", uiStub.getOutputString());
         } catch (DukeException e) { //shouldn't throw this exception
             assertEquals(0, 1);
         }
@@ -40,8 +40,8 @@ class DeleteCommandTest {
 
         try {
             deleteCommand.execute(storageStub, uiStub, taskListStub);
-            assertEquals("LINE#Noted. I've removed this task.#  X task2#"
-                    + "Now you have 1 task in the list.#LINE#", uiStub.getOutputString());
+            assertEquals("Noted. I've removed this task.#  X task2#"
+                    + "Now you have 1 task in the list.#", uiStub.getOutputString());
         } catch (DukeException e) { //shouldn't throw this exception
             assertEquals(0, 1);
         }
@@ -56,9 +56,9 @@ class DeleteCommandTest {
 
         try {
             deleteCommand.execute(storageStub, uiStub, taskListStub);
-            assertEquals("LINE#Noted. I've removed this task.#  X task3#"
+            assertEquals("Noted. I've removed this task.#  X task3#"
                     + "Now you have 4 tasks in the list.#Sorry! I was unable to save "
-                    + "this update in storage. I'll try again next time.#LINE#", uiStub.getOutputString());
+                    + "this update in storage. I'll try again next time.#", uiStub.getOutputString());
         } catch (DukeException e) { //shouldn't throw this exception
             assertEquals(0, 1);
         }

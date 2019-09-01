@@ -54,7 +54,6 @@ public class DoneCommand extends Command {
 
         taskList.markTaskAsDone(index);
 
-        ui.printHorizontalLine();
         ui.formatLine("Nice! I've marked this task as done:");
         ui.formatLine("  " + taskList.getTask(index));
 
@@ -63,7 +62,5 @@ public class DoneCommand extends Command {
         } catch (DukeException e) {
             ui.formatLine("Sorry! I was unable to save this update in storage. I'll try again next time.");
         }
-
-        ui.printHorizontalLine();
     }
 }

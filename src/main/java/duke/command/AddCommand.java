@@ -50,7 +50,6 @@ public class AddCommand extends Command {
     public void execute(Storage storage, Ui ui, TaskList taskList) {
         taskList.addNewTask(toAdd);
 
-        ui.printHorizontalLine();
         ui.formatLine("Got it. I've added this task:");
         ui.formatLine("  " + toAdd);
         ui.formatLine("Now you have " + taskList.getSize() + " task"
@@ -61,7 +60,5 @@ public class AddCommand extends Command {
         } catch (DukeException e) {
             ui.formatLine("Sorry! I was unable to save this update in storage. I'll try again next time.");
         }
-
-        ui.printHorizontalLine();
     }
 }

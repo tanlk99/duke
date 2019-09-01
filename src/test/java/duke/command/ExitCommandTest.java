@@ -15,6 +15,6 @@ class ExitCommandTest {
         ExitCommand exitCommand = new ExitCommand();
 
         exitCommand.execute(storageStub, uiStub, taskListStub);
-        assertEquals("LINE#Bye. Hope to see you again soon!#LINE#", uiStub.getOutputString());
+        assertEquals("", uiStub.getOutputString());
     }
 }

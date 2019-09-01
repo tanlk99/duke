@@ -23,7 +23,7 @@ class ListCommandTest {
         ListCommand listCommand = new ListCommand();
 
         listCommand.execute(storageStub, uiStub, taskListStub);
-        assertEquals("LINE#You have no tasks right now.#LINE#", uiStub.getOutputString());
+        assertEquals("You have no tasks right now.#", uiStub.getOutputString());
     }
 
     @Test
@@ -32,7 +32,7 @@ class ListCommandTest {
         ListCommand listCommand = new ListCommand();
 
         listCommand.execute(storageStub, uiStub, taskListStub);
-        assertEquals("LINE#Here are the tasks in your list:#1.X task1#LINE#",
+        assertEquals("Here are the tasks in your list:#1.X task1#",
                 uiStub.getOutputString());
     }
 
@@ -42,7 +42,7 @@ class ListCommandTest {
         ListCommand listCommand = new ListCommand();
 
         listCommand.execute(storageStub, uiStub, taskListStub);
-        assertEquals("LINE#Here are the tasks in your list:#1.X task1#"
-                + "2.X task2#3.X task3#4.X task4#5.X task5#LINE#", uiStub.getOutputString());
+        assertEquals("Here are the tasks in your list:#1.X task1#"
+                + "2.X task2#3.X task3#4.X task4#5.X task5#", uiStub.getOutputString());
     }
 }

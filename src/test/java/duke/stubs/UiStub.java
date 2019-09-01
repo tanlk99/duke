@@ -3,8 +3,7 @@ package duke.stubs;
 import duke.util.Ui;
 
 /**
- * Simplified version of UI for test purposes. Instead of printing lines to
- * standard output, UiStub stores its output by appending to the end of a string.
+ * Simplified version of UI for test purposes.
  * Outputs from different method calls are separated by a '#' symbol.
  */
 public class UiStub extends Ui {
@@ -12,11 +11,6 @@ public class UiStub extends Ui {
 
     public UiStub() {
         outputString = "";
-    }
-
-    @Override
-    public void printHorizontalLine() {
-        outputString += "LINE#";
     }
 
     @Override

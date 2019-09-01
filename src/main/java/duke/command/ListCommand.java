@@ -26,7 +26,6 @@ public class ListCommand extends Command {
      * @param   taskList    A {@link TaskList} object which stores the task list
      */
     public void execute(Storage storage, Ui ui, TaskList taskList) {
-        ui.printHorizontalLine();
         if (taskList.getSize() == 0) {
             ui.formatLine("You have no tasks right now.");
         } else {
@@ -35,6 +34,5 @@ public class ListCommand extends Command {
                 ui.formatLine(i + "." + taskList.getTask(i));
             }
         }
-        ui.printHorizontalLine();
     }
 }

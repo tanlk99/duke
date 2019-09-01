@@ -25,8 +25,8 @@ class AddCommandTest {
         AddCommand addCommand = new AddCommand(dummyTask);
         addCommand.execute(storageStub, uiStub, taskListStub);
 
-        assertEquals("LINE#Got it. I've added this task:#  X do dishes#"
-                + "Now you have 6 tasks in the list.#LINE#", uiStub.getOutputString());
+        assertEquals("Got it. I've added this task:#  X do dishes#"
+                + "Now you have 6 tasks in the list.#", uiStub.getOutputString());
     }
 
     @Test
@@ -36,8 +36,8 @@ class AddCommandTest {
         AddCommand addCommand = new AddCommand(dummyTask);
         addCommand.execute(storageStub, uiStub, taskListStub);
 
-        assertEquals("LINE#Got it. I've added this task:#  X do dishes#"
-                + "Now you have 1 task in the list.#LINE#", uiStub.getOutputString());
+        assertEquals("Got it. I've added this task:#  X do dishes#"
+                + "Now you have 1 task in the list.#", uiStub.getOutputString());
     }
 
     @Test
@@ -49,9 +49,9 @@ class AddCommandTest {
         AddCommand addCommand = new AddCommand(dummyTask);
         addCommand.execute(storageStub, uiStub, taskListStub);
 
-        assertEquals("LINE#Got it. I've added this task:#  X do dishes#"
+        assertEquals("Got it. I've added this task:#  X do dishes#"
                 + "Now you have 6 tasks in the list.#Sorry! I was unable to save "
-                + "this update in storage. I'll try again next time.#LINE#", uiStub.getOutputString());
+                + "this update in storage. I'll try again next time.#", uiStub.getOutputString());
     }
 
     @Test
@@ -63,8 +63,8 @@ class AddCommandTest {
         AddCommand addCommand = new AddCommand(dummyTask);
         addCommand.execute(storageStub, uiStub, taskListStub);
 
-        assertEquals("LINE#Got it. I've added this task:#  X do dishes#"
+        assertEquals("Got it. I've added this task:#  X do dishes#"
                 + "Now you have 1 task in the list.#Sorry! I was unable to save "
-                + "this update in storage. I'll try again next time.#LINE#", uiStub.getOutputString());
+                + "this update in storage. I'll try again next time.#", uiStub.getOutputString());
     }
 }

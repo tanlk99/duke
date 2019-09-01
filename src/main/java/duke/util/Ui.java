@@ -4,22 +4,15 @@ package duke.util;
  * Handles the output done by Duke through wrapper functions.
  */
 public class Ui {
-    /**
-     * Prints an indented long horizontal line. The length of this line is fixed.
-     */
-    public void printHorizontalLine() {
-        formatLine("________________________________________"
-                + "________________________________________\n");
-    }
+    private String output = "";
 
     /**
-     * Formats and prints a string as the output of Duke.
-     * Currently, this function indents the output by 4 spaces and prints it.
+     * Appends a string to the output of Duke.
      *
-     * @param   output  Output string to print
+     * @param   output  Output string to append
      */
     public void formatLine(String output) {
-        System.out.println("    " + output);
+        this.output += output + "\n";
     }
 
     /**
@@ -34,11 +27,9 @@ public class Ui {
                              "Hello! I'm Duke.",
                              "What can I do for you?"};
 
-        printHorizontalLine();
         for (String line : greeting) {
             formatLine(line);
         }
-        printHorizontalLine();
     }
 
     /**
@@ -49,10 +40,19 @@ public class Ui {
                             "If this is your first time using Duke, you can ignore this message.",
                             "Starting Duke with a blank task list..."};
 
-        printHorizontalLine();
         for (String line : apology) {
             formatLine(line);
         }
-        printHorizontalLine();
+    }
+
+    /**
+     * Returns all of Duke's stored output, and then empties it.
+     *
+     * @return Duke's stored output
+     */
+    public String getOutput() {
+        String toReturn = output;
+        output = "";
+        return toReturn;
     }
 }
