@@ -2,11 +2,17 @@ package duke.application;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Circle;
+import javafx.scene.paint.Color;
 
 /**
  * A dialog box to display chat messages. Consists of an image element
@@ -27,11 +33,17 @@ class DialogBox extends HBox {
         text = l;
         displayPicture = iv;
 
+        double centerY = this.getWidth();
+
         text.setWrapText(true);
         displayPicture.setFitWidth(100.0);
         displayPicture.setFitHeight(100.0);
+        displayPicture.setClip(new Circle(50, 50, 50));
 
         this.setAlignment(Pos.TOP_RIGHT);
+        this.setSpacing(10.0);
+        this.setPadding(new Insets(5.0, 5.0, 5.0, 5.0));
+
         this.getChildren().addAll(text, displayPicture);
     }
 
@@ -54,7 +66,12 @@ class DialogBox extends HBox {
      * @return      A DialogBox object for the message
      */
     static DialogBox getUserDialog(Label l, ImageView iv) {
-        return new DialogBox(l, iv);
+        DialogBox db = new DialogBox(l, iv);
+        db.setBackground(new Background(
+                new BackgroundFill(Color.gray(0.9), CornerRadii.EMPTY, Insets.EMPTY)
+        ));
+
+        return db;
     }
 
     /**
@@ -66,8 +83,12 @@ class DialogBox extends HBox {
      * @return      A DialogBox object for the message
      */
     static DialogBox getDukeDialog(Label l, ImageView iv) {
-        var db = new DialogBox(l, iv);
+        DialogBox db = new DialogBox(l, iv);
+        db.setBackground(new Background(
+                new BackgroundFill(Color.gray(0.8), CornerRadii.EMPTY, Insets.EMPTY)
+        ));
         db.flip();
+
         return db;
     }
 }
