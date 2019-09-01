@@ -21,6 +21,15 @@ public class FindCommand extends Command {
     }
 
     /**
+     * Returns the string to search for.
+     *
+     * @return  String to search for
+     */
+    public String getFilter() {
+        return filter;
+    }
+
+    /**
      * Indicates whether Duke needs to exit after this command.
      * FindCommand instances will always return false.
      *

@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
@@ -37,15 +36,15 @@ public class Parser {
     /**
      * Enumerates all task types known to the parser.
      */
-    private static enum TaskType {
-        TODO("todo", Optional.empty()),
-        DEADLINE("deadline", Optional.of("/by")),
-        EVENT("event", Optional.of("/at"));
+    private enum TaskType {
+        TODO("todo", null),
+        DEADLINE("deadline", "/by"),
+        EVENT("event", "/at");
 
         public final String commandPhrase;
-        public final Optional<String> timeDivider;
+        public final String timeDivider;
 
-        TaskType(String commandPhrase, Optional<String> timeDivider) {
+        TaskType(String commandPhrase, String timeDivider) {
             this.commandPhrase = commandPhrase;
             this.timeDivider = timeDivider;
         }
@@ -58,12 +57,28 @@ public class Parser {
                     .filter(t -> t.commandPhrase.equals(commandPhrase))
                     .findFirst();
 
-            if (!result.isPresent()) {
+            if (result.isEmpty()) {
                 throw new RuntimeException("Our parser encountered a fatal error.");
             }
 
             return result.get();
         }
+    }
+
+    private boolean isBeginWithVowel(String string) {
+        if (string.length() == 0) {
+            return false;
+        }
+
+        char[] vowels = {'a', 'e', 'i', 'o', 'u'};
+
+        for (char vowel : vowels) {
+            if (string.charAt(0) == vowel) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -121,14 +136,14 @@ public class Parser {
             return new ListCommand();
         case "done":
             try {
-                index = Integer.parseInt(rawInput.split(" ", 2)[1]);
+                index = Integer.parseInt(rawInput.split(" ", 2)[1].trim());
                 return new DoneCommand(index);
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                 throw new DukeException("Please use 'done i' to mark completion of the i-th task in the list.");
             }
         case "delete":
             try {
-                index = Integer.parseInt(rawInput.split(" ", 2)[1]);
+                index = Integer.parseInt(rawInput.split(" ", 2)[1].trim());
                 return new DeleteCommand(index);
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                 throw new DukeException("Please use 'delete i' to delete the i-th task in the list.");
@@ -138,12 +153,13 @@ public class Parser {
                 throw new DukeException("Your search string cannot be empty. To see all tasks, use \"list\" instead.");
             }
 
-            return new FindCommand(rawInput.split(" ", 2)[1]);
+            return new FindCommand(rawInput.split(" ", 2)[1].trim());
         case "todo": //Fallthrough
         case "event": //Fallthrough
         case "deadline":
             if (!rawInput.contains(" ")) {
-                throw new DukeException("The description of a " + commandPhrase + " cannot be empty.");
+                throw new DukeException("The description of " + (isBeginWithVowel(commandPhrase) ? "an " : "a ")
+                        + commandPhrase + " cannot be empty.");
             }
             String rawTaskDescription = rawInput.split(" ", 2)[1];
             TaskType taskType = TaskType.getTaskType(commandPhrase);
@@ -161,7 +177,7 @@ public class Parser {
      * @throws  DukeException   If task description or time is invalid
      */
     private Task parseTask(String rawTaskDescription, TaskType taskType) throws DukeException {
-        if (taskType.timeDivider.isPresent()) {
+        if (taskType.timeDivider != null) {
             return parseTimedTask(rawTaskDescription, taskType);
         } else {
             return parseUntimedTask(rawTaskDescription, taskType);
@@ -177,11 +193,12 @@ public class Parser {
      * @throws  DukeException   If task description or time is invalid
      */
     private Task parseTimedTask(String rawTaskDescription, TaskType taskType) throws DukeException {
-        String divider = taskType.timeDivider.get();
+        assert taskType.timeDivider != null;
+        String divider = taskType.timeDivider;
         String command = taskType.commandPhrase;
 
         if (!rawTaskDescription.contains(" " + divider + " ")) {
-            throw new DukeException("Please specify the " + command + " using " + divider
+            throw new DukeException("Please specify the " + command + " time using " + divider
                     + " (with spaces preceding and following).");
         }
 
@@ -189,10 +206,11 @@ public class Parser {
         String rawTaskTime = rawTaskDescription.split(" " + divider + " ", 2)[1].trim();
 
         if (taskDescription.length() == 0) {
-            throw new DukeException("The description of a " + command + " cannot be empty.");
+            throw new DukeException("The description of " + (isBeginWithVowel(command) ? "an " : "a ")
+                    + command + " cannot be empty.");
         }
         if (rawTaskTime.length() == 0) {
-            throw new DukeException("Please specify the " + command + " using " + divider
+            throw new DukeException("Please specify the " + command + " time using " + divider
                     + " (with spaces preceding and following).");
         }
 
@@ -218,7 +236,7 @@ public class Parser {
 
     /**
      * Interprets a command to add an untimed task and creates the corresponding {@link Task} object.
-     * Untimed tasks include {@link Todo}.
+     * Untimed tasks include {@link ToDo}.
      *
      * @param   rawTaskDescription    Raw description of task passed to command line
      * @return  A Task object to add to the task list
@@ -227,12 +245,13 @@ public class Parser {
     private Task parseUntimedTask(String rawTaskDescription, TaskType taskType) throws DukeException {
         String taskDescription = rawTaskDescription.trim();
         if (taskDescription.length() == 0) {
-            throw new DukeException("The description of a " + taskType.commandPhrase + " cannot be empty.");
+            throw new DukeException("The description of " + (isBeginWithVowel(taskType.commandPhrase) ? "an " : "a ")
+                    + taskType.commandPhrase + " cannot be empty.");
         }
 
         switch (taskType) {
         case TODO:
-            return new ToDo(rawTaskDescription);
+            return new ToDo(taskDescription);
         default:
             throw new RuntimeException("Our parser encountered a fatal error."); //should not continue
         }

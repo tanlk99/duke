@@ -22,6 +22,15 @@ public class DeleteCommand extends Command {
     }
 
     /**
+     * Returns the index of the task to delete.
+     *
+     * @return  Index of task to delete
+     */
+    public int getIndex() {
+        return index;
+    }
+
+    /**
      * Indicates whether Duke needs to exit after this command.
      * DeleteCommand instances will always return false.
      *

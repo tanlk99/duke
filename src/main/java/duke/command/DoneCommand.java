@@ -21,6 +21,15 @@ public class DoneCommand extends Command {
     }
 
     /**
+     * Returns the index of the task to mark as done.
+     *
+     * @return  Index of task to mark as done
+     */
+    public int getIndex() {
+        return index;
+    }
+
+    /**
      * Indicates whether Duke needs to exit after this command.
      * DoneCommand instances will always return false.
      *

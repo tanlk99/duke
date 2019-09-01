@@ -22,6 +22,15 @@ public class AddCommand extends Command {
     }
 
     /**
+     * Returns the task to add to the task list.
+     *
+     * @return  Task object to add to task list
+     */
+    public Task getTaskToAdd() {
+        return toAdd;
+    }
+
+    /**
      * Indicates whether Duke needs to exit after this command.
      * AddCommand instances will always return false.
      *
