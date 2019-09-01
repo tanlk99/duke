@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 class ToDoTest {
     @Test
-    void testToString() {
+    void toString_default() {
         ToDo todo = new ToDo("do dishes");
         assertEquals("[T][X] do dishes", todo.toString());
         todo.markAsDone();

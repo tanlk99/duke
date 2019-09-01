@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class EventTest {
     @Test
-    void testToString_stringConstructor() {
+    void toString_stringConstructor() {
         Event eventString = new Event("do dishes", "tomorrow");
         assertEquals("[E][X] do dishes (at: tomorrow)", eventString.toString());
         eventString.markAsDone();
@@ -15,7 +15,7 @@ class EventTest {
     }
 
     @Test
-    void testToString_calendarConstructor() {
+    void toString_calendarConstructor() {
         Calendar calendar = new GregorianCalendar(2020, Calendar.FEBRUARY, 22, 11, 30);
         Event eventCalendar = new Event("do dishes", calendar);
         assertEquals("[E][X] do dishes (at: 22-02-2020 11:30)", eventCalendar.toString());

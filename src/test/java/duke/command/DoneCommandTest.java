@@ -19,7 +19,7 @@ class DoneCommandTest {
     }
 
     @Test
-    void testExecute_default() {
+    void execute_validIndex_successful() {
         TaskListStub taskListStub = new TaskListStub(5);
         DoneCommand doneCommand = new DoneCommand(3);
 
@@ -33,7 +33,7 @@ class DoneCommandTest {
     }
 
     @Test
-    void testExecute_storageExceptionThrown() {
+    void execute_validIndex_storageExceptionThrown() {
         storageStub.setWillThrowException(true);
 
         TaskListStub taskListStub = new TaskListStub(5);
@@ -50,8 +50,8 @@ class DoneCommandTest {
     }
 
     @Test
-    void testExecute_negativeIndex() {
-        storageStub.setWillThrowException(true);
+    void execute_negativeIndex_exceptionThrown() {
+        storageStub.setWillThrowException(true); //should not interact with storage
 
         TaskListStub taskListStub = new TaskListStub(5);
         DoneCommand doneCommand = new DoneCommand(-4);
@@ -60,13 +60,14 @@ class DoneCommandTest {
             doneCommand.execute(storageStub, uiStub, taskListStub);
             assertEquals(0, 1);
         } catch (DukeException e) { //should always throw this exception
+            assertEquals("", uiStub.getOutputString());
             assertEquals("That is not a valid task number.", e.getMessage());
         }
     }
 
     @Test
-    void testExecute_tooLargeIndex() {
-        storageStub.setWillThrowException(true);
+    void execute_tooLargeIndex_exceptionThrown() {
+        storageStub.setWillThrowException(true); //should not interact with storage
 
         TaskListStub taskListStub = new TaskListStub(5);
         DoneCommand doneCommand = new DoneCommand(9);
@@ -76,6 +77,7 @@ class DoneCommandTest {
 
             assertEquals(0, 1);
         } catch (DukeException e) { //should always throw this exception
+            assertEquals("", uiStub.getOutputString());
             assertEquals("That is not a valid task number.", e.getMessage());
         }
     }

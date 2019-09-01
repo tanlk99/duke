@@ -19,7 +19,7 @@ class AddCommandTest {
     }
 
     @Test
-    void testExecute_default() {
+    void execute_taskListNotEmpty_successful() {
         TaskListStub taskListStub = new TaskListStub(5);
         TaskStub dummyTask = new TaskStub("do dishes");
         AddCommand addCommand = new AddCommand(dummyTask);
@@ -30,7 +30,7 @@ class AddCommandTest {
     }
 
     @Test
-    void testExecute_taskListEmpty() {
+    void execute_taskListEmpty_successful() {
         TaskListStub taskListStub = new TaskListStub(0);
         TaskStub dummyTask = new TaskStub("do dishes");
         AddCommand addCommand = new AddCommand(dummyTask);
@@ -41,7 +41,7 @@ class AddCommandTest {
     }
 
     @Test
-    void testExecute_storageExceptionThrown() {
+    void execute_taskListNotEmpty_storageExceptionThrown() {
         storageStub.setWillThrowException(true);
 
         TaskListStub taskListStub = new TaskListStub(5);
@@ -55,7 +55,7 @@ class AddCommandTest {
     }
 
     @Test
-    void testExecute_taskListEmptyStorageExceptionThrown() {
+    void execute_taskListEmpty_storageExceptionThrown() {
         storageStub.setWillThrowException(true);
 
         TaskListStub taskListStub = new TaskListStub(0);

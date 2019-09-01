@@ -18,7 +18,7 @@ class FindCommandTest {
     }
 
     @Test
-    void testExecute_taskListEmpty() {
+    void execute_taskListEmpty() {
         TaskListStub taskListStub = new TaskListStub(0);
         FindCommand findCommand = new FindCommand("nullity");
 
@@ -28,7 +28,7 @@ class FindCommandTest {
     }
 
     @Test
-    void testExecute_allMatch() {
+    void execute_allMatch() {
         TaskListStub taskListStub = new TaskListStub(3);
         FindCommand findCommand = new FindCommand("nullity");
 
@@ -38,7 +38,7 @@ class FindCommandTest {
     }
 
     @Test
-    void testExecute_noneMatch() {
+    void execute_noneMatch() {
         TaskListStub taskListStub = new TaskListStub(3);
         taskListStub.setMatchType(1);
         FindCommand findCommand = new FindCommand("nullity");

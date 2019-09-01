@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class ExitCommandTest {
     @Test
-    void testExecute() {
+    void execute() {
         StorageStub storageStub = new StorageStub();
         UiStub uiStub = new UiStub();
         TaskListStub taskListStub = new TaskListStub(0);

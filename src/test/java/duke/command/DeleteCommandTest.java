@@ -19,7 +19,7 @@ class DeleteCommandTest {
     }
 
     @Test
-    void testExecute_default() {
+    void execute_taskListMedium_successful() {
         TaskListStub taskListStub = new TaskListStub(5);
         DeleteCommand deleteCommand = new DeleteCommand(3);
 
@@ -34,7 +34,7 @@ class DeleteCommandTest {
     }
 
     @Test
-    void testExecute_taskListSmall() {
+    void execute_taskListSmall_successful() {
         TaskListStub taskListStub = new TaskListStub(2);
         DeleteCommand deleteCommand = new DeleteCommand(2);
 
@@ -48,7 +48,7 @@ class DeleteCommandTest {
     }
 
     @Test
-    void testExecute_storageExceptionThrown() {
+    void execute_storageExceptionThrown() {
         storageStub.setWillThrowException(true);
 
         TaskListStub taskListStub = new TaskListStub(5);
@@ -65,7 +65,7 @@ class DeleteCommandTest {
     }
 
     @Test
-    void testExecute_negativeIndex() {
+    void execute_negativeIndex_exceptionThrown() {
         storageStub.setWillThrowException(true);
 
         TaskListStub taskListStub = new TaskListStub(5);
@@ -75,12 +75,13 @@ class DeleteCommandTest {
             deleteCommand.execute(storageStub, uiStub, taskListStub);
             assertEquals(0, 1);
         } catch (DukeException e) { //should always throw this exception
+            assertEquals("", uiStub.getOutputString());
             assertEquals(e.getMessage(), "That is not a valid task number.");
         }
     }
 
     @Test
-    void testExecute_tooLargeIndex() {
+    void execute_tooLargeIndex_exceptionThrown() {
         storageStub.setWillThrowException(true);
 
         TaskListStub taskListStub = new TaskListStub(5);
@@ -90,6 +91,7 @@ class DeleteCommandTest {
             deleteCommand.execute(storageStub, uiStub, taskListStub);
             assertEquals(0, 1);
         } catch (DukeException e) { //should always throw this exception
+            assertEquals("", uiStub.getOutputString());
             assertEquals(e.getMessage(), "That is not a valid task number.");
         }
     }

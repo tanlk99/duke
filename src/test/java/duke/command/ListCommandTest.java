@@ -18,7 +18,7 @@ class ListCommandTest {
     }
 
     @Test
-    void testExecute_taskListEmpty() {
+    void execute_taskListEmpty() {
         TaskListStub taskListStub = new TaskListStub(0);
         ListCommand listCommand = new ListCommand();
 
@@ -27,7 +27,7 @@ class ListCommandTest {
     }
 
     @Test
-    void testExecute_taskListSizeOne() {
+    void execute_taskListSizeOne() {
         TaskListStub taskListStub = new TaskListStub(1);
         ListCommand listCommand = new ListCommand();
 
@@ -37,7 +37,7 @@ class ListCommandTest {
     }
 
     @Test
-    void testExecute_taskListMedium() {
+    void execute_taskListMedium() {
         TaskListStub taskListStub = new TaskListStub(5);
         ListCommand listCommand = new ListCommand();
 

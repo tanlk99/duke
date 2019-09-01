@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class DeadlineTest {
     @Test
-    void testToString_stringConstructor() {
+    void toString_stringConstructor() {
         Deadline deadlineString = new Deadline("do dishes", "tomorrow");
         assertEquals("[D][X] do dishes (by: tomorrow)", deadlineString.toString());
         deadlineString.markAsDone();
@@ -15,7 +15,7 @@ class DeadlineTest {
     }
 
     @Test
-    void testToString_calendarConstructor() {
+    void toString_calendarConstructor() {
         Calendar calendar = new GregorianCalendar(2020, Calendar.FEBRUARY, 22, 11, 30);
         Deadline deadlineCalendar = new Deadline("do dishes", calendar);
         assertEquals("[D][X] do dishes (by: 22-02-2020 11:30)", deadlineCalendar.toString());
