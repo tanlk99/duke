@@ -1,8 +1,8 @@
 package duke.command;
 
+import duke.util.Buffer;
 import duke.util.Storage;
 import duke.util.TaskList;
-import duke.util.Ui;
 import duke.task.Task;
 import duke.exception.DukeException;
 
@@ -34,28 +34,28 @@ public class DeleteCommand extends Command {
      * Deletes the task given by <i>index</i>.
      *
      * @param   storage     A {@link Storage} object to cache task list
-     * @param   ui          A {@link Ui} object to display Duke's output
+     * @param   buffer      A {@link Buffer} object to buffer Duke's output
      * @param   taskList    A {@link TaskList} object which stores the task list
      * @throws  DukeException   If index is invalid
      */
-    public void execute(Storage storage, Ui ui, TaskList taskList) throws DukeException {
+    public void execute(Storage storage, Buffer buffer, TaskList taskList) throws DukeException {
         if (index <= 0 || index > taskList.getSize()) {
             throw new DukeException("That is not a valid task number.");
         }
 
-        ui.formatLine("Noted. I've removed this task.");
+        buffer.formatLine("Noted. I've removed this task.");
 
         Task toRemove = taskList.getTask(index);
         taskList.deleteTask(index);
 
-        ui.formatLine("  " + toRemove);
-        ui.formatLine("Now you have " + taskList.getSize() + " task"
+        buffer.formatLine("  " + toRemove);
+        buffer.formatLine("Now you have " + taskList.getSize() + " task"
                 + (taskList.getSize() == 1 ? "" : "s") + " in the list.");
 
         try {
             storage.writeCache(taskList);
         } catch (DukeException e) {
-            ui.formatLine("Sorry! I was unable to save this update in storage. I'll try again next time.");
+            buffer.formatLine("Sorry! I was unable to save this update in storage. I'll try again next time.");
         }
     }
 }

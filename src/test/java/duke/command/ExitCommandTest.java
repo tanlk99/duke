@@ -2,7 +2,7 @@ package duke.command;
 
 import duke.stubs.StorageStub;
 import duke.stubs.TaskListStub;
-import duke.stubs.UiStub;
+import duke.stubs.BufferStub;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +10,7 @@ class ExitCommandTest {
     @Test
     void execute() {
         StorageStub storageStub = new StorageStub();
-        UiStub uiStub = new UiStub();
+        BufferStub uiStub = new BufferStub();
         TaskListStub taskListStub = new TaskListStub(0);
         ExitCommand exitCommand = new ExitCommand();
 

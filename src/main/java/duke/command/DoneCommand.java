@@ -1,8 +1,8 @@
 package duke.command;
 
+import duke.util.Buffer;
 import duke.util.Storage;
 import duke.util.TaskList;
-import duke.util.Ui;
 import duke.exception.DukeException;
 
 /**
@@ -33,24 +33,24 @@ public class DoneCommand extends Command {
      * Marks the task given by <i>index</i> as done.
      *
      * @param   storage     A {@link Storage} object to cache task list
-     * @param   ui          A {@link Ui} object to display Duke's output
+     * @param   buffer      A {@link Buffer} object to buffer Duke's output
      * @param   taskList    A {@link TaskList} object which stores the task list
      * @throws  DukeException   If index is invalid
      */
-    public void execute(Storage storage, Ui ui, TaskList taskList) throws DukeException {
+    public void execute(Storage storage, Buffer buffer, TaskList taskList) throws DukeException {
         if (index <= 0 || index > taskList.getSize()) {
             throw new DukeException("That is not a valid task number.");
         }
 
         taskList.markTaskAsDone(index);
 
-        ui.formatLine("Nice! I've marked this task as done:");
-        ui.formatLine("  " + taskList.getTask(index));
+        buffer.formatLine("Nice! I've marked this task as done:");
+        buffer.formatLine("  " + taskList.getTask(index));
 
         try {
             storage.writeCache(taskList);
         } catch (DukeException e) {
-            ui.formatLine("Sorry! I was unable to save this update in storage. I'll try again next time.");
+            buffer.formatLine("Sorry! I was unable to save this update in storage. I'll try again next time.");
         }
     }
 }

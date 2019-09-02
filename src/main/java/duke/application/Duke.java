@@ -1,8 +1,8 @@
 package duke.application;
 
+import duke.util.Buffer;
 import duke.util.Storage;
 import duke.util.TaskList;
-import duke.util.Ui;
 import duke.util.parser.Parser;
 import duke.command.Command;
 import duke.exception.DukeException;
@@ -31,7 +31,7 @@ public class Duke {
 
     private Storage storage;
     private Parser parser;
-    private Ui ui;
+    private Buffer buffer;
     private TaskList taskList;
 
     /**
@@ -48,7 +48,7 @@ public class Duke {
      * @param   filePath    Location of the cache file
      */
     Duke(String filePath) {
-        ui = new Ui();
+        buffer = new Buffer();
         parser = new Parser();
 
         try {
@@ -56,7 +56,7 @@ public class Duke {
             storage.createCacheIfNotExists();
             taskList = new TaskList(storage.readCache());
         } catch (DukeException e) {
-            ui.showLoadingError();
+            buffer.addLoadingError();
             taskList = new TaskList();
         }
     }
@@ -67,8 +67,8 @@ public class Duke {
      * @return Duke's greeting message
      */
     String getGreetings() {
-        ui.showGreetings();
-        return ui.getOutput();
+        buffer.addGreetings();
+        return buffer.getOutput();
     }
 
     /**
@@ -79,15 +79,15 @@ public class Duke {
     String getResponse(String rawInput) {
         try {
             Command parsedCommand = parser.parseInput(rawInput);
-            parsedCommand.execute(storage, ui, taskList);
+            parsedCommand.execute(storage, buffer, taskList);
 
             if (parsedCommand.terminate()) {
                 Platform.exit();
             }
         } catch (DukeException e) {
-            ui.formatLine("Sorry! " + e);
+            buffer.formatLine("Sorry! " + e);
         }
 
-        return ui.getOutput();
+        return buffer.getOutput();
     }
 }

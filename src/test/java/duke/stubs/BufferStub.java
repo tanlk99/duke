@@ -1,15 +1,15 @@
 package duke.stubs;
 
-import duke.util.Ui;
+import duke.util.Buffer;
 
 /**
- * Simplified version of UI for test purposes.
+ * Simplified version of Buffer for test purposes.
  * Outputs from different method calls are separated by a '#' symbol.
  */
-public class UiStub extends Ui {
+public class BufferStub extends Buffer {
     private String outputString;
 
-    public UiStub() {
+    public BufferStub() {
         outputString = "";
     }
 
@@ -19,7 +19,7 @@ public class UiStub extends Ui {
     }
 
     /**
-     * Returns a string containing all output passed to UiStub so far.
+     * Returns a string containing all output passed to BufferStub so far.
      *
      * @return  string containing all output
      */

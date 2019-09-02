@@ -3,19 +3,19 @@ package duke.command;
 import duke.exception.DukeException;
 import duke.stubs.StorageStub;
 import duke.stubs.TaskListStub;
-import duke.stubs.UiStub;
+import duke.stubs.BufferStub;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class DoneCommandTest {
     private StorageStub storageStub;
-    private UiStub uiStub;
+    private BufferStub uiStub;
 
     @BeforeEach
     void initTests() {
         storageStub = new StorageStub();
-        uiStub = new UiStub();
+        uiStub = new BufferStub();
     }
 
     @Test

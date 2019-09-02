@@ -1,8 +1,8 @@
 package duke.command;
 
+import duke.util.Buffer;
 import duke.util.Storage;
 import duke.util.TaskList;
-import duke.util.Ui;
 import duke.exception.DukeException;
 
 /**
@@ -24,8 +24,8 @@ public abstract class Command {
      * Executes the command.
      *
      * @param   storage     A {@link Storage} object to cache task list
-     * @param   ui          A {@link Ui} object to display Duke's output
+     * @param   buffer      A {@link Buffer} object to buffer Duke's output
      * @param   taskList    A {@link TaskList} object which stores the task list
      */
-    public abstract void execute(Storage storage, Ui ui, TaskList taskList) throws DukeException;
+    public abstract void execute(Storage storage, Buffer buffer, TaskList taskList) throws DukeException;
 }

@@ -1,13 +1,13 @@
 package duke.util;
 
 /**
- * Handles the output done by Duke through wrapper functions.
+ * Buffers Duke's text output.
  */
-public class Ui {
+public class Buffer {
     private String output = "";
 
     /**
-     * Appends a string to the output of Duke.
+     * Appends a string to the buffer.
      *
      * @param   output  Output string to append
      */
@@ -16,15 +16,10 @@ public class Ui {
     }
 
     /**
-     * Shows Duke's standard welcome on startup.
+     * Adds Duke's standard welcome on startup to the buffer.
      */
-    public void showGreetings() {
-        String[] greeting = {" ____        _        ",
-                             "|  _ \\ _   _| | _____ ",
-                             "| | | | | | | |/ / _ \\",
-                             "| |_| | |_| |   <  __/",
-                             "|____/ \\__,_|_|\\_\\___|\n",
-                             "Hello! I'm Duke.",
+    public void addGreetings() {
+        String[] greeting = {"Hello! I'm Duke.",
                              "What can I do for you?"};
 
         for (String line : greeting) {
@@ -33,9 +28,9 @@ public class Ui {
     }
 
     /**
-     * Shows an error message if loading from cache failed.
+     * Adds the error message if loading from cache failed to the buffer.
      */
-    public void showLoadingError() {
+    public void addLoadingError() {
         String[] apology = {"Sorry! Duke could not load up your previous task list from storage.",
                             "If this is your first time using Duke, you can ignore this message.",
                             "Starting Duke with a blank task list..."};
@@ -46,9 +41,9 @@ public class Ui {
     }
 
     /**
-     * Returns all of Duke's stored output, and then empties it.
+     * Returns the entire buffer, and then empties it.
      *
-     * @return Duke's stored output
+     * @return Current buffer string
      */
     public String getOutput() {
         String toReturn = output;
