@@ -1,6 +1,6 @@
 package duke.application;
 
-import duke.util.Parser;
+import duke.util.parser.Parser;
 import duke.util.Storage;
 import duke.util.TaskList;
 import duke.util.Ui;
