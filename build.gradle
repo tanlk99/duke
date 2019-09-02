@@ -24,7 +24,7 @@ checkstyle {
 
 application {
     // Change this to your main class.
-    mainClassName = "duke.application.Duke"
+    mainClassName = "duke.application.Launcher"
 }
 
 shadowJar {
