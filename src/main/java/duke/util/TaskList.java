@@ -2,7 +2,6 @@ package duke.util;
 
 import java.util.ArrayList;
 import duke.task.Task;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Handles all operations on the task list and tasks in the task list.
@@ -89,8 +88,8 @@ public class TaskList {
      */
     public boolean taskDescriptionContains(int index, String filter) {
         assert index > 0 && index <= taskList.size();
-        String taskDescription = taskList.get(index - 1).getDescription();
-        return StringUtils.containsIgnoreCase(taskDescription, filter);
+        String taskDescriptionLower = taskList.get(index - 1).getDescription().toLowerCase();
+        return taskDescriptionLower.contains(filter.toLowerCase());
     }
 
     /**
