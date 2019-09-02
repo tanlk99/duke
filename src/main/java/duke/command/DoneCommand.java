@@ -30,16 +30,6 @@ public class DoneCommand extends Command {
     }
 
     /**
-     * Indicates whether Duke needs to exit after this command.
-     * DoneCommand instances will always return false.
-     *
-     * @return True if Duke needs to terminate
-     */
-    public boolean terminate() {
-        return false;
-    }
-
-    /**
      * Marks the task given by <i>index</i> as done.
      *
      * @param   storage     A {@link Storage} object to cache task list

@@ -12,10 +12,13 @@ import duke.exception.DukeException;
 public abstract class Command {
     /**
      * Indicates whether Duke needs to exit after this command.
+     * This method should only return true for {@link duke.command.ExitCommand ExitCommand} instances.
      *
      * @return True if Duke needs to terminate
      */
-    public abstract boolean terminate();
+    public boolean terminate() {
+        return false;
+    }
 
     /**
      * Executes the command.

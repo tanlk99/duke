@@ -30,16 +30,6 @@ public class FindCommand extends Command {
     }
 
     /**
-     * Indicates whether Duke needs to exit after this command.
-     * FindCommand instances will always return false.
-     *
-     * @return True if Duke needs to terminate
-     */
-    public boolean terminate() {
-        return false;
-    }
-
-    /**
      * Finds all tasks with descriptions containing the filter and lists them.
      *
      * @param   storage     A {@link Storage} object to cache task list

@@ -31,16 +31,6 @@ public class DeleteCommand extends Command {
     }
 
     /**
-     * Indicates whether Duke needs to exit after this command.
-     * DeleteCommand instances will always return false.
-     *
-     * @return True if Duke needs to terminate
-     */
-    public boolean terminate() {
-        return false;
-    }
-
-    /**
      * Deletes the task given by <i>index</i>.
      *
      * @param   storage     A {@link Storage} object to cache task list

@@ -31,16 +31,6 @@ public class AddCommand extends Command {
     }
 
     /**
-     * Indicates whether Duke needs to exit after this command.
-     * AddCommand instances will always return false.
-     *
-     * @return True if Duke needs to terminate
-     */
-    public boolean terminate() {
-        return false;
-    }
-
-    /**
      * Adds the task to the task list.
      *
      * @param   storage     A {@link Storage} object to cache task list

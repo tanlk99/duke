@@ -9,16 +9,6 @@ import duke.util.Ui;
  */
 public class ListCommand extends Command {
     /**
-     * Indicates whether Duke needs to exit after this command.
-     * ListCommand instances will always return false.
-     *
-     * @return True if Duke needs to terminate
-     */
-    public boolean terminate() {
-        return false;
-    }
-
-    /**
      * Lists all tasks in the task list.
      *
      * @param   storage     A {@link Storage} object to cache task list
