@@ -2,6 +2,7 @@ package duke.application;
 
 import java.io.IOException;
 import java.util.Collections;
+import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,6 +19,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 
 /**
  * A dialog box to display chat messages. Consists of an image element
@@ -28,6 +30,7 @@ class DialogBox extends HBox {
     private Label dialog;
     @FXML
     private ImageView displayPicture;
+    private FadeTransition fadeTransition;
 
     /**
      * Creates a new DialogBox.
@@ -48,15 +51,18 @@ class DialogBox extends HBox {
 
         dialog.setText(text);
         displayPicture.setImage(img);
-
-        dialog.setWrapText(true);
-        displayPicture.setFitWidth(100.0);
-        displayPicture.setFitHeight(100.0);
         displayPicture.setClip(new Circle(50, 50, 50));
 
-        this.setAlignment(Pos.TOP_RIGHT);
-        this.setSpacing(10.0);
-        this.setPadding(new Insets(5.0, 5.0, 5.0, 5.0));
+        prepareAnimation();
+    }
+
+    private void prepareAnimation() {
+        fadeTransition = new FadeTransition();
+        fadeTransition.setDuration(Duration.seconds(0.5));
+        fadeTransition.setFromValue(0.4);
+        fadeTransition.setToValue(1.0);
+
+        fadeTransition.setNode(this);
     }
 
     /**
@@ -83,6 +89,7 @@ class DialogBox extends HBox {
                 new BackgroundFill(Color.gray(0.9), CornerRadii.EMPTY, Insets.EMPTY)
         ));
 
+        db.fadeTransition.play();
         return db;
     }
 
@@ -101,6 +108,7 @@ class DialogBox extends HBox {
         ));
         db.flip();
 
+        db.fadeTransition.play();
         return db;
     }
 }
