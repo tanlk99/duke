@@ -1,0 +1,4 @@
+#message-content {
+    -fx-font-size: 14px;
+    -fx-wrap-text: true;
+}
