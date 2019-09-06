@@ -57,7 +57,7 @@ class DeleteCommandTest {
         try {
             deleteCommand.execute(storageStub, uiStub, taskListStub);
             assertEquals("Noted. I've removed this task.#  X task3#"
-                    + "Now you have 4 tasks in the list.#Sorry! I was unable to save "
+                    + "Now you have 4 tasks in the list.##Sorry! I was unable to save "
                     + "this update in storage. I'll try again next time.#", uiStub.getOutputString());
         } catch (DukeException e) { //shouldn't throw this exception
             assertEquals(0, 1);

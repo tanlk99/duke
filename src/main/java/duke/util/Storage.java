@@ -67,7 +67,6 @@ public class Storage {
      * @throws IOException  if initalization of file failed
      */
     private void initializeNewCache() throws IOException {
-        File file = new File(cacheAddr);
         ArrayList<Task> emptyList = new ArrayList<>();
 
         FileOutputStream fileOut = new FileOutputStream(cacheAddr, false);
@@ -84,7 +83,7 @@ public class Storage {
      *
      *
      */
-    private String getDirectoryPath(String filePath) {
+    String getDirectoryPath(String filePath) {
         int lastSlash = filePath.lastIndexOf("/");
         if (lastSlash == -1) {
             return ".";
