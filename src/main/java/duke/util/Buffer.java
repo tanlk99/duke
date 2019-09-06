@@ -4,7 +4,7 @@ package duke.util;
  * Buffers Duke's text output.
  */
 public class Buffer {
-    private String output = "";
+    private StringBuilder output = new StringBuilder();
 
     /**
      * Appends a string to the buffer.
@@ -12,7 +12,7 @@ public class Buffer {
      * @param   output  Output string to append
      */
     public void formatLine(String output) {
-        this.output += output + "\n";
+        this.output.append(output).append("\n");
     }
 
     /**
@@ -45,8 +45,8 @@ public class Buffer {
      * @return Current buffer string
      */
     public String getOutput() {
-        String toReturn = output;
-        output = "";
+        String toReturn = output.toString();
+        output.setLength(0);
         return toReturn;
     }
 }

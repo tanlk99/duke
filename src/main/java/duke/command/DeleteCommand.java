@@ -55,6 +55,7 @@ public class DeleteCommand extends Command {
         try {
             storage.writeCache(taskList);
         } catch (DukeException e) {
+            buffer.formatLine(""); //insert empty line for readability
             buffer.formatLine("Sorry! I was unable to save this update in storage. I'll try again next time.");
         }
     }
