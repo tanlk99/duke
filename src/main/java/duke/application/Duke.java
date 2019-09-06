@@ -53,7 +53,7 @@ public class Duke {
 
         try {
             storage = new Storage(filePath);
-            storage.createCacheIfNotExists();
+            storage.initializeCacheIfNotExists();
             taskList = new TaskList(storage.readCache());
         } catch (DukeException e) {
             buffer.addLoadingError();

@@ -31,25 +31,66 @@ public class Storage {
      *
      * @throws  DukeException  If creation or initialization of the cache file failed.
      */
-    public void createCacheIfNotExists() throws DukeException {
+    public void initializeCacheIfNotExists() throws DukeException {
         try {
             File file = new File(cacheAddr);
-
-            if (!file.exists()) {
-                file.createNewFile();
-                ArrayList<Task> emptyList = new ArrayList<>();
-
-                FileOutputStream fileOut = new FileOutputStream(cacheAddr, false);
-                ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
-
-                objOut.writeObject(emptyList);
-
-                objOut.close();
-                fileOut.close();
+            if (file.exists()) {
+                return;
             }
+
+            String dirPath = getDirectoryPath(cacheAddr);
+            createDirectoryIfNotExists(dirPath);
+            file.createNewFile();
+            initializeNewCache();
         } catch (IOException e) {
             throw new DukeException("Could not load/create cache file.");
         }
+    }
+
+    /**
+     * Creates a directory (and all parent directories) if it does not exist.
+     *
+     * @param dirPath  path of directory
+     */
+    private void createDirectoryIfNotExists(String dirPath) {
+        File dir = new File(dirPath);
+        if (dir.exists()) {
+            return;
+        }
+
+        dir.mkdirs();
+    }
+
+    /**
+     * Initializes a newly created cache file with an empty task list.
+     *
+     * @throws IOException  if initalization of file failed
+     */
+    private void initializeNewCache() throws IOException {
+        File file = new File(cacheAddr);
+        ArrayList<Task> emptyList = new ArrayList<>();
+
+        FileOutputStream fileOut = new FileOutputStream(cacheAddr, false);
+        ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
+
+        objOut.writeObject(emptyList);
+
+        objOut.close();
+        fileOut.close();
+    }
+
+    /**
+     * Gets the directory location of a file path.
+     *
+     *
+     */
+    private String getDirectoryPath(String filePath) {
+        int lastSlash = filePath.lastIndexOf("/");
+        if (lastSlash == -1) {
+            return ".";
+        }
+
+        return filePath.substring(0, lastSlash);
     }
 
     /**

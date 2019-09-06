@@ -32,7 +32,6 @@ public class Buffer {
      */
     public void addLoadingError() {
         String[] apology = {"Sorry! Duke could not load up your previous task list from storage.",
-                            "If this is your first time using Duke, you can ignore this message.",
                             "Starting Duke with a blank task list..."};
 
         for (String line : apology) {
