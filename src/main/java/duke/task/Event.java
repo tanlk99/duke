@@ -14,6 +14,13 @@ public class Event extends Task {
     protected boolean hasCalendar;
 
     /**
+     * No-argument constructor for Jackson.
+     */
+    public Event() {
+
+    }
+
+    /**
      * Creates a new Event instance using a string to represent time.
      *
      * @param   description Description of the event

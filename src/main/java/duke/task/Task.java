@@ -1,14 +1,36 @@
 package duke.task;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 /**
  * Represents a task in the task list.
  * Can be marked as done.
  */
-public abstract class Task implements Serializable {
+@JsonTypeInfo(
+        use = Id.NAME,
+        include = As.PROPERTY,
+        property = "@class"
+)
+@JsonSubTypes({
+        @Type(value = ToDo.class, name = "Todo"),
+        @Type(value = Deadline.class, name = "Deadline"),
+        @Type(value = Event.class, name = "Event")
+})
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+public abstract class Task {
     protected String description;
-    protected boolean isDone;
+    protected boolean isDone = false;
+
+    /**
+     * No-argument constructor for Jackson.
+     */
+    public Task() {
+    }
 
     /**
      * Creates a new Task.
@@ -18,7 +40,16 @@ public abstract class Task implements Serializable {
      */
     public Task(String description) {
         this.description = description;
-        isDone = false;
+    }
+
+    /**
+     * Creates a new Task, which has already been completed.
+     *
+     * @param   description A description of the task
+     */
+    public Task(String description, boolean isDone) {
+        this.description = description;
+        this.isDone = isDone;
     }
 
     /**

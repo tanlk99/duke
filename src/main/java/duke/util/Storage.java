@@ -1,14 +1,13 @@
 package duke.util;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 import duke.task.Task;
 import duke.exception.DukeException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Handles I/O between Duke and an external cache file. Storage instances can load the
@@ -41,7 +40,7 @@ public class Storage {
             String dirPath = getDirectoryPath(cacheAddr);
             createDirectoryIfNotExists(dirPath);
             file.createNewFile();
-            initializeNewCache();
+            initializeNewCache(cacheAddr);
         } catch (IOException e) {
             throw new DukeException("Could not load/create cache file.");
         }
@@ -64,18 +63,15 @@ public class Storage {
     /**
      * Initializes a newly created cache file with an empty task list.
      *
+     * @param filePath  path of cache file to initialize
      * @throws IOException  if initalization of file failed
      */
-    private void initializeNewCache() throws IOException {
-        ArrayList<Task> emptyList = new ArrayList<>();
+    private void initializeNewCache(String filePath) throws IOException {
+        File file = new File(filePath);
+        List<Task> emptyList = new ArrayList<>();
 
-        FileOutputStream fileOut = new FileOutputStream(cacheAddr, false);
-        ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
-
-        objOut.writeObject(emptyList);
-
-        objOut.close();
-        fileOut.close();
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.writeValue(file, emptyList);
     }
 
     /**
@@ -102,17 +98,10 @@ public class Storage {
         ArrayList<Task> result;
 
         try {
-            FileInputStream fileIn = new FileInputStream(cacheAddr);
-            ObjectInputStream objIn = new ObjectInputStream(fileIn);
-
-            ArrayList<Task> taskArrayList = (ArrayList<Task>)objIn.readObject();
-
-            objIn.close();
-            fileIn.close();
-
-            result = taskArrayList;
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println(e);
+            File file = new File(cacheAddr);
+            ObjectMapper objectMapper = new ObjectMapper();
+            result = objectMapper.readValue(file, new TypeReference<ArrayList<Task>>(){});
+        } catch (IOException e) {
             throw new DukeException("Could not load cache file.");
         }
 
@@ -127,13 +116,11 @@ public class Storage {
      */
     public void writeCache(TaskList taskList) throws DukeException {
         try {
-            FileOutputStream fileOut = new FileOutputStream(cacheAddr, false);
-            ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
+            File file = new File(cacheAddr);
+            ObjectMapper objectMapper = new ObjectMapper();
 
-            objOut.writeObject(taskList.getFullTaskList());
-
-            objOut.close();
-            fileOut.close();
+            objectMapper.writerFor(new TypeReference<ArrayList<Task>>(){})
+                    .writeValue(file, taskList.getFullTaskList());
         } catch (IOException e) {
             throw new DukeException("Could not write to cache file.");
         }

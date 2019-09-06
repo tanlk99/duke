@@ -6,6 +6,13 @@ package duke.task;
  */
 public class ToDo extends Task {
     /**
+     * No-argument constructor for Jackson.
+     */
+    public ToDo() {
+
+    }
+
+    /**
      * Creates a new ToDo instance.
      *
      * @param   description     Description of the to-do task

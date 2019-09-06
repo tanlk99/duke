@@ -14,6 +14,13 @@ public class Deadline extends Task {
     protected boolean hasCalendar;
 
     /**
+     * No-argument constructor for Jackson.
+     */
+    public Deadline() {
+
+    }
+
+    /**
      * Creates a new Deadline instance using a string to represent time.
      *
      * @param   description Description of the deadline
