@@ -1,6 +1,5 @@
-package duke.util;
+package duke.util.parser;
 
-import duke.util.parser.Parser;
 import duke.task.Task;
 import duke.command.AddCommand;
 import duke.command.Command;
@@ -9,12 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ParserAddCommandTest {
-    private Parser parser;
+class InputParserAddCommandTest {
+    private InputParser parser;
 
     @BeforeEach
     void initTests() {
-        parser = new Parser();
+        parser = new InputParser();
     }
 
     private void parseInputAddCommand_successful(String input, String expectedTaskString) {
