@@ -36,7 +36,7 @@ public class Deadline extends Task {
      * Creates a new Deadline instance using a {@link Calendar} to represent time.
      *
      * @param   description Description of the deadline
-     * @param   time  A {@link Calendar} describing the due data
+     * @param   time  A {@link Calendar} describing the due date
      */
     public Deadline(String description, Calendar time) {
         super(description);
@@ -44,6 +44,11 @@ public class Deadline extends Task {
         hasCalendar = true;
     }
 
+    /**
+     * Returns a string representing the due date.
+     *
+     * @return A string representing the due date
+     */
     private String getTime() {
         if (hasCalendar) {
             assert time != null;

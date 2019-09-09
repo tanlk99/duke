@@ -26,8 +26,8 @@ public class Duke {
     private Button sendButton;
     private Scene scene;
 
-    private Image user = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image duke = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Image user = new Image(getClass().getResourceAsStream("/images/DaUser.png"));
+    private Image duke = new Image(getClass().getResourceAsStream("/images/DaDuke.png"));
 
     private Storage storage;
     private Parser parser;
@@ -81,7 +81,7 @@ public class Duke {
             Command parsedCommand = parser.parseInput(rawInput);
             parsedCommand.execute(storage, buffer, taskList);
 
-            if (parsedCommand.terminate()) {
+            if (parsedCommand.shouldTerminate()) {
                 Platform.exit();
             }
         } catch (DukeException e) {
