@@ -15,7 +15,7 @@ class DoneCommandParserTest {
     }
 
     @Test
-    void parseComman_validInput_successful() {
+    void parseCommand_validInput_successful() {
         String input = "done 1";
 
         try {
