@@ -10,7 +10,7 @@ class DoneCommandParser implements CommandParser<DoneCommand> {
     /**
      * Parses a "done" command.
      *
-     * @param rawInput  raw input passed to Duke
+     * @param rawInput raw input passed to Duke with whitespaces trimmed
      * @return a DoneCommand instance to execute the command
      * @throws DukeException  if input format is invalid
      */

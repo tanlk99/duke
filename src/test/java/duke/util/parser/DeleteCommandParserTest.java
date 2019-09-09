@@ -7,23 +7,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class InputParserDeleteCommandTest {
-    private InputParser parser;
+class DeleteCommandParserTest {
+    private DeleteCommandParser parser;
 
     @BeforeEach
     void initTests() {
-        parser = new InputParser();
+        parser = new DeleteCommandParser();
     }
 
     @Test
-    void parseInputDeleteCommand_validInput_successful() {
+    void parseCommand_validInput_successful() {
         String input = "delete 1";
 
         try {
-            Command command = parser.parseInput(input);
-            assert command instanceof DeleteCommand;
-
-            int index = ((DeleteCommand)command).getIndex();
+            DeleteCommand command = parser.parseCommand(input);
+            int index = command.getIndex();
             assertEquals(1, index);
         } catch (DukeException e) {
             assertEquals(1, 0);
@@ -31,14 +29,12 @@ class InputParserDeleteCommandTest {
     }
 
     @Test
-    void parseInputDeleteCommand_spacedInput_successful() {
-        String input = "  delete    1   ";
+    void parseCommand_spacedInput_successful() {
+        String input = "delete    1";
 
         try {
-            Command command = parser.parseInput(input);
-            assert command instanceof DeleteCommand;
-
-            int index = ((DeleteCommand)command).getIndex();
+            DeleteCommand command = parser.parseCommand(input);
+            int index = command.getIndex();
             assertEquals(1, index);
         } catch (DukeException e) {
             assertEquals(1, 0);
@@ -46,11 +42,11 @@ class InputParserDeleteCommandTest {
     }
 
     @Test
-    void parseInputDeleteCommand_invalidInput_exceptionThrown() {
+    void parseCommand_invalidInput_exceptionThrown() {
         String input = "delete aaaaa";
 
         try {
-            Command command = parser.parseInput(input);
+            DeleteCommand command = parser.parseCommand(input);
             assertEquals(1, 0);
         } catch (DukeException e) {
             assertEquals("Please use 'delete i' to delete the i-th task in the list.", e.getMessage());
@@ -58,11 +54,11 @@ class InputParserDeleteCommandTest {
     }
 
     @Test
-    void parseInputDeleteCommand_emptyInput_exceptionThrown() {
-        String input = "    delete    ";
+    void parseCommand_emptyInput_exceptionThrown() {
+        String input = "delete";
 
         try {
-            Command command = parser.parseInput(input);
+            Command command = parser.parseCommand(input);
             assertEquals(1, 0);
         } catch (DukeException e) {
             assertEquals("Please use 'delete i' to delete the i-th task in the list.", e.getMessage());

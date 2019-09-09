@@ -10,7 +10,7 @@ class FindCommandParser implements CommandParser<FindCommand> {
     /**
      * Parses a "find" command.
      *
-     * @param rawInput  raw input passed to Duke
+     * @param rawInput raw input passed to Duke with whitespaces trimmed
      * @return a FindCommand instance to execute the command
      * @throws DukeException  if input format is invalid
      */

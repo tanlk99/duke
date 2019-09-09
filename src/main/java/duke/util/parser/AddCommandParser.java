@@ -9,7 +9,7 @@ class AddCommandParser implements CommandParser<AddCommand> {
     /**
      * Parses a command to add a new task.
      *
-     * @param rawInput raw input passed to Duke
+     * @param rawInput raw input passed to Duke with whitespaces trimmed
      * @return an AddCommand instance to execute the command
      * @throws DukeException if input format is invalid
      */

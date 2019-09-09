@@ -7,7 +7,7 @@ interface CommandParser<T extends Command> {
     /**
      * Parses a command of a certain type.
      *
-     * @param rawInput raw input passed to Duke
+     * @param rawInput raw input passed to Duke with whitespaces trimmed
      * @return an Command instance to execute the command
      * @throws DukeException if input format is invalid
      */
