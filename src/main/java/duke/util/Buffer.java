@@ -28,7 +28,7 @@ public class Buffer {
     }
 
     /**
-     * Adds the error message if loading from cache failed to the buffer.
+     * Adds the error message for cache load failure to the buffer.
      */
     public void addLoadingError() {
         String[] apology = {"Sorry! Duke could not load up your previous task list from storage.",

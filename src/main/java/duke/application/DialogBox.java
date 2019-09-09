@@ -56,6 +56,9 @@ class DialogBox extends HBox {
         prepareAnimation();
     }
 
+    /**
+     * Prepares the fade-in transition of the dialog box.
+     */
     private void prepareAnimation() {
         fadeTransition = new FadeTransition();
         fadeTransition.setDuration(Duration.seconds(0.5));
@@ -69,7 +72,7 @@ class DialogBox extends HBox {
      * Flips the dialog box such that the ImageView is on the left and text on the right.
      */
     private void flip() {
-        ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
+        ObservableList<Node> tmp = FXCollections.observableArrayList(getChildren());
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
         setAlignment(Pos.TOP_LEFT);

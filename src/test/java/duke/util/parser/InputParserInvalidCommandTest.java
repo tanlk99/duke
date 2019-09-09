@@ -1,18 +1,18 @@
-package duke.util;
+package duke.util.parser;
 
-import duke.util.parser.Parser;
+import duke.util.parser.InputParser;
 import duke.command.Command;
 import duke.exception.DukeException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ParserInvalidCommandTest {
-    private Parser parser;
+class InputParserInvalidCommandTest {
+    private InputParser parser;
 
     @BeforeEach
     void initTests() {
-        parser = new Parser();
+        parser = new InputParser();
     }
 
     @Test

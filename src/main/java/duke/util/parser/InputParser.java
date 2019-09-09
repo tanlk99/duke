@@ -1,12 +1,8 @@
 package duke.util.parser;
 
-import duke.command.AddCommand;
 import duke.command.ArchiveAllCommand;
 import duke.command.Command;
-import duke.command.DeleteCommand;
-import duke.command.DoneCommand;
 import duke.command.ExitCommand;
-import duke.command.FindCommand;
 import duke.command.ListCommand;
 import duke.exception.DukeException;
 
@@ -16,37 +12,8 @@ import duke.exception.DukeException;
  * <p>Interprets and converts raw input from the command line to instances of
  * {@link Command} to be executed by Duke.</p>
  */
-public class Parser {
-    private TaskParser taskParser;
-
-    /**
-     * Returns true if <i>string</i> begins with a vowel (i.e. 'a', 'e', 'i', 'o', or 'u').
-     *
-     * @param string    the String to check
-     * @return  true if string begins with a vowel
-     */
-    static boolean isBeginWithVowel(String string) {
-        if (string.length() == 0) {
-            return false;
-        }
-
-        char[] vowels = {'a', 'e', 'i', 'o', 'u'};
-
-        for (char vowel : vowels) {
-            if (string.charAt(0) == vowel) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Creates a new Parser object.
-     */
-    public Parser() {
-        taskParser = new TaskParser();
-    }
+public class InputParser {
+    private static final String INVALID_COMMAND = "I don't understand that command.";
 
     /**
      * Interprets a command input string to create a {@link Command} object.
@@ -99,7 +66,6 @@ public class Parser {
     public Command parseInput(String untrimmedRawInput) throws DukeException {
         String rawInput = untrimmedRawInput.trim();
         String commandPhrase = rawInput.split(" ", 2)[0];
-        int index;
 
         switch (commandPhrase) {
         case "bye":
@@ -107,38 +73,19 @@ public class Parser {
         case "list":
             return new ListCommand();
         case "done":
-            try {
-                index = Integer.parseInt(rawInput.split(" ", 2)[1].trim());
-                return new DoneCommand(index);
-            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                throw new DukeException("Please use 'done i' to mark completion of the i-th task in the list.");
-            }
+            return new DoneCommandParser().parseCommand(rawInput);
         case "delete":
-            try {
-                index = Integer.parseInt(rawInput.split(" ", 2)[1].trim());
-                return new DeleteCommand(index);
-            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                throw new DukeException("Please use 'delete i' to delete the i-th task in the list.");
-            }
+            return new DeleteCommandParser().parseCommand(rawInput);
         case "find":
-            if (!rawInput.contains(" ")) {
-                throw new DukeException("Your search string cannot be empty. To see all tasks, use \"list\" instead.");
-            }
-
-            return new FindCommand(rawInput.split(" ", 2)[1].trim());
+            return new FindCommandParser().parseCommand(rawInput);
         case "todo": //Fallthrough
         case "event": //Fallthrough
         case "deadline":
-            if (!rawInput.contains(" ")) {
-                throw new DukeException("The description of " + (isBeginWithVowel(commandPhrase) ? "an " : "a ")
-                        + commandPhrase + " cannot be empty.");
-            }
-            String rawTaskDescription = rawInput.split(" ", 2)[1];
-            return new AddCommand(taskParser.parseTask(rawTaskDescription, commandPhrase));
+            return new AddCommandParser().parseCommand(rawInput);
         case "archive":
             return new ArchiveAllCommand();
         default:
-            throw new DukeException("I don't understand that command.");
+            throw new DukeException(INVALID_COMMAND);
         }
     }
 }

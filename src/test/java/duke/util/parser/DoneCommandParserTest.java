@@ -1,30 +1,26 @@
-package duke.util;
+package duke.util.parser;
 
-import duke.util.parser.Parser;
-import duke.command.Command;
 import duke.command.DoneCommand;
 import duke.exception.DukeException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ParserDoneCommandTest {
-    private Parser parser;
+class DoneCommandParserTest {
+    private DoneCommandParser parser;
 
     @BeforeEach
     void initTests() {
-        parser = new Parser();
+        parser = new DoneCommandParser();
     }
 
     @Test
-    void parseInputDoneCommand_validInput_successful() {
+    void parseCommand_validInput_successful() {
         String input = "done 1";
 
         try {
-            Command command = parser.parseInput(input);
-            assert command instanceof DoneCommand;
-
-            int index = ((DoneCommand)command).getIndex();
+            DoneCommand command = parser.parseCommand(input);
+            int index = command.getIndex();
             assertEquals(1, index);
         } catch (DukeException e) {
             assertEquals(1, 0);
@@ -32,14 +28,12 @@ class ParserDoneCommandTest {
     }
 
     @Test
-    void parseInputDoneCommand_spacedInput_successful() {
-        String input = "  done    1   ";
+    void parseCommand_spacedInput_successful() {
+        String input = "done    1";
 
         try {
-            Command command = parser.parseInput(input);
-            assert command instanceof DoneCommand;
-
-            int index = ((DoneCommand)command).getIndex();
+            DoneCommand command = parser.parseCommand(input);
+            int index = command.getIndex();
             assertEquals(1, index);
         } catch (DukeException e) {
             assertEquals(1, 0);
@@ -47,11 +41,11 @@ class ParserDoneCommandTest {
     }
 
     @Test
-    void parseInputDoneCommand_invalidInput_exceptionThrown() {
+    void parseCommand_invalidInput_exceptionThrown() {
         String input = "done aaaaa";
 
         try {
-            Command command = parser.parseInput(input);
+            DoneCommand command = parser.parseCommand(input);
             assertEquals(1, 0);
         } catch (DukeException e) {
             assertEquals("Please use 'done i' to mark completion of the i-th task in the list.", e.getMessage());
@@ -59,11 +53,11 @@ class ParserDoneCommandTest {
     }
 
     @Test
-    void parseInputDoneCommand_emptyInput_exceptionThrown() {
-        String input = "    done    ";
+    void parseCommand_emptyInput_exceptionThrown() {
+        String input = "done";
 
         try {
-            Command command = parser.parseInput(input);
+            DoneCommand command = parser.parseCommand(input);
             assertEquals(1, 0);
         } catch (DukeException e) {
             assertEquals("Please use 'done i' to mark completion of the i-th task in the list.", e.getMessage());

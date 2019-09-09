@@ -12,11 +12,12 @@ import duke.exception.DukeException;
  * Parses tasks in Duke's commands.
  */
 class TaskParser {
-    private DateParser dateParser;
+    private static final String TASK_EMPTY_DESCRIPTION = "The description of %1$s %2$s cannot be empty.";
+    private static final String TASK_EMPTY_TIME = "Please specify the %1$s time using %2$s "
+            + "(with spaces preceding and following).";
 
-    TaskParser() {
-        dateParser = new DateParser();
-    }
+    private static final String INTERNAL_DATE_FORMAT_NOT_FOUND = "Internal exception: no date format found";
+    private static final String PARSER_FATAL_ERROR = "My parser encountered a fatal error.";
 
     /**
      * Enumerates all task types known to the parser.
@@ -46,7 +47,7 @@ class TaskParser {
                     .findFirst();
 
             if (result.isEmpty()) {
-                throw new RuntimeException("Our parser encountered a fatal error.");
+                throw new RuntimeException(PARSER_FATAL_ERROR);
             }
 
             return result.get();
@@ -84,40 +85,37 @@ class TaskParser {
         String command = taskType.commandPhrase;
 
         if (!rawTaskDescription.contains(" " + divider + " ")) {
-            throw new DukeException("Please specify the " + command + " time using " + divider
-                    + " (with spaces preceding and following).");
+            throw new DukeException(String.format(TASK_EMPTY_TIME, command, divider));
         }
 
         String taskDescription = rawTaskDescription.split(" " + divider + " ", 2)[0].trim();
         String rawTaskTime = rawTaskDescription.split(" " + divider + " ", 2)[1].trim();
 
         if (taskDescription.length() == 0) {
-            throw new DukeException("The description of "
-                    + (Parser.isBeginWithVowel(command) ? "an " : "a ")
-                    + command + " cannot be empty.");
+            throw new DukeException(String.format(TASK_EMPTY_DESCRIPTION,
+                    ParserUtil.getArticle(command), command));
         }
         if (rawTaskTime.length() == 0) {
-            throw new DukeException("Please specify the " + command + " time using " + divider
-                    + " (with spaces preceding and following).");
+            throw new DukeException(String.format(TASK_EMPTY_TIME, command, divider));
         }
 
         switch (taskType) {
         case DEADLINE:
             try {
-                return new Deadline(taskDescription, dateParser.parseTime(rawTaskTime));
+                return new Deadline(taskDescription, new DateParser().parseTime(rawTaskTime));
             } catch (DukeException e) {
-                assert e.getMessage().equals("Internal exception: no date format found");
+                assert e.getMessage().equals(INTERNAL_DATE_FORMAT_NOT_FOUND);
                 return new Deadline(taskDescription, rawTaskTime);
             }
         case EVENT:
             try {
-                return new Event(taskDescription, dateParser.parseTime(rawTaskTime));
+                return new Event(taskDescription, new DateParser().parseTime(rawTaskTime));
             } catch (DukeException e) {
-                assert e.getMessage().equals("Internal exception: no date format found");
+                assert e.getMessage().equals(INTERNAL_DATE_FORMAT_NOT_FOUND);
                 return new Event(taskDescription, rawTaskTime);
             }
         default:
-            throw new RuntimeException("Our parser encountered a fatal error."); //should not continue
+            throw new RuntimeException(PARSER_FATAL_ERROR); //should not continue
         }
     }
 
@@ -130,18 +128,20 @@ class TaskParser {
      * @throws  DukeException   If task description is invalid
      */
     private Task parseUntimedTask(String rawTaskDescription, TaskType taskType) throws DukeException {
+        assert taskType.timeDivider == null;
         String taskDescription = rawTaskDescription.trim();
+        String command = taskType.commandPhrase;
+
         if (taskDescription.length() == 0) {
-            throw new DukeException("The description of "
-                    + (Parser.isBeginWithVowel(taskType.commandPhrase) ? "an " : "a ")
-                    + taskType.commandPhrase + " cannot be empty.");
+            throw new DukeException(String.format(TASK_EMPTY_DESCRIPTION,
+                    ParserUtil.getArticle(command), command));
         }
 
         switch (taskType) {
         case TODO:
             return new ToDo(taskDescription);
         default:
-            throw new RuntimeException("Our parser encountered a fatal error."); //should not continue
+            throw new RuntimeException(PARSER_FATAL_ERROR); //should not continue
         }
     }
 }

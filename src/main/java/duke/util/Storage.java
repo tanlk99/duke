@@ -95,8 +95,8 @@ public class Storage {
     /**
      * Gets the directory location of a file path.
      *
-     * @param filePath  path of file
-     * @return  parent directory of file
+     * @param filePath  path of the file
+     * @return  parent directory of the file
      */
     String getDirectoryPath(String filePath) {
         int lastSlash = filePath.lastIndexOf("/");

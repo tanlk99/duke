@@ -57,28 +57,28 @@ public class TaskListStub extends TaskList {
     @Override
     public void markTaskAsDone(int index) { //assume only called once for each test
         assert index <= taskListSize && index > 0;
-        this.markedDonePosition = index;
+        markedDonePosition = index;
     }
 
     @Override
     public boolean taskDescriptionContains(int index, String filter) {
-        boolean returnValue;
+        boolean isMatch;
 
         switch (matchType) {
         case 0: //match all
-            returnValue = true;
+            isMatch = true;
             break;
         case 1: //match none
-            returnValue = false;
+            isMatch = false;
             break;
         case 2: //match only odd
-            returnValue = (index % 2 == 1);
+            isMatch = (index % 2 == 1);
             break;
         default: //match only index taskListSize
-            returnValue = (index == taskListSize);
+            isMatch = (index == taskListSize);
         }
 
-        return returnValue;
+        return isMatch;
     }
 
     @Override
