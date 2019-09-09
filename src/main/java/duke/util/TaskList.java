@@ -93,6 +93,13 @@ public class TaskList {
     }
 
     /**
+     * Clears the entire task list.
+     */
+    public void deleteAllTasks() {
+        taskList.clear();
+    }
+
+    /**
      * Returns the entire task list. This method is intended for file storage purposes only.
      *
      * @return      An ArrayList containing the current task list

@@ -1,6 +1,7 @@
 package duke.util.parser;
 
 import duke.command.AddCommand;
+import duke.command.ArchiveAllCommand;
 import duke.command.Command;
 import duke.command.DeleteCommand;
 import duke.command.DoneCommand;
@@ -80,6 +81,11 @@ public class Parser {
      *   <tr>
      *     <td>find <i>substring</i></td>
      *     <td>Finds and lists all tasks with description containing <i>substring</i>.</td>
+     *   </tr>
+     *   <tr>
+     *     <td>archive</td>
+     *     <td>Transfers all tasks to an archive file (task list will be cleared).</td>
+     *   </tr>
      *   <tr>
      *     <td>bye</td>
      *     <td>Exit Duke.</td>
@@ -129,6 +135,8 @@ public class Parser {
             }
             String rawTaskDescription = rawInput.split(" ", 2)[1];
             return new AddCommand(taskParser.parseTask(rawTaskDescription, commandPhrase));
+        case "archive":
+            return new ArchiveAllCommand();
         default:
             throw new DukeException("I don't understand that command.");
         }
