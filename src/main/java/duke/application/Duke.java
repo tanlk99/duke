@@ -3,7 +3,7 @@ package duke.application;
 import duke.util.Buffer;
 import duke.util.Storage;
 import duke.util.TaskList;
-import duke.util.parser.Parser;
+import duke.util.parser.InputParser;
 import duke.command.Command;
 import duke.exception.DukeException;
 import javafx.application.Platform;
@@ -30,7 +30,7 @@ public class Duke {
     private Image duke = new Image(getClass().getResourceAsStream("/images/DaDuke.png"));
 
     private Storage storage;
-    private Parser parser;
+    private InputParser parser;
     private Buffer buffer;
     private TaskList taskList;
 
@@ -47,9 +47,9 @@ public class Duke {
      *
      * @param   filePath    Location of the cache file
      */
-    Duke(String filePath) {
+    private Duke(String filePath) {
         buffer = new Buffer();
-        parser = new Parser();
+        parser = new InputParser();
 
         try {
             storage = new Storage(filePath);

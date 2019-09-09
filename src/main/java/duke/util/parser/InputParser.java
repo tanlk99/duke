@@ -11,7 +11,7 @@ import duke.exception.DukeException;
  * <p>Interprets and converts raw input from the command line to instances of
  * {@link Command} to be executed by Duke.</p>
  */
-public class Parser {
+public class InputParser {
     private static final String INVALID_COMMAND = "I don't understand that command.";
 
     /**

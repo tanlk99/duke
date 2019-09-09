@@ -3,7 +3,7 @@ package duke.util.parser;
 import duke.command.DoneCommand;
 import duke.exception.DukeException;
 
-class DoneCommandParser {
+class DoneCommandParser implements CommandParser<DoneCommand> {
     private static final String DONE_COMMAND_HELP = "Please use 'done i' to mark completion "
             + "of the i-th task in the list.";
 
@@ -14,7 +14,7 @@ class DoneCommandParser {
      * @return a DoneCommand instance to execute the command
      * @throws DukeException  if input format is invalid
      */
-    DoneCommand parseCommand(String rawInput) throws DukeException {
+    public DoneCommand parseCommand(String rawInput) throws DukeException {
         try {
             int index = Integer.parseInt(rawInput.split(" ", 2)[1].trim());
             return new DoneCommand(index);

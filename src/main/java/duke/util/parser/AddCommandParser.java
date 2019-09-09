@@ -3,7 +3,7 @@ package duke.util.parser;
 import duke.command.AddCommand;
 import duke.exception.DukeException;
 
-class AddCommandParser {
+class AddCommandParser implements CommandParser<AddCommand> {
     private static final String ADD_COMMAND_EMPTY_DESCRIPTION = "The description of %1$s %2$s cannot be empty.";
 
     /**
@@ -13,7 +13,7 @@ class AddCommandParser {
      * @return an AddCommand instance to execute the command
      * @throws DukeException if input format is invalid
      */
-    AddCommand parseCommand(String rawInput) throws DukeException {
+    public AddCommand parseCommand(String rawInput) throws DukeException {
         String commandPhrase = rawInput.split(" ", 2)[0];
 
         if (!rawInput.contains(" ")) {
