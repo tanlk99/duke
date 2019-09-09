@@ -3,8 +3,9 @@ package duke.util.parser;
 import duke.command.FindCommand;
 import duke.exception.DukeException;
 
-public class FindCommandParser {
-    private static final String FIND_COMMAND_EMPTY = "Your search string cannot be empty. To see all tasks, use \"list\" instead.";
+class FindCommandParser {
+    private static final String FIND_COMMAND_EMPTY = "Your search string cannot be empty. To see all "
+            + "tasks, use \"list\" instead.";
 
     /**
      * Parses a "find" command.
@@ -13,7 +14,7 @@ public class FindCommandParser {
      * @return a FindCommand instance to execute the command
      * @throws DukeException  if input format is invalid
      */
-    public FindCommand parseCommand(String rawInput) throws DukeException {
+    FindCommand parseCommand(String rawInput) throws DukeException {
         if (!rawInput.contains(" ")) {
             throw new DukeException(FIND_COMMAND_EMPTY);
         }
