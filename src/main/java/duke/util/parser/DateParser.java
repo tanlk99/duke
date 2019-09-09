@@ -13,6 +13,8 @@ import duke.exception.DukeException;
  * Parses dates in Duke's commands.
  */
 class DateParser {
+    private static final String INTERNAL_DATE_FORMAT_NOT_FOUND = "Internal exception: no date format found";
+
     private static final List<String> DATE_FORMAT_STRINGS = Arrays.asList(
             "dd/MM/yyyy HH:mm", "dd-MM-yyyy HH:mm", "yyyy/MM/dd HH:mm", "yyyy-MM-dd HH:mm",
             "dd/MM/yyyy", "dd-MM-yyyy", "yyyy/MM/dd", "yyyy-MM-dd",
@@ -53,6 +55,6 @@ class DateParser {
         }
 
         //no date format worked
-        throw new DukeException("Internal exception: no date format found");
+        throw new DukeException(INTERNAL_DATE_FORMAT_NOT_FOUND);
     }
 }

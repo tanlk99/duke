@@ -44,6 +44,11 @@ public class Event extends Task {
         hasCalendar = true;
     }
 
+    /**
+     * Returns a string describing the time of the event.
+     *
+     * @return  A string describing the time of the event
+     */
     private String getTime() {
         if (hasCalendar) {
             assert time != null;

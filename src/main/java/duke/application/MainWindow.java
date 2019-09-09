@@ -1,7 +1,6 @@
 package duke.application;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -18,14 +17,15 @@ public class MainWindow extends Stage {
     private VBox dialogContainer;
     @FXML
     private TextField userInput;
-    @FXML
-    private Button sendButton;
 
     private Duke duke;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Image userImage = new Image(getClass().getResourceAsStream("/images/DaUser.png"));
+    private Image dukeImage = new Image(getClass().getResourceAsStream("/images/DaDuke.png"));
 
+    /**
+     * Initializes the main window.
+     */
     @FXML
     private void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());

@@ -16,7 +16,7 @@ public abstract class Command {
      *
      * @return True if Duke needs to terminate
      */
-    public boolean terminate() {
+    public boolean shouldTerminate() {
         return false;
     }
 
