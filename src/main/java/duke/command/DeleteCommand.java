@@ -10,6 +10,13 @@ import duke.exception.DukeException;
  * Represents a command to delete a task in the task list.
  */
 public class DeleteCommand extends Command {
+    private static final String DELETE_COMMAND_INVALID_INDEX = "That is not a valid task number.";
+    private static final String DELETE_COMMAND_SUCCESS_1 = "Noted. I've removed this task.";
+    private static final String DELETE_COMMAND_SUCCESS_2 = "  %1$s";
+    private static final String DELETE_COMMAND_SUCCESS_3 = "Now you have %1$d task%2$s in the list.";
+    private static final String STORAGE_UPDATE_SAVE_FAILED = "Sorry! I was unable to save this update "
+            + "in storage. I'll try again next time.";
+
     private int index;
 
     /**
@@ -40,23 +47,24 @@ public class DeleteCommand extends Command {
      */
     public void execute(Storage storage, Buffer buffer, TaskList taskList) throws DukeException {
         if (index <= 0 || index > taskList.getSize()) {
-            throw new DukeException("That is not a valid task number.");
+            throw new DukeException(DELETE_COMMAND_INVALID_INDEX);
         }
 
-        buffer.formatLine("Noted. I've removed this task.");
+        buffer.formatLine(DELETE_COMMAND_SUCCESS_1);
 
         Task toRemove = taskList.getTask(index);
         taskList.deleteTask(index);
 
-        buffer.formatLine("  " + toRemove);
-        buffer.formatLine("Now you have " + taskList.getSize() + " task"
-                + (taskList.getSize() == 1 ? "" : "s") + " in the list.");
+        buffer.formatLine(String.format(DELETE_COMMAND_SUCCESS_2, toRemove.toString()));
+        buffer.formatLine(String.format(DELETE_COMMAND_SUCCESS_3,
+                taskList.getSize(),
+                taskList.getSize() == 1 ? "" : "s"));
 
         try {
             storage.writeCache(taskList);
         } catch (DukeException e) {
-            buffer.formatLine(""); //insert empty line for readability
-            buffer.formatLine("Sorry! I was unable to save this update in storage. I'll try again next time.");
+            buffer.formatLine(""); //Insert empty line for readability
+            buffer.formatLine(STORAGE_UPDATE_SAVE_FAILED);
         }
     }
 }
