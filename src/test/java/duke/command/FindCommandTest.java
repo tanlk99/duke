@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 
 class FindCommandTest {
     private StorageStub storageStub;
-    private BufferStub uiStub;
+    private BufferStub bufferStub;
 
     @BeforeEach
     void initTests() {
         storageStub = new StorageStub();
-        uiStub = new BufferStub();
+        bufferStub = new BufferStub();
     }
 
     @Test
@@ -22,9 +22,9 @@ class FindCommandTest {
         TaskListStub taskListStub = new TaskListStub(0);
         FindCommand findCommand = new FindCommand("nullity");
 
-        findCommand.execute(storageStub, uiStub, taskListStub);
+        findCommand.execute(storageStub, bufferStub, taskListStub);
         assertEquals("There were no tasks in the list that matched your search term.#"
-                + "", uiStub.getOutputString());
+                + "", bufferStub.getOutputString());
     }
 
     @Test
@@ -32,9 +32,9 @@ class FindCommandTest {
         TaskListStub taskListStub = new TaskListStub(3);
         FindCommand findCommand = new FindCommand("nullity");
 
-        findCommand.execute(storageStub, uiStub, taskListStub);
+        findCommand.execute(storageStub, bufferStub, taskListStub);
         assertEquals("Here are the matching tasks in your list:#"
-                + "1.X task1#2.X task2#3.X task3#", uiStub.getOutputString());
+                + "1.X task1#2.X task2#3.X task3#", bufferStub.getOutputString());
     }
 
     @Test
@@ -43,9 +43,9 @@ class FindCommandTest {
         taskListStub.setMatchType(1);
         FindCommand findCommand = new FindCommand("nullity");
 
-        findCommand.execute(storageStub, uiStub, taskListStub);
+        findCommand.execute(storageStub, bufferStub, taskListStub);
         assertEquals("There were no tasks in the list that matched your search term.#"
-                + "", uiStub.getOutputString());
+                + "", bufferStub.getOutputString());
     }
 
     @Test
@@ -54,9 +54,9 @@ class FindCommandTest {
         taskListStub.setMatchType(2);
         FindCommand findCommand = new FindCommand("nullity");
 
-        findCommand.execute(storageStub, uiStub, taskListStub);
+        findCommand.execute(storageStub, bufferStub, taskListStub);
         assertEquals("Here are the matching tasks in your list:#"
-                + "1.X task1#3.X task3#", uiStub.getOutputString());
+                + "1.X task1#3.X task3#", bufferStub.getOutputString());
     }
 
     @Test
@@ -65,8 +65,8 @@ class FindCommandTest {
         taskListStub.setMatchType(3);
         FindCommand findCommand = new FindCommand("nullity");
 
-        findCommand.execute(storageStub, uiStub, taskListStub);
+        findCommand.execute(storageStub, bufferStub, taskListStub);
         assertEquals("Here are the matching tasks in your list:#"
-                + "3.X task3#", uiStub.getOutputString());
+                + "3.X task3#", bufferStub.getOutputString());
     }
 }

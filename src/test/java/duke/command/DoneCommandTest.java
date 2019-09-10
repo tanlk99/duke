@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test;
 
 class DoneCommandTest {
     private StorageStub storageStub;
-    private BufferStub uiStub;
+    private BufferStub bufferStub;
 
     @BeforeEach
     void initTests() {
         storageStub = new StorageStub();
-        uiStub = new BufferStub();
+        bufferStub = new BufferStub();
     }
 
     @Test
@@ -24,60 +24,60 @@ class DoneCommandTest {
         DoneCommand doneCommand = new DoneCommand(3);
 
         try {
-            doneCommand.execute(storageStub, uiStub, taskListStub);
+            doneCommand.execute(storageStub, bufferStub, taskListStub);
             assertEquals("Nice! I've marked this task as done:#  O task3#",
-                    uiStub.getOutputString());
+                    bufferStub.getOutputString());
         } catch (DukeException e) { //shouldn't throw this exception
-            assertEquals(0, 1);
+            assertEquals(1, 0);
         }
     }
 
     @Test
-    void execute_validIndex_storageExceptionThrown() {
-        storageStub.setWillThrowException(true);
+    void execute_validIndex_storageErrorPrinted() {
+        storageStub.setWillThrowStorageException(true);
 
         TaskListStub taskListStub = new TaskListStub(5);
         DoneCommand doneCommand = new DoneCommand(3);
 
         try {
-            doneCommand.execute(storageStub, uiStub, taskListStub);
+            doneCommand.execute(storageStub, bufferStub, taskListStub);
             assertEquals("Nice! I've marked this task as done:#  O task3##Sorry! I "
                     + "was unable to save this update in storage. I'll try again next time.#",
-                    uiStub.getOutputString());
+                    bufferStub.getOutputString());
         } catch (DukeException e) { //shouldn't throw this exception
-            assertEquals(0, 1);
+            assertEquals(1, 0);
         }
     }
 
     @Test
     void execute_negativeIndex_exceptionThrown() {
-        storageStub.setWillThrowException(true); //should not interact with storage
+        storageStub.setWillThrowStorageException(true); //should not interact with storage
 
         TaskListStub taskListStub = new TaskListStub(5);
         DoneCommand doneCommand = new DoneCommand(-4);
 
         try {
-            doneCommand.execute(storageStub, uiStub, taskListStub);
-            assertEquals(0, 1);
+            doneCommand.execute(storageStub, bufferStub, taskListStub);
+            assertEquals(1, 0);
         } catch (DukeException e) { //should always throw this exception
-            assertEquals("", uiStub.getOutputString());
+            assertEquals("", bufferStub.getOutputString());
             assertEquals("That is not a valid task number.", e.getMessage());
         }
     }
 
     @Test
     void execute_tooLargeIndex_exceptionThrown() {
-        storageStub.setWillThrowException(true); //should not interact with storage
+        storageStub.setWillThrowStorageException(true); //should not interact with storage
 
         TaskListStub taskListStub = new TaskListStub(5);
         DoneCommand doneCommand = new DoneCommand(9);
 
         try {
-            doneCommand.execute(storageStub, uiStub, taskListStub);
+            doneCommand.execute(storageStub, bufferStub, taskListStub);
 
-            assertEquals(0, 1);
+            assertEquals(1, 0);
         } catch (DukeException e) { //should always throw this exception
-            assertEquals("", uiStub.getOutputString());
+            assertEquals("", bufferStub.getOutputString());
             assertEquals("That is not a valid task number.", e.getMessage());
         }
     }
