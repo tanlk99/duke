@@ -31,7 +31,7 @@ public class ArchiveCommand extends Command {
     /**
      * Creates an new ArchiveCommand with a list of indexes to archive.
      *
-     * @param indexesToArchive  list of indexes to archive
+     * @param indexesToArchive  List of indexes to archive
      */
     public ArchiveCommand(ArrayList<Integer> indexesToArchive) {
         this.indexesToArchive = indexesToArchive;

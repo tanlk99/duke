@@ -16,7 +16,7 @@ public class TaskListStub extends TaskList {
     /**
      * Creates a new TaskListStub with <i>taskListSize</i> tasks in the task list.
      *
-     * @param taskListSize  number of tasks in the task list
+     * @param taskListSize  Number of tasks in the task list
      */
     public TaskListStub(int taskListSize) {
         super();
@@ -27,7 +27,7 @@ public class TaskListStub extends TaskList {
      * Sets the match type of {@link #taskDescriptionContains(int, String) taskDescription}.
      * List of match types used: 0 - match all, 1 - match none, 2 - match odd indices, 3 - match last
      *
-     * @param matchType type of matching to use
+     * @param matchType Type of matching to use
      */
     public void setMatchType(int matchType) {
         this.matchType = matchType;

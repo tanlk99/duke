@@ -14,7 +14,7 @@ public class Main extends Application {
     /**
      * Starts the Duke application.
      *
-     * @param stage the Stage object to run Duke
+     * @param stage Stage object to run Duke
      */
     @Override
     public void start(Stage stage) {

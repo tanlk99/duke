@@ -74,7 +74,7 @@ public class Duke {
     /**
      * Returns Duke's response to a single line of user input, assumed to be non-empty.
      *
-     * @param rawInput input from the user
+     * @param rawInput Input from the user
      */
     String getResponse(String rawInput) {
         try {

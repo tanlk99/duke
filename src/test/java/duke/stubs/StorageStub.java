@@ -21,7 +21,7 @@ public class StorageStub extends Storage {
     /**
      * Sets if {@link #writeCache} will throw a {@link DukeException}.
      *
-     * @param willThrowStorageException    true if {@link #writeCache} is to throw exception
+     * @param willThrowStorageException    True if {@link #writeCache} is to throw exception
      */
     public void setWillThrowStorageException(boolean willThrowStorageException) {
         this.willThrowStorageException = willThrowStorageException;
@@ -30,7 +30,7 @@ public class StorageStub extends Storage {
     /**
      * Sets if {@link #writeArchive} will throw a {@link DukeException}.
      *
-     * @param willThrowArchiveException    true if {@link #writeArchive} is to throw exception
+     * @param willThrowArchiveException    True if {@link #writeArchive} is to throw exception
      */
     public void setWillThrowArchiveException(boolean willThrowArchiveException) {
         this.willThrowArchiveException = willThrowArchiveException;
