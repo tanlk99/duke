@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 class StorageTest {
-    private Storage storage = new Storage("");
+    private Storage storage = new Storage("", "");
 
     @Test
     void testDirectoryPath() {

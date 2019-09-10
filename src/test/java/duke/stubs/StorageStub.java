@@ -15,7 +15,7 @@ public class StorageStub extends Storage {
     private boolean willThrowArchiveException = false;
 
     public StorageStub() {
-        super("nullity");
+        super("nullity", "nullity");
     }
 
     /**

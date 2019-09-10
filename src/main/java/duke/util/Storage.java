@@ -27,11 +27,12 @@ public class Storage {
     /**
      * Creates a Storage object.
      *
-     * @param   cacheAddr   Relative path to cache file
+     * @param  cacheAddr    Relative path to cache file
+     * @param  archiveAddr  Relative path to archive file
      */
-    public Storage(String cacheAddr) {
+    public Storage(String cacheAddr, String archiveAddr) {
         this.cacheAddr = cacheAddr;
-        this.archiveAddr = "archive/duke-archive.txt";
+        this.archiveAddr = archiveAddr;
     }
 
     /**
