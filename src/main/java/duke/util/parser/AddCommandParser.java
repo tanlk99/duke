@@ -9,9 +9,9 @@ class AddCommandParser implements CommandParser<AddCommand> {
     /**
      * Parses a command to add a new task.
      *
-     * @param rawInput raw input passed to Duke with whitespaces trimmed
-     * @return an AddCommand instance to execute the command
-     * @throws DukeException if input format is invalid
+     * @param rawInput Raw input passed to Duke with whitespaces trimmed
+     * @return An AddCommand instance to execute the command
+     * @throws DukeException If input format is invalid
      */
     public AddCommand parseCommand(String rawInput) throws DukeException {
         String commandPhrase = rawInput.split(" ", 2)[0];

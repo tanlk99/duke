@@ -8,7 +8,9 @@ import duke.exception.DukeException;
 /**
  * Represents a command to archive all tasks in the task list.
  */
-public class ArchiveAllCommand extends Command {
+public class ArchiveAllCommand extends ArchiveCommand {
+    private static final String ARCHIVE_ALL_COMMAND_EMPTY_TASK_LIST = "You have no tasks in your task list right now.";
+
     /**
      * Archives all tasks. If Duke is unable to write to the archive file,
      * the tasks are not deleted from the task list (to prevent loss of data).
@@ -18,23 +20,16 @@ public class ArchiveAllCommand extends Command {
      * @param   buffer      A {@link Buffer} object to buffer Duke's output
      * @param   taskList    A {@link TaskList} object which stores the task list
      */
-    public void execute(Storage storage, Buffer buffer, TaskList taskList) {
-        try {
-            storage.writeArchive(taskList);
-            buffer.formatLine("Your task list has been saved to the archive file.");
-        } catch (DukeException e) {
-            buffer.formatLine("I was unable to save your tasks to the archive location.");
-            buffer.formatLine("Your tasks will not be deleted.");
+    public void execute(Storage storage, Buffer buffer, TaskList taskList) throws DukeException {
+        int size = taskList.getSize();
+        if (size == 0) {
+            buffer.formatLine(ARCHIVE_ALL_COMMAND_EMPTY_TASK_LIST);
             return;
         }
 
-        taskList.deleteAllTasks();
-
-        try {
-            storage.writeCache(taskList);
-        } catch (DukeException e) {
-            buffer.formatLine(""); //insert empty line for readability
-            buffer.formatLine("Sorry! I was unable to save this update in storage. I'll try again next time.");
+        for (int i = 1; i <= size; i++) {
+            super.indexesToArchive.add(i);
         }
+        super.execute(storage, buffer, taskList);
     }
 }

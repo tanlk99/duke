@@ -10,9 +10,9 @@ class DoneCommandParser implements CommandParser<DoneCommand> {
     /**
      * Parses a "done" command.
      *
-     * @param rawInput raw input passed to Duke with whitespaces trimmed
-     * @return a DoneCommand instance to execute the command
-     * @throws DukeException  if input format is invalid
+     * @param rawInput Raw input passed to Duke with whitespaces trimmed
+     * @return A DoneCommand instance to execute the command
+     * @throws DukeException  If input format is invalid
      */
     public DoneCommand parseCommand(String rawInput) throws DukeException {
         try {

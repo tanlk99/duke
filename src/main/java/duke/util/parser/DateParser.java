@@ -50,7 +50,7 @@ class DateParser {
                 }
                 return calendarTime;
             } catch (ParseException ignored) {
-                continue;
+                continue; //try next date format string
             }
         }
 

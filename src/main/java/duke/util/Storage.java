@@ -16,6 +16,11 @@ import com.fasterxml.jackson.databind.SequenceWriter;
  * task list from the cache file, or write the task list to the cache file.
  */
 public class Storage {
+    private static final String CACHE_INITIALIZE_FAILED = "Could not initialize cache file.";
+    private static final String CACHE_READ_FAILED = "Could not read from cache file.";
+    private static final String CACHE_WRITE_FAILED = "Could not write to cache file.";
+    private static final String ARCHIVE_WRITE_FAILED = "Could not write to archive file.";
+
     private String cacheAddr;
     private String archiveAddr;
 
@@ -41,15 +46,15 @@ public class Storage {
                 initializeNewCache(cacheAddr);
             }
         } catch (IOException e) {
-            throw new DukeException("Could not load/create cache file.");
+            throw new DukeException(CACHE_INITIALIZE_FAILED);
         }
     }
 
     /**
      * Initializes a newly created cache file with an empty task list.
      *
-     * @param filePath  path of cache file to initialize
-     * @throws IOException  if initalization of file failed
+     * @param filePath  Path of cache file to initialize
+     * @throws IOException  If initalization of file failed
      */
     private void initializeNewCache(String filePath) throws IOException {
         File file = new File(filePath);
@@ -62,9 +67,9 @@ public class Storage {
     /**
      * Creates an empty file at the specified location if it does not exist.
      *
-     * @param filePath    path of file to create
-     * @return true if file already exists
-     * @throws IOException   if file creation failed
+     * @param filePath      Path of file to create
+     * @return  True if file already exists
+     * @throws IOException  If file creation failed
      */
     private boolean createFileIfNotExists(String filePath) throws IOException {
         File file = new File(filePath);
@@ -81,7 +86,7 @@ public class Storage {
     /**
      * Creates a directory (and all parent directories) if it does not exist.
      *
-     * @param dirPath  path of directory
+     * @param dirPath  Path of directory
      */
     private void createDirectoryIfNotExists(String dirPath) {
         File dir = new File(dirPath);
@@ -95,8 +100,8 @@ public class Storage {
     /**
      * Gets the directory location of a file path.
      *
-     * @param filePath  path of the file
-     * @return  parent directory of the file
+     * @param filePath  Path of the file
+     * @return  Parent directory of the file
      */
     String getDirectoryPath(String filePath) {
         int lastSlash = filePath.lastIndexOf("/");
@@ -110,7 +115,7 @@ public class Storage {
     /**
      * Retrieves the saved task list from the cache file.
      *
-     * @return  An ArrayList containing the retrieved task list
+     * @return  ArrayList containing the retrieved task list
      * @throws  DukeException  If unable to read from cache file or the cache file is corrupted
      */
     public ArrayList<Task> readCache() throws DukeException {
@@ -121,7 +126,7 @@ public class Storage {
             ObjectMapper objectMapper = new ObjectMapper();
             result = objectMapper.readValue(file, new TypeReference<ArrayList<Task>>(){});
         } catch (IOException e) {
-            throw new DukeException("Could not load cache file.");
+            throw new DukeException(CACHE_READ_FAILED);
         }
 
         return result;
@@ -140,19 +145,19 @@ public class Storage {
 
             objectMapper.writerFor(new TypeReference<ArrayList<Task>>(){})
                     .withDefaultPrettyPrinter()
-                    .writeValue(file, taskList.getFullTaskList());
+                    .writeValue(file, taskList.getAllTasks());
         } catch (IOException e) {
-            throw new DukeException("Could not write to cache file.");
+            throw new DukeException(CACHE_WRITE_FAILED);
         }
     }
 
     /**
-     * Appends the contents of a task list to the archive file.
+     * Appends the contents of a list of tasks to the archive file.
      *
-     * @param taskList      TaskList to write to archive file
+     * @param taskArrayList    List of task objects to write to archive file
      * @throws DukeException    If unable to write to archive file
      */
-    public void writeArchive(TaskList taskList) throws DukeException {
+    public void writeArchive(ArrayList<Task> taskArrayList) throws DukeException {
         try {
             createFileIfNotExists(archiveAddr);
 
@@ -164,13 +169,12 @@ public class Storage {
                     .withDefaultPrettyPrinter()
                     .writeValues(fileWriter);
 
-            for (Task task : taskList.getFullTaskList()) {
-                System.out.println(task);
+            for (Task task : taskArrayList) {
                 sequenceWriter.write(task);
             }
             sequenceWriter.close();
         } catch (IOException e) {
-            throw new DukeException("Could not write to archive file.");
+            throw new DukeException(ARCHIVE_WRITE_FAILED);
         }
     }
 }

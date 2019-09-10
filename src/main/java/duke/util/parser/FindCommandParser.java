@@ -10,9 +10,9 @@ class FindCommandParser implements CommandParser<FindCommand> {
     /**
      * Parses a "find" command.
      *
-     * @param rawInput raw input passed to Duke with whitespaces trimmed
-     * @return a FindCommand instance to execute the command
-     * @throws DukeException  if input format is invalid
+     * @param rawInput Raw input passed to Duke with whitespaces trimmed
+     * @return A FindCommand instance to execute the command
+     * @throws DukeException  If input format is invalid
      */
     public FindCommand parseCommand(String rawInput) throws DukeException {
         if (!rawInput.contains(" ")) {
