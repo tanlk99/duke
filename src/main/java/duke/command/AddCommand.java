@@ -10,6 +10,12 @@ import duke.exception.DukeException;
  * Represents a command to add a task to the task list.
  */
 public class AddCommand extends Command {
+    private static final String ADD_COMMAND_SUCCESS_1 = "Got it. I've added this task:";
+    private static final String ADD_COMMAND_SUCCESS_2 = "  %1$s";
+    private static final String ADD_COMMAND_SUCCESS_3 = "Now you have %1$d task%2$s in the list.";
+    private static final String STORAGE_UPDATE_SAVE_FAILED = "Sorry! I was unable to save this update "
+            + "in storage. I'll try again next time.";
+
     private Task toAdd;
 
     /**
@@ -40,16 +46,17 @@ public class AddCommand extends Command {
     public void execute(Storage storage, Buffer buffer, TaskList taskList) {
         taskList.addNewTask(toAdd);
 
-        buffer.formatLine("Got it. I've added this task:");
-        buffer.formatLine("  " + toAdd);
-        buffer.formatLine("Now you have " + taskList.getSize() + " task"
-                + (taskList.getSize() == 1 ? "" : "s") + " in the list.");
+        buffer.formatLine(ADD_COMMAND_SUCCESS_1);
+        buffer.formatLine(String.format(ADD_COMMAND_SUCCESS_2, toAdd.toString()));
+        buffer.formatLine(String.format(ADD_COMMAND_SUCCESS_3,
+                taskList.getSize(),
+                taskList.getSize() == 1 ? "" : "s"));
 
         try {
             storage.writeCache(taskList);
         } catch (DukeException e) {
-            buffer.formatLine(""); //insert empty line for readability
-            buffer.formatLine("Sorry! I was unable to save this update in storage. I'll try again next time.");
+            buffer.formatLine(""); //Insert empty line for readability
+            buffer.formatLine(STORAGE_UPDATE_SAVE_FAILED);
         }
     }
 }

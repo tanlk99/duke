@@ -9,6 +9,11 @@ import duke.util.Buffer;
  * Represents a command to search for all tasks in the task list with descriptions containing a string.
  */
 public class FindCommand extends Command {
+    private static final String FIND_COMMAND_NO_MATCH = "There were no tasks in the list "
+            + "that matched your search term.";
+    private static final String FIND_COMMAND_SUCCESS = "Here are the matching tasks in your list:";
+    private static final String FIND_COMMAND_LIST = "%1$d.%2$s";
+
     private String filter;
 
     /**
@@ -46,11 +51,12 @@ public class FindCommand extends Command {
         }
 
         if (matchIndices.size() == 0) {
-            buffer.formatLine("There were no tasks in the list that matched your search term.");
+            buffer.formatLine(FIND_COMMAND_NO_MATCH);
         } else {
-            buffer.formatLine("Here are the matching tasks in your list:");
+            buffer.formatLine(FIND_COMMAND_SUCCESS);
             for (int index : matchIndices) {
-                buffer.formatLine(index + "." + taskList.getTask(index));
+                buffer.formatLine(String.format(FIND_COMMAND_LIST,
+                        index, taskList.getTask(index).toString()));
             }
         }
     }

@@ -9,6 +9,12 @@ import duke.exception.DukeException;
  * Represents a command to mark a task in the task list as done.
  */
 public class DoneCommand extends Command {
+    private static final String DONE_COMMAND_INVALID_INDEX = "That is not a valid task number.";
+    private static final String DONE_COMMAND_SUCCESS_1 = "Nice! I've marked this task as done:";
+    private static final String DONE_COMMAND_SUCCESS_2 = "  %1$s";
+    private static final String STORAGE_UPDATE_SAVE_FAILED = "Sorry! I was unable to save this update "
+            + "in storage. I'll try again next time.";
+
     private int index;
 
     /**
@@ -39,19 +45,19 @@ public class DoneCommand extends Command {
      */
     public void execute(Storage storage, Buffer buffer, TaskList taskList) throws DukeException {
         if (index <= 0 || index > taskList.getSize()) {
-            throw new DukeException("That is not a valid task number.");
+            throw new DukeException(DONE_COMMAND_INVALID_INDEX);
         }
 
         taskList.markTaskAsDone(index);
 
-        buffer.formatLine("Nice! I've marked this task as done:");
-        buffer.formatLine("  " + taskList.getTask(index));
+        buffer.formatLine(DONE_COMMAND_SUCCESS_1);
+        buffer.formatLine(String.format(DONE_COMMAND_SUCCESS_2, taskList.getTask(index)));
 
         try {
             storage.writeCache(taskList);
         } catch (DukeException e) {
-            buffer.formatLine(""); //insert empty line for readability
-            buffer.formatLine("Sorry! I was unable to save this update in storage. I'll try again next time.");
+            buffer.formatLine(""); //Insert empty line for readability
+            buffer.formatLine(STORAGE_UPDATE_SAVE_FAILED);
         }
     }
 }
