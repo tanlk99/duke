@@ -17,7 +17,6 @@ public class Deadline extends Task {
      * No-argument constructor for Jackson.
      */
     public Deadline() {
-
     }
 
     /**

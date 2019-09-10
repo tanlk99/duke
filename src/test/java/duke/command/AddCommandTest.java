@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test;
 
 class AddCommandTest {
     private StorageStub storageStub;
-    private BufferStub uiStub;
+    private BufferStub bufferStub;
 
     @BeforeEach
     void initTests() {
         storageStub = new StorageStub();
-        uiStub = new BufferStub();
+        bufferStub = new BufferStub();
     }
 
     @Test
@@ -23,10 +23,10 @@ class AddCommandTest {
         TaskListStub taskListStub = new TaskListStub(5);
         TaskStub dummyTask = new TaskStub("do dishes");
         AddCommand addCommand = new AddCommand(dummyTask);
-        addCommand.execute(storageStub, uiStub, taskListStub);
+        addCommand.execute(storageStub, bufferStub, taskListStub);
 
         assertEquals("Got it. I've added this task:#  X do dishes#"
-                + "Now you have 6 tasks in the list.#", uiStub.getOutputString());
+                + "Now you have 6 tasks in the list.#", bufferStub.getOutputString());
     }
 
     @Test
@@ -34,37 +34,37 @@ class AddCommandTest {
         TaskListStub taskListStub = new TaskListStub(0);
         TaskStub dummyTask = new TaskStub("do dishes");
         AddCommand addCommand = new AddCommand(dummyTask);
-        addCommand.execute(storageStub, uiStub, taskListStub);
+        addCommand.execute(storageStub, bufferStub, taskListStub);
 
         assertEquals("Got it. I've added this task:#  X do dishes#"
-                + "Now you have 1 task in the list.#", uiStub.getOutputString());
+                + "Now you have 1 task in the list.#", bufferStub.getOutputString());
     }
 
     @Test
-    void execute_taskListNotEmpty_storageExceptionThrown() {
-        storageStub.setWillThrowException(true);
+    void execute_taskListNotEmpty_storageErrorPrinted() {
+        storageStub.setWillThrowStorageException(true);
 
         TaskListStub taskListStub = new TaskListStub(5);
         TaskStub dummyTask = new TaskStub("do dishes");
         AddCommand addCommand = new AddCommand(dummyTask);
-        addCommand.execute(storageStub, uiStub, taskListStub);
+        addCommand.execute(storageStub, bufferStub, taskListStub);
 
         assertEquals("Got it. I've added this task:#  X do dishes#"
                 + "Now you have 6 tasks in the list.##Sorry! I was unable to save "
-                + "this update in storage. I'll try again next time.#", uiStub.getOutputString());
+                + "this update in storage. I'll try again next time.#", bufferStub.getOutputString());
     }
 
     @Test
-    void execute_taskListEmpty_storageExceptionThrown() {
-        storageStub.setWillThrowException(true);
+    void execute_taskListEmpty_storageErrorPrinted() {
+        storageStub.setWillThrowStorageException(true);
 
         TaskListStub taskListStub = new TaskListStub(0);
         TaskStub dummyTask = new TaskStub("do dishes");
         AddCommand addCommand = new AddCommand(dummyTask);
-        addCommand.execute(storageStub, uiStub, taskListStub);
+        addCommand.execute(storageStub, bufferStub, taskListStub);
 
         assertEquals("Got it. I've added this task:#  X do dishes#"
                 + "Now you have 1 task in the list.##Sorry! I was unable to save "
-                + "this update in storage. I'll try again next time.#", uiStub.getOutputString());
+                + "this update in storage. I'll try again next time.#", bufferStub.getOutputString());
     }
 }

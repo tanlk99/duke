@@ -10,11 +10,11 @@ class ExitCommandTest {
     @Test
     void execute() {
         StorageStub storageStub = new StorageStub();
-        BufferStub uiStub = new BufferStub();
+        BufferStub bufferStub = new BufferStub();
         TaskListStub taskListStub = new TaskListStub(0);
         ExitCommand exitCommand = new ExitCommand();
 
-        exitCommand.execute(storageStub, uiStub, taskListStub);
-        assertEquals("", uiStub.getOutputString());
+        exitCommand.execute(storageStub, bufferStub, taskListStub);
+        assertEquals("", bufferStub.getOutputString());
     }
 }

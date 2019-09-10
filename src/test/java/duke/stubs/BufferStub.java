@@ -21,7 +21,7 @@ public class BufferStub extends Buffer {
     /**
      * Returns a string containing all output passed to BufferStub so far.
      *
-     * @return  string containing all output
+     * @return  String containing all output
      */
     public String getOutputString() {
         return outputString;

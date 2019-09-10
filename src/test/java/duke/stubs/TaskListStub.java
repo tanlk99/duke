@@ -1,5 +1,6 @@
 package duke.stubs;
 
+import java.util.ArrayList;
 import duke.util.TaskList;
 import duke.task.Task;
 
@@ -15,7 +16,7 @@ public class TaskListStub extends TaskList {
     /**
      * Creates a new TaskListStub with <i>taskListSize</i> tasks in the task list.
      *
-     * @param taskListSize  number of tasks in the task list
+     * @param taskListSize  Number of tasks in the task list
      */
     public TaskListStub(int taskListSize) {
         super();
@@ -26,7 +27,7 @@ public class TaskListStub extends TaskList {
      * Sets the match type of {@link #taskDescriptionContains(int, String) taskDescription}.
      * List of match types used: 0 - match all, 1 - match none, 2 - match odd indices, 3 - match last
      *
-     * @param matchType type of matching to use
+     * @param matchType Type of matching to use
      */
     public void setMatchType(int matchType) {
         this.matchType = matchType;
@@ -44,6 +45,21 @@ public class TaskListStub extends TaskList {
     }
 
     @Override
+    public ArrayList<Task> getTasks(ArrayList<Integer> indexes) {
+        ArrayList<Task> tasks = new ArrayList<>();
+        for (int index : indexes) {
+            assert index <= taskListSize && index > 0;
+            TaskStub taskToReturn = new TaskStub("task" + index);
+            if (index == markedDonePosition) {
+                taskToReturn.setDone(true);
+            }
+            tasks.add(taskToReturn);
+        }
+
+        return tasks;
+    }
+
+    @Override
     public void addNewTask(Task task) {
         taskListSize += 1;
     }
@@ -52,6 +68,12 @@ public class TaskListStub extends TaskList {
     public void deleteTask(int index) {
         assert index <= taskListSize && index > 0;
         taskListSize -= 1;
+    }
+
+    @Override
+    public void deleteTasks(ArrayList<Integer> indexes) {
+        assert taskListSize >= indexes.size(); //indexes array assumed unique
+        taskListSize -= indexes.size();
     }
 
     @Override
@@ -84,5 +106,18 @@ public class TaskListStub extends TaskList {
     @Override
     public int getSize() {
         return taskListSize;
+    }
+
+    ArrayList<Task> getAllTasks() {
+        ArrayList<Task> tasks = new ArrayList<>();
+        for (int index = 1; index <= taskListSize; index++) {
+            TaskStub taskToReturn = new TaskStub("task" + index);
+            if (index == markedDonePosition) {
+                taskToReturn.setDone(true);
+            }
+            tasks.add(taskToReturn);
+        }
+
+        return tasks;
     }
 }

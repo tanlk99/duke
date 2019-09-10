@@ -17,7 +17,6 @@ public class Event extends Task {
      * No-argument constructor for Jackson.
      */
     public Event() {
-
     }
 
     /**

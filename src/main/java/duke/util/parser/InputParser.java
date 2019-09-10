@@ -47,6 +47,19 @@ public class InputParser {
      *   <tr>
      *     <td>find <i>substring</i></td>
      *     <td>Finds and lists all tasks with description containing <i>substring</i>.</td>
+     *   </tr>
+     *   <tr>
+     *     <td>archive <i>index</i> <i>index</i> ...</td>
+     *     <td>Transfers all tasks given by its <i>index</i> to an archive file and deletes them.</td>
+     *   </tr>
+     *   <tr>
+     *     <td>archive *</td>
+     *     <td>Transfers ALL tasks to an archive file (task list will be cleared).</td>
+     *   </tr>
+     *   <tr>
+     *     <td>archive all</td>
+     *     <td>Same as previous.</td>
+     *   </tr>
      *   <tr>
      *     <td>bye</td>
      *     <td>Exit Duke.</td>
@@ -76,6 +89,8 @@ public class InputParser {
         case "event": //Fallthrough
         case "deadline":
             return new AddCommandParser().parseCommand(rawInput);
+        case "archive":
+            return new ArchiveCommandParser().parseCommand(rawInput);
         default:
             throw new DukeException(INVALID_COMMAND);
         }

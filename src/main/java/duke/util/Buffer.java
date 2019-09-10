@@ -4,6 +4,11 @@ package duke.util;
  * Buffers Duke's text output.
  */
 public class Buffer {
+    private static final String[] DUKE_GREETING = {"Hello! I'm Duke.",
+                                                   "What can I do for you?"};
+    private static final String[] DUKE_APOLOGY = {"Sorry! Duke could not load up your previous task list from storage.",
+                                                  "Starting Duke with a blank task list..."};
+
     private StringBuilder output = new StringBuilder();
 
     /**
@@ -19,10 +24,7 @@ public class Buffer {
      * Adds Duke's standard welcome on startup to the buffer.
      */
     public void addGreetings() {
-        String[] greeting = {"Hello! I'm Duke.",
-                             "What can I do for you?"};
-
-        for (String line : greeting) {
+        for (String line : DUKE_GREETING) {
             formatLine(line);
         }
     }
@@ -31,10 +33,7 @@ public class Buffer {
      * Adds the error message for cache load failure to the buffer.
      */
     public void addLoadingError() {
-        String[] apology = {"Sorry! Duke could not load up your previous task list from storage.",
-                            "Starting Duke with a blank task list..."};
-
-        for (String line : apology) {
+        for (String line : DUKE_APOLOGY) {
             formatLine(line);
         }
     }

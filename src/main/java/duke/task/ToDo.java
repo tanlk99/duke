@@ -9,7 +9,6 @@ public class ToDo extends Task {
      * No-argument constructor for Jackson.
      */
     public ToDo() {
-
     }
 
     /**

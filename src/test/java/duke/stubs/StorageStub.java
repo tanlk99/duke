@@ -1,7 +1,9 @@
 package duke.stubs;
 
+import java.util.ArrayList;
 import duke.util.Storage;
 import duke.util.TaskList;
+import duke.task.Task;
 import duke.exception.DukeException;
 
 /**
@@ -9,24 +11,41 @@ import duke.exception.DukeException;
  * Can be set whether or not to throw a exception (to simulate file I/O erros).
  */
 public class StorageStub extends Storage {
-    private boolean willThrowException = false;
+    private boolean willThrowStorageException = false;
+    private boolean willThrowArchiveException = false;
 
     public StorageStub() {
-        super("nullity");
+        super("nullity", "nullity");
     }
 
     /**
-     * Sets if {@link #writeCache(TaskList) writeCache} will throw a {@link duke.exception.DukeException DukeException}.
+     * Sets if {@link #writeCache} will throw a {@link DukeException}.
      *
-     * @param willThrowException    true if {@link #writeCache(TaskList) writeCache} is to throw exception
+     * @param willThrowStorageException    True if {@link #writeCache} is to throw exception
      */
-    public void setWillThrowException(boolean willThrowException) {
-        this.willThrowException = willThrowException;
+    public void setWillThrowStorageException(boolean willThrowStorageException) {
+        this.willThrowStorageException = willThrowStorageException;
+    }
+
+    /**
+     * Sets if {@link #writeArchive} will throw a {@link DukeException}.
+     *
+     * @param willThrowArchiveException    True if {@link #writeArchive} is to throw exception
+     */
+    public void setWillThrowArchiveException(boolean willThrowArchiveException) {
+        this.willThrowArchiveException = willThrowArchiveException;
     }
 
     @Override
     public void writeCache(TaskList taskList) throws DukeException {
-        if (willThrowException) {
+        if (willThrowStorageException) {
+            throw new DukeException("");
+        }
+    }
+
+    @Override
+    public void writeArchive(ArrayList<Task> taskList) throws DukeException {
+        if (willThrowArchiveException) {
             throw new DukeException("");
         }
     }

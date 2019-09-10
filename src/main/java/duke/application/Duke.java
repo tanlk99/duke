@@ -39,20 +39,20 @@ public class Duke {
      * Uses the default filepath "data/duke-cache.txt".
      */
     Duke() {
-        this("data/duke-cache.txt");
+        this("data/duke-cache.txt", "archive/duke-archive.txt");
     }
 
     /**
      * Creates a new Duke instance and initializes Duke's utility classes.
      *
-     * @param   filePath    Location of the cache file
+     * @param   cachePath    Location of the cache file
      */
-    private Duke(String filePath) {
+    private Duke(String cachePath, String archivePath) {
         buffer = new Buffer();
         parser = new InputParser();
 
         try {
-            storage = new Storage(filePath);
+            storage = new Storage(cachePath, archivePath);
             storage.initializeCacheIfNotExists();
             taskList = new TaskList(storage.readCache());
         } catch (DukeException e) {
@@ -74,7 +74,7 @@ public class Duke {
     /**
      * Returns Duke's response to a single line of user input, assumed to be non-empty.
      *
-     * @param rawInput input from the user
+     * @param rawInput Input from the user
      */
     String getResponse(String rawInput) {
         try {

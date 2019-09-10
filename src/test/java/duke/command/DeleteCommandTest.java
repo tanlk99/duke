@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test;
 
 class DeleteCommandTest {
     private StorageStub storageStub;
-    private BufferStub uiStub;
+    private BufferStub bufferStub;
 
     @BeforeEach
     void initTests() {
         storageStub = new StorageStub();
-        uiStub = new BufferStub();
+        bufferStub = new BufferStub();
     }
 
     @Test
@@ -24,12 +24,12 @@ class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(3);
 
         try {
-            deleteCommand.execute(storageStub, uiStub, taskListStub);
+            deleteCommand.execute(storageStub, bufferStub, taskListStub);
 
             assertEquals("Noted. I've removed this task.#  X task3#"
-                    + "Now you have 4 tasks in the list.#", uiStub.getOutputString());
+                    + "Now you have 4 tasks in the list.#", bufferStub.getOutputString());
         } catch (DukeException e) { //shouldn't throw this exception
-            assertEquals(0, 1);
+            assertEquals(1, 0);
         }
     }
 
@@ -39,59 +39,59 @@ class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(2);
 
         try {
-            deleteCommand.execute(storageStub, uiStub, taskListStub);
+            deleteCommand.execute(storageStub, bufferStub, taskListStub);
             assertEquals("Noted. I've removed this task.#  X task2#"
-                    + "Now you have 1 task in the list.#", uiStub.getOutputString());
+                    + "Now you have 1 task in the list.#", bufferStub.getOutputString());
         } catch (DukeException e) { //shouldn't throw this exception
-            assertEquals(0, 1);
+            assertEquals(1, 0);
         }
     }
 
     @Test
-    void execute_storageExceptionThrown() {
-        storageStub.setWillThrowException(true);
+    void execute_storageErrorPrinted() {
+        storageStub.setWillThrowStorageException(true);
 
         TaskListStub taskListStub = new TaskListStub(5);
         DeleteCommand deleteCommand = new DeleteCommand(3);
 
         try {
-            deleteCommand.execute(storageStub, uiStub, taskListStub);
+            deleteCommand.execute(storageStub, bufferStub, taskListStub);
             assertEquals("Noted. I've removed this task.#  X task3#"
                     + "Now you have 4 tasks in the list.##Sorry! I was unable to save "
-                    + "this update in storage. I'll try again next time.#", uiStub.getOutputString());
+                    + "this update in storage. I'll try again next time.#", bufferStub.getOutputString());
         } catch (DukeException e) { //shouldn't throw this exception
-            assertEquals(0, 1);
+            assertEquals(1, 0);
         }
     }
 
     @Test
     void execute_negativeIndex_exceptionThrown() {
-        storageStub.setWillThrowException(true);
+        storageStub.setWillThrowStorageException(true);
 
         TaskListStub taskListStub = new TaskListStub(5);
         DeleteCommand deleteCommand = new DeleteCommand(-1);
 
         try {
-            deleteCommand.execute(storageStub, uiStub, taskListStub);
-            assertEquals(0, 1);
+            deleteCommand.execute(storageStub, bufferStub, taskListStub);
+            assertEquals(1, 0);
         } catch (DukeException e) { //should always throw this exception
-            assertEquals("", uiStub.getOutputString());
+            assertEquals("", bufferStub.getOutputString());
             assertEquals(e.getMessage(), "That is not a valid task number.");
         }
     }
 
     @Test
     void execute_tooLargeIndex_exceptionThrown() {
-        storageStub.setWillThrowException(true);
+        storageStub.setWillThrowStorageException(true);
 
         TaskListStub taskListStub = new TaskListStub(5);
         DeleteCommand deleteCommand = new DeleteCommand(9);
 
         try {
-            deleteCommand.execute(storageStub, uiStub, taskListStub);
-            assertEquals(0, 1);
+            deleteCommand.execute(storageStub, bufferStub, taskListStub);
+            assertEquals(1, 0);
         } catch (DukeException e) { //should always throw this exception
-            assertEquals("", uiStub.getOutputString());
+            assertEquals("", bufferStub.getOutputString());
             assertEquals(e.getMessage(), "That is not a valid task number.");
         }
     }

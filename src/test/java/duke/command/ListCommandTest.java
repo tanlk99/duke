@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 
 class ListCommandTest {
     private StorageStub storageStub;
-    private BufferStub uiStub;
+    private BufferStub bufferStub;
 
     @BeforeEach
     void initTests() {
         storageStub = new StorageStub();
-        uiStub = new BufferStub();
+        bufferStub = new BufferStub();
     }
 
     @Test
@@ -22,8 +22,8 @@ class ListCommandTest {
         TaskListStub taskListStub = new TaskListStub(0);
         ListCommand listCommand = new ListCommand();
 
-        listCommand.execute(storageStub, uiStub, taskListStub);
-        assertEquals("You have no tasks right now.#", uiStub.getOutputString());
+        listCommand.execute(storageStub, bufferStub, taskListStub);
+        assertEquals("You have no tasks right now.#", bufferStub.getOutputString());
     }
 
     @Test
@@ -31,9 +31,9 @@ class ListCommandTest {
         TaskListStub taskListStub = new TaskListStub(1);
         ListCommand listCommand = new ListCommand();
 
-        listCommand.execute(storageStub, uiStub, taskListStub);
+        listCommand.execute(storageStub, bufferStub, taskListStub);
         assertEquals("Here are the tasks in your list:#1.X task1#",
-                uiStub.getOutputString());
+                bufferStub.getOutputString());
     }
 
     @Test
@@ -41,8 +41,8 @@ class ListCommandTest {
         TaskListStub taskListStub = new TaskListStub(5);
         ListCommand listCommand = new ListCommand();
 
-        listCommand.execute(storageStub, uiStub, taskListStub);
+        listCommand.execute(storageStub, bufferStub, taskListStub);
         assertEquals("Here are the tasks in your list:#1.X task1#"
-                + "2.X task2#3.X task3#4.X task4#5.X task5#", uiStub.getOutputString());
+                + "2.X task2#3.X task3#4.X task4#5.X task5#", bufferStub.getOutputString());
     }
 }
