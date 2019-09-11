@@ -21,18 +21,18 @@ public class Storage {
     private static final String CACHE_WRITE_FAILED = "Could not write to cache file.";
     private static final String ARCHIVE_WRITE_FAILED = "Could not write to archive file.";
 
-    private String cacheAddr;
-    private String archiveAddr;
+    private String cachePath;
+    private String archivePath;
 
     /**
      * Creates a Storage object.
      *
-     * @param  cacheAddr    Relative path to cache file
+     * @param  cachePath    Relative path to cache file
      * @param  archiveAddr  Relative path to archive file
      */
-    public Storage(String cacheAddr, String archiveAddr) {
-        this.cacheAddr = cacheAddr;
-        this.archiveAddr = archiveAddr;
+    public Storage(String cachePath, String archiveAddr) {
+        this.cachePath = cachePath;
+        this.archivePath = archiveAddr;
     }
 
     /**
@@ -41,11 +41,13 @@ public class Storage {
      * @throws  DukeException  If creation or initialization of the cache file failed.
      */
     public void initializeCacheIfNotExists() throws DukeException {
+        if (FileLoader.isFilePresent(cachePath)) {
+            return;
+        }
+
         try {
-            boolean isFileExists = createFileIfNotExists(cacheAddr);
-            if (!isFileExists) {
-                initializeNewCache(cacheAddr);
-            }
+            FileLoader.createFileIfNotExists(cachePath);
+            initializeNewCache(cachePath);
         } catch (IOException e) {
             throw new DukeException(CACHE_INITIALIZE_FAILED);
         }
@@ -54,7 +56,7 @@ public class Storage {
     /**
      * Initializes a newly created cache file with an empty task list.
      *
-     * @param filePath  Path of cache file to initialize
+     * @param filePath  Path to cache file to initialize
      * @throws IOException  If initalization of file failed
      */
     private void initializeNewCache(String filePath) throws IOException {
@@ -63,54 +65,6 @@ public class Storage {
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(file, emptyList);
-    }
-
-    /**
-     * Creates an empty file at the specified location if it does not exist.
-     *
-     * @param filePath      Path of file to create
-     * @return  True if file already exists
-     * @throws IOException  If file creation failed
-     */
-    private boolean createFileIfNotExists(String filePath) throws IOException {
-        File file = new File(filePath);
-        if (file.exists()) {
-            return true;
-        }
-
-        String dirPath = getDirectoryPath(filePath);
-        createDirectoryIfNotExists(dirPath);
-        file.createNewFile();
-        return false;
-    }
-
-    /**
-     * Creates a directory (and all parent directories) if it does not exist.
-     *
-     * @param dirPath  Path of directory
-     */
-    private void createDirectoryIfNotExists(String dirPath) {
-        File dir = new File(dirPath);
-        if (dir.exists()) {
-            return;
-        }
-
-        dir.mkdirs();
-    }
-
-    /**
-     * Gets the directory location of a file path.
-     *
-     * @param filePath  Path of the file
-     * @return  Parent directory of the file
-     */
-    String getDirectoryPath(String filePath) {
-        int lastSlash = filePath.lastIndexOf("/");
-        if (lastSlash == -1) {
-            return ".";
-        }
-
-        return filePath.substring(0, lastSlash);
     }
 
     /**
@@ -123,7 +77,7 @@ public class Storage {
         ArrayList<Task> result;
 
         try {
-            File file = new File(cacheAddr);
+            File file = new File(cachePath);
             ObjectMapper objectMapper = new ObjectMapper();
             result = objectMapper.readValue(file, new TypeReference<ArrayList<Task>>(){});
         } catch (IOException e) {
@@ -141,7 +95,7 @@ public class Storage {
      */
     public void writeCache(TaskList taskList) throws DukeException {
         try {
-            File file = new File(cacheAddr);
+            File file = new File(cachePath);
             ObjectMapper objectMapper = new ObjectMapper();
 
             objectMapper.writerFor(new TypeReference<ArrayList<Task>>(){})
@@ -160,9 +114,9 @@ public class Storage {
      */
     public void writeArchive(ArrayList<Task> taskArrayList) throws DukeException {
         try {
-            createFileIfNotExists(archiveAddr);
+            FileLoader.createFileIfNotExists(archivePath);
 
-            File file = new File(archiveAddr);
+            File file = new File(archivePath);
             FileWriter fileWriter = new FileWriter(file, true);
 
             ObjectMapper objectMapper = new ObjectMapper();
