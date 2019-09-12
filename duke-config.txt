@@ -1,0 +1,4 @@
+{
+  "cachePath" : "data/duke-cache.txt",
+  "archivePath" : "archive/duke-archive.txt"
+}

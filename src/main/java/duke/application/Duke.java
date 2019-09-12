@@ -3,6 +3,7 @@ package duke.application;
 import duke.util.Buffer;
 import duke.util.Storage;
 import duke.util.TaskList;
+import duke.util.config.ConfigLoader;
 import duke.util.parser.InputParser;
 import duke.command.Command;
 import duke.exception.DukeException;
@@ -20,6 +21,8 @@ import javafx.scene.layout.VBox;
  * "[project root]/data/duke-cache.txt".
  */
 public class Duke {
+    private static final String DEFAULT_CONFIG_PATH = "duke-config.txt";
+
     private ScrollPane scrollPane;
     private VBox dialogContainer;
     private TextField userInput;
@@ -29,6 +32,7 @@ public class Duke {
     private Image user = new Image(getClass().getResourceAsStream("/images/DaUser.png"));
     private Image duke = new Image(getClass().getResourceAsStream("/images/DaDuke.png"));
 
+    private ConfigLoader configLoader;
     private Storage storage;
     private InputParser parser;
     private Buffer buffer;
@@ -50,9 +54,11 @@ public class Duke {
     private Duke(String cachePath, String archivePath) {
         buffer = new Buffer();
         parser = new InputParser();
+        configLoader = new ConfigLoader(DEFAULT_CONFIG_PATH);
 
         try {
-            storage = new Storage(cachePath, archivePath);
+            configLoader.loadConfig();
+            storage = new Storage(configLoader.getCachePath(), configLoader.getArchivePath());
             storage.initializeCacheIfNotExists();
             taskList = new TaskList(storage.readCache());
         } catch (DukeException e) {
