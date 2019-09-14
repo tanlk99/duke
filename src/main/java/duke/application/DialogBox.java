@@ -7,17 +7,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
@@ -26,6 +21,13 @@ import javafx.util.Duration;
  * and the chat message.
  */
 class DialogBox extends HBox {
+    private static final String DUKE_DIALOG_BOX_ID = "duke-dialog-box";
+    private static final String USER_DIALOG_BOX_ID = "user-dialog-box";
+
+    private static final double TRANSITION_DURATION = 0.5;
+    private static final double TRANSITION_OPACITY_FROM = 0.5;
+    private static final double TRANSITION_OPACITY_TO = 1.0;
+
     @FXML
     private Label dialog;
     @FXML
@@ -51,7 +53,9 @@ class DialogBox extends HBox {
 
         dialog.setText(text);
         displayPicture.setImage(img);
-        displayPicture.setClip(new Circle(50, 50, 50));
+
+        double radius = displayPicture.getFitHeight() / 2;
+        displayPicture.setClip(new Circle(radius, radius, radius));
 
         prepareAnimation();
     }
@@ -61,9 +65,9 @@ class DialogBox extends HBox {
      */
     private void prepareAnimation() {
         fadeTransition = new FadeTransition();
-        fadeTransition.setDuration(Duration.seconds(0.5));
-        fadeTransition.setFromValue(0.4);
-        fadeTransition.setToValue(1.0);
+        fadeTransition.setDuration(Duration.seconds(TRANSITION_DURATION));
+        fadeTransition.setFromValue(TRANSITION_OPACITY_FROM);
+        fadeTransition.setToValue(TRANSITION_OPACITY_TO);
 
         fadeTransition.setNode(this);
     }
@@ -88,10 +92,7 @@ class DialogBox extends HBox {
      */
     static DialogBox getUserDialog(String text, Image img) {
         DialogBox db = new DialogBox(text, img);
-        db.setBackground(new Background(
-                new BackgroundFill(Color.gray(0.9), CornerRadii.EMPTY, Insets.EMPTY)
-        ));
-
+        db.setId(USER_DIALOG_BOX_ID);
         db.fadeTransition.play();
         return db;
     }
@@ -106,9 +107,7 @@ class DialogBox extends HBox {
      */
     static DialogBox getDukeDialog(String text, Image img) {
         DialogBox db = new DialogBox(text, img);
-        db.setBackground(new Background(
-                new BackgroundFill(Color.gray(0.8), CornerRadii.EMPTY, Insets.EMPTY)
-        ));
+        db.setId(DUKE_DIALOG_BOX_ID);
         db.flip();
 
         db.fadeTransition.play();
