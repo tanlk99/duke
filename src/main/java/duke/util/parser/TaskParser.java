@@ -84,6 +84,10 @@ class TaskParser {
         String divider = taskType.timeDivider;
         String command = taskType.commandPhrase;
 
+        if (rawTaskDescription.trim().startsWith(divider)) {
+            throw new DukeException(String.format(TASK_EMPTY_DESCRIPTION,
+                    ParserUtil.getArticle(command), command));
+        }
         if (!rawTaskDescription.contains(" " + divider + " ")) {
             throw new DukeException(String.format(TASK_EMPTY_TIME, command, divider));
         }
@@ -91,10 +95,6 @@ class TaskParser {
         String taskDescription = rawTaskDescription.split(" " + divider + " ", 2)[0].trim();
         String rawTaskTime = rawTaskDescription.split(" " + divider + " ", 2)[1].trim();
 
-        if (taskDescription.length() == 0) {
-            throw new DukeException(String.format(TASK_EMPTY_DESCRIPTION,
-                    ParserUtil.getArticle(command), command));
-        }
         if (rawTaskTime.length() == 0) {
             throw new DukeException(String.format(TASK_EMPTY_TIME, command, divider));
         }

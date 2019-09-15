@@ -90,6 +90,12 @@ class AddCommandParserTest {
     }
 
     @Test
+    void parseCommandDeadlineCommand_emptyDescriptionNoWhitespace_exceptionThrown() {
+        parseCommand_exceptionThrown("deadline /by 2",
+                "The description of a deadline cannot be empty.");
+    }
+
+    @Test
     void parseCommandDeadlineCommand_noDivider_exceptionThrown() {
         parseCommand_exceptionThrown("deadline a",
                 "Please specify the deadline time using /by (with spaces preceding and following).");
