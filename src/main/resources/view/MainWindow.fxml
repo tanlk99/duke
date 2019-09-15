@@ -9,7 +9,7 @@
 <?import javafx.stage.Stage?>
 
 <!-- Stage FXML solution adapted from https://stackoverflow.com/questions/38791933/how-to-define-stage-in-fxml -->
-<fx:root type="javafx.stage.Stage" title="Duke" minHeight="600.0" minWidth="400.0" resizable="false" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="duke.application.MainWindow">
+<fx:root type="javafx.stage.Stage" title="Duck" minHeight="600.0" minWidth="400.0" resizable="false" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="duck.application.MainWindow">
     <scene>
         <Scene>
             <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0">

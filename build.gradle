@@ -13,7 +13,7 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.0'
 }
 
-group 'seedu.duke'
+group 'seedu.duck'
 version '0.1.0'
 
 repositories {
@@ -26,11 +26,11 @@ checkstyle {
 
 application {
     // Change this to your main class.
-    mainClassName = "duke.application.Launcher"
+    mainClassName = "duck.application.Launcher"
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "duck"
     archiveVersion = "0.1.3"
     archiveClassifier = null
     archiveAppendix = null

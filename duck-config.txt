@@ -1,0 +1,4 @@
+{
+  "cachePath" : "data/duck-cache.txt",
+  "archivePath" : "archive/duck-archive.txt"
+}
