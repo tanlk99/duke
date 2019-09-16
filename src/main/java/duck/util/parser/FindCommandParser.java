@@ -3,6 +3,9 @@ package duck.util.parser;
 import duck.command.FindCommand;
 import duck.exception.DuckException;
 
+/**
+ * Parses a FindCommand.
+ */
 class FindCommandParser implements CommandParser<FindCommand> {
     private static final String FIND_COMMAND_EMPTY = "Your search string cannot be empty. To see all "
             + "tasks, use \"list\" instead.";

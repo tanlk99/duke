@@ -3,6 +3,9 @@ package duck.util.parser;
 import duck.command.AddCommand;
 import duck.exception.DuckException;
 
+/**
+ * Parses an AddCommand.
+ */
 class AddCommandParser implements CommandParser<AddCommand> {
     private static final String ADD_COMMAND_EMPTY_DESCRIPTION = "The description of %1$s %2$s cannot be empty.";
 

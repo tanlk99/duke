@@ -3,6 +3,9 @@ package duck.util.parser;
 import duck.command.DeleteCommand;
 import duck.exception.DuckException;
 
+/**
+ * Parses a DeleteCommand.
+ */
 class DeleteCommandParser implements CommandParser<DeleteCommand> {
     private static final String DELETE_COMMAND_HELP = "Please use 'delete i' to delete the i-th task in the list.";
 

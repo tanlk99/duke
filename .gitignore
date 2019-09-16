@@ -16,3 +16,4 @@ bin/
 # Cache and archive files
 data/*
 archive/*
+duck-config.txt

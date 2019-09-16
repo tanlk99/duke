@@ -7,6 +7,9 @@ import duck.command.ArchiveAllCommand;
 import duck.command.ArchiveCommand;
 import duck.exception.DuckException;
 
+/**
+ * Parses an ArchiveCommand.
+ */
 public class ArchiveCommandParser implements CommandParser<ArchiveCommand> {
     private static final String ARCHIVE_COMMAND_EMPTY_INPUT = "The list of tasks to archive cannot be empty.";
     private static final String ARCHIVE_COMMAND_HELP = "Use 'archive' followed by a list "

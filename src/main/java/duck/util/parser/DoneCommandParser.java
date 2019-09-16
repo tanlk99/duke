@@ -3,6 +3,9 @@ package duck.util.parser;
 import duck.command.DoneCommand;
 import duck.exception.DuckException;
 
+/**
+ * Parses a DoneCommand.
+ */
 class DoneCommandParser implements CommandParser<DoneCommand> {
     private static final String DONE_COMMAND_HELP = "Please use 'done i' to mark completion "
             + "of the i-th task in the list.";

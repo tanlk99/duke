@@ -91,6 +91,8 @@ public class InputParser {
             return new AddCommandParser().parseCommand(rawInput);
         case "archive":
             return new ArchiveCommandParser().parseCommand(rawInput);
+        case "set":
+            return new SetConfigCommandParser().parseCommand(rawInput);
         default:
             throw new DuckException(INVALID_COMMAND);
         }

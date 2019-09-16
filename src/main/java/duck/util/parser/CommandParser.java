@@ -3,6 +3,11 @@ package duck.util.parser;
 import duck.command.Command;
 import duck.exception.DuckException;
 
+/**
+ * Parses a Command.
+ *
+ * @param <T> Type of command to parse
+ */
 interface CommandParser<T extends Command> {
     /**
      * Parses a command of a certain type.
