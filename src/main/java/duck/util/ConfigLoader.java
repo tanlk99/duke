@@ -1,18 +1,23 @@
-package duck.util.config;
+package duck.util;
 
 import java.io.File;
 import java.io.IOException;
-import duck.util.FileLoader;
-import duck.exception.DuckException;
+import java.util.HashMap;
+import java.util.Map;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import duck.exception.DuckException;
 
 public class ConfigLoader {
+    private static final String DEFAULT_CACHE_PATH = "data/duck-cache.txt";
+    private static final String DEFAULT_ARCHIVE_PATH = "archive/duck-archive.txt";
+
     private static final String CONFIG_INITIALIZE_FAILED = "Could not initialize config file.";
     private static final String CONFIG_READ_FAILED = "Could not read config file.";
     private static final String CONFIG_WRITE_FAILED = "Could not write config file.";
 
     private String configPath;
-    private Config config;
+    private Map<String, String> config = new HashMap<>();
 
     /**
      * Creates a new ConfigLoader.
@@ -20,8 +25,16 @@ public class ConfigLoader {
      * @param configPath Relative path to config file
      */
     public ConfigLoader(String configPath) {
-        config = Config.getDefaultConfig();
         this.configPath = configPath;
+        initializeDefaultConfig();
+    }
+
+    /**
+     * Writes Duck's default configuration.
+     */
+    private void initializeDefaultConfig() {
+        config.put("cachePath", DEFAULT_CACHE_PATH);
+        config.put("archivePath", DEFAULT_ARCHIVE_PATH);
     }
 
     /**
@@ -38,7 +51,7 @@ public class ConfigLoader {
 
         try {
             FileLoader.createFileIfNotExists(configPath);
-            config = Config.getDefaultConfig(); //set to default
+            initializeDefaultConfig(); //set to default
             writeConfig();
         } catch (IOException | DuckException e) {
             throw new DuckException(CONFIG_INITIALIZE_FAILED);
@@ -46,7 +59,7 @@ public class ConfigLoader {
     }
 
     /**
-     * Reads a Config object from the config file.
+     * Reads Duck's configuration from the config file.
      *
      * @throws DuckException If read failed
      */
@@ -54,14 +67,14 @@ public class ConfigLoader {
         try {
             File file = new File(configPath);
             ObjectMapper mapper = new ObjectMapper();
-            config = mapper.readValue(file, Config.class);
+            config = mapper.readValue(file, new TypeReference<HashMap<String, String>>() {});
         } catch (IOException e) {
             throw new DuckException(CONFIG_READ_FAILED);
         }
     }
 
     /**
-     * Writes the Config object to the config file.
+     * Writes Duck's configuration to the config file.
      *
      * @throws DuckException If write failed
      */
@@ -69,7 +82,8 @@ public class ConfigLoader {
         try {
             File file = new File(configPath);
             ObjectMapper mapper = new ObjectMapper();
-            mapper.writerWithDefaultPrettyPrinter().writeValue(file, config);
+            mapper.writerFor(new TypeReference<HashMap<String, String>>() {})
+                    .withDefaultPrettyPrinter().writeValue(file, config);
         } catch (IOException e) {
             throw new DuckException(CONFIG_WRITE_FAILED);
         }
@@ -78,40 +92,22 @@ public class ConfigLoader {
     /**
      * Sets the cache path and saves the new path in the config file.
      *
-     * @param cachePath Relative path to cache file
+     * @param name  Name of parameter to update
+     * @param value Value of parameter to update
      * @throws DuckException If write failed
      */
-    public void saveCachePath(String cachePath) throws DuckException {
-        config.setCachePath(cachePath);
-        writeConfig();
-    }
-
-    /**
-     * Sets the archive path and saves the new path in the config file.
-     *
-     * @param archivePath Relative path to archive file
-     * @throws DuckException If write failed
-     */
-    public void saveArchivePath(String archivePath) throws DuckException {
-        config.setArchivePath(archivePath);
+    public void updateConfig(String name, String value) throws DuckException {
+        config.put(name, value);
         writeConfig();
     }
 
     /**
      * Gets the cache path.
      *
-     * @return Relative path to config file
+     * @param name  Name of parameter to get
+     * @return Value of parameter
      */
-    public String getCachePath() {
-        return config.getCachePath();
-    }
-
-    /**
-     * Gets the archive path.
-     *
-     * @return Relative path to archive file
-     */
-    public String getArchivePath() {
-        return config.getArchivePath();
+    public String getConfig(String name) {
+        return config.get(name);
     }
 }

@@ -14,7 +14,7 @@ class ExitCommandTest {
         TaskListStub taskListStub = new TaskListStub(0);
         ExitCommand exitCommand = new ExitCommand();
 
-        exitCommand.execute(storageStub, bufferStub, taskListStub);
+        exitCommand.execute(storageStub, bufferStub, taskListStub, null);
         assertEquals("", bufferStub.getOutputString());
     }
 }

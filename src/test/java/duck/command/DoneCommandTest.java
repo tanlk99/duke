@@ -24,7 +24,7 @@ class DoneCommandTest {
         DoneCommand doneCommand = new DoneCommand(3);
 
         try {
-            doneCommand.execute(storageStub, bufferStub, taskListStub);
+            doneCommand.execute(storageStub, bufferStub, taskListStub, null);
             assertEquals("Nice! I've marked this task as done:#  O task3#",
                     bufferStub.getOutputString());
         } catch (DuckException e) { //shouldn't throw this exception
@@ -40,7 +40,7 @@ class DoneCommandTest {
         DoneCommand doneCommand = new DoneCommand(3);
 
         try {
-            doneCommand.execute(storageStub, bufferStub, taskListStub);
+            doneCommand.execute(storageStub, bufferStub, taskListStub, null);
             assertEquals("Nice! I've marked this task as done:#  O task3##Sorry! I "
                     + "was unable to save this update in storage. I'll try again next time.#",
                     bufferStub.getOutputString());
@@ -57,7 +57,7 @@ class DoneCommandTest {
         DoneCommand doneCommand = new DoneCommand(-4);
 
         try {
-            doneCommand.execute(storageStub, bufferStub, taskListStub);
+            doneCommand.execute(storageStub, bufferStub, taskListStub, null);
             assertEquals(1, 0);
         } catch (DuckException e) { //should always throw this exception
             assertEquals("", bufferStub.getOutputString());
@@ -73,7 +73,7 @@ class DoneCommandTest {
         DoneCommand doneCommand = new DoneCommand(9);
 
         try {
-            doneCommand.execute(storageStub, bufferStub, taskListStub);
+            doneCommand.execute(storageStub, bufferStub, taskListStub, null);
 
             assertEquals(1, 0);
         } catch (DuckException e) { //should always throw this exception

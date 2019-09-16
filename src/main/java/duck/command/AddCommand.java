@@ -5,6 +5,7 @@ import duck.util.TaskList;
 import duck.util.Buffer;
 import duck.task.Task;
 import duck.exception.DuckException;
+import duck.util.ConfigLoader;
 
 /**
  * Represents a command to add a task to the task list.
@@ -39,11 +40,12 @@ public class AddCommand extends Command {
     /**
      * Adds the task to the task list.
      *
-     * @param   storage     A {@link Storage} object to cache task list
-     * @param   buffer      A {@link Buffer} object to buffer Duck's output
-     * @param   taskList    A {@link TaskList} object which stores the task list
+     * @param storage     A {@link Storage} object to cache task list
+     * @param buffer      A {@link Buffer} object to buffer Duck's output
+     * @param taskList    A {@link TaskList} object which stores the task list
+     * @param configLoader  A {@link ConfigLoader} object to write changes to configuration
      */
-    public void execute(Storage storage, Buffer buffer, TaskList taskList) {
+    public void execute(Storage storage, Buffer buffer, TaskList taskList, ConfigLoader configLoader) {
         taskList.addNewTask(toAdd);
 
         buffer.formatLine(ADD_COMMAND_SUCCESS_1);

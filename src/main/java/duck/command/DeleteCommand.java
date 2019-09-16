@@ -5,6 +5,7 @@ import duck.util.Storage;
 import duck.util.TaskList;
 import duck.task.Task;
 import duck.exception.DuckException;
+import duck.util.ConfigLoader;
 
 /**
  * Represents a command to delete a task in the task list.
@@ -40,12 +41,13 @@ public class DeleteCommand extends Command {
     /**
      * Deletes the task given by <i>index</i>.
      *
-     * @param   storage     A {@link Storage} object to cache task list
-     * @param   buffer      A {@link Buffer} object to buffer Duck's output
-     * @param   taskList    A {@link TaskList} object which stores the task list
+     * @param storage     A {@link Storage} object to cache task list
+     * @param buffer      A {@link Buffer} object to buffer Duck's output
+     * @param taskList    A {@link TaskList} object which stores the task list
+     * @param configLoader  A {@link ConfigLoader} object to write changes to configuration
      * @throws  DuckException   If index is invalid
      */
-    public void execute(Storage storage, Buffer buffer, TaskList taskList) throws DuckException {
+    public void execute(Storage storage, Buffer buffer, TaskList taskList, ConfigLoader configLoader) throws DuckException {
         if (index <= 0 || index > taskList.getSize()) {
             throw new DuckException(DELETE_COMMAND_INVALID_INDEX);
         }

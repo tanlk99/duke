@@ -1,11 +1,12 @@
 package duck.command;
 
 import java.util.ArrayList;
+import duck.exception.DuckException;
+import duck.task.Task;
 import duck.util.Buffer;
 import duck.util.Storage;
 import duck.util.TaskList;
-import duck.task.Task;
-import duck.exception.DuckException;
+import duck.util.ConfigLoader;
 
 /**
  * Represents a command to archive a list of tasks in the task list.
@@ -42,11 +43,12 @@ public class ArchiveCommand extends Command {
      * the tasks are not deleted from the task list (to prevent loss of data).
      * Archive location is [project-root]/archive/duck-archive.txt by default.
      *
-     * @param   storage     A {@link Storage} object to cache task list
-     * @param   buffer      A {@link Buffer} object to buffer Duck's output
-     * @param   taskList    A {@link TaskList} object which stores the task list
+     * @param storage     A {@link Storage} object to cache task list*
+     * @param buffer      A {@link Buffer} object to buffer Duck's output
+     * @param taskList    A {@link TaskList} object which stores the task list
+     * @param configLoader  A {@link ConfigLoader} object to write changes to configuration
      */
-    public void execute(Storage storage, Buffer buffer, TaskList taskList) throws DuckException {
+    public void execute(Storage storage, Buffer buffer, TaskList taskList, ConfigLoader configLoader) throws DuckException {
         //Validate indexes
         for (int index : indexesToArchive) {
             if (index <= 0 || index > taskList.getSize()) {

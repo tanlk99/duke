@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import duck.util.Storage;
 import duck.util.TaskList;
 import duck.util.Buffer;
+import duck.util.ConfigLoader;
 
 /**
  * Represents a command to search for all tasks in the task list with descriptions containing a string.
@@ -37,11 +38,12 @@ public class FindCommand extends Command {
     /**
      * Finds all tasks with descriptions containing the filter and lists them.
      *
-     * @param   storage     A {@link Storage} object to cache task list
-     * @param   buffer      A {@link Buffer} object to buffer Duck's output
-     * @param   taskList    A {@link TaskList} object which stores the task list
+     * @param storage     A {@link Storage} object to cache task list
+     * @param buffer      A {@link Buffer} object to buffer Duck's output
+     * @param taskList    A {@link TaskList} object which stores the task list
+     * @param configLoader  A {@link ConfigLoader} object to write changes to configuration
      */
-    public void execute(Storage storage, Buffer buffer, TaskList taskList) {
+    public void execute(Storage storage, Buffer buffer, TaskList taskList, ConfigLoader configLoader) {
         ArrayList<Integer> matchIndices = new ArrayList<>();
 
         for (int index = 1; index <= taskList.getSize(); index++) {

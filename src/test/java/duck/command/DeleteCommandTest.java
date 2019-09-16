@@ -24,7 +24,7 @@ class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(3);
 
         try {
-            deleteCommand.execute(storageStub, bufferStub, taskListStub);
+            deleteCommand.execute(storageStub, bufferStub, taskListStub, null);
 
             assertEquals("Noted. I've removed this task.#  X task3#"
                     + "Now you have 4 tasks in the list.#", bufferStub.getOutputString());
@@ -39,7 +39,7 @@ class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(2);
 
         try {
-            deleteCommand.execute(storageStub, bufferStub, taskListStub);
+            deleteCommand.execute(storageStub, bufferStub, taskListStub, null);
             assertEquals("Noted. I've removed this task.#  X task2#"
                     + "Now you have 1 task in the list.#", bufferStub.getOutputString());
         } catch (DuckException e) { //shouldn't throw this exception
@@ -55,7 +55,7 @@ class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(3);
 
         try {
-            deleteCommand.execute(storageStub, bufferStub, taskListStub);
+            deleteCommand.execute(storageStub, bufferStub, taskListStub, null);
             assertEquals("Noted. I've removed this task.#  X task3#"
                     + "Now you have 4 tasks in the list.##Sorry! I was unable to save "
                     + "this update in storage. I'll try again next time.#", bufferStub.getOutputString());
@@ -72,7 +72,7 @@ class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(-1);
 
         try {
-            deleteCommand.execute(storageStub, bufferStub, taskListStub);
+            deleteCommand.execute(storageStub, bufferStub, taskListStub, null);
             assertEquals(1, 0);
         } catch (DuckException e) { //should always throw this exception
             assertEquals("", bufferStub.getOutputString());
@@ -88,7 +88,7 @@ class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(9);
 
         try {
-            deleteCommand.execute(storageStub, bufferStub, taskListStub);
+            deleteCommand.execute(storageStub, bufferStub, taskListStub, null);
             assertEquals(1, 0);
         } catch (DuckException e) { //should always throw this exception
             assertEquals("", bufferStub.getOutputString());

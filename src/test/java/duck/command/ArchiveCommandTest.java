@@ -27,7 +27,7 @@ class ArchiveCommandTest {
         ArchiveCommand archiveCommand = new ArchiveCommand(indexesToArchive);
 
         try {
-            archiveCommand.execute(storageStub, bufferStub, taskListStub);
+            archiveCommand.execute(storageStub, bufferStub, taskListStub, null);
             assertEquals("I saved the following tasks to the archive file:#  X task1#"
                     + "  X task3#", bufferStub.getOutputString());
         } catch (DuckException e) {
@@ -42,7 +42,7 @@ class ArchiveCommandTest {
         ArchiveCommand archiveCommand = new ArchiveCommand(indexesToArchive);
 
         try {
-            archiveCommand.execute(storageStub, bufferStub, taskListStub);
+            archiveCommand.execute(storageStub, bufferStub, taskListStub, null);
             assertEquals(1, 0);
         } catch (DuckException e) {
             assertEquals("-1 is not a valid task number.", e.getMessage());
@@ -57,7 +57,7 @@ class ArchiveCommandTest {
         ArchiveCommand archiveCommand = new ArchiveCommand(indexesToArchive);
 
         try {
-            archiveCommand.execute(storageStub, bufferStub, taskListStub);
+            archiveCommand.execute(storageStub, bufferStub, taskListStub, null);
             assertEquals(1, 0);
         } catch (DuckException e) {
             assertEquals("I was unable to save your task(s) to the archive location. "
@@ -73,7 +73,7 @@ class ArchiveCommandTest {
         ArchiveCommand archiveCommand = new ArchiveCommand(indexesToArchive);
 
         try {
-            archiveCommand.execute(storageStub, bufferStub, taskListStub);
+            archiveCommand.execute(storageStub, bufferStub, taskListStub, null);
             assertEquals("I saved the following tasks to the archive file:#  X task1#"
                     + "  X task3##Sorry! I was unable to save this update "
                     + "in storage. I'll try again next time.#", bufferStub.getOutputString());
@@ -88,7 +88,7 @@ class ArchiveCommandTest {
         ArchiveAllCommand archiveCommand = new ArchiveAllCommand();
 
         try {
-            archiveCommand.execute(storageStub, bufferStub, taskListStub);
+            archiveCommand.execute(storageStub, bufferStub, taskListStub, null);
             assertEquals("You have no tasks in your task list right now.#", bufferStub.getOutputString());
         } catch (DuckException e) {
             assertEquals(1, 0);

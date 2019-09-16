@@ -3,7 +3,7 @@ package duck.application;
 import duck.util.Buffer;
 import duck.util.Storage;
 import duck.util.TaskList;
-import duck.util.config.ConfigLoader;
+import duck.util.ConfigLoader;
 import duck.util.parser.InputParser;
 import duck.command.Command;
 import duck.exception.DuckException;
@@ -58,7 +58,9 @@ public class Duck {
 
         try {
             configLoader.loadConfig();
-            storage = new Storage(configLoader.getCachePath(), configLoader.getArchivePath());
+            storage = new Storage(configLoader.getConfig("cachePath"),
+                    configLoader.getConfig("archivePath"));
+
             storage.initializeCacheIfNotExists();
             taskList = new TaskList(storage.readCache());
         } catch (DuckException e) {
@@ -85,7 +87,7 @@ public class Duck {
     String getResponse(String rawInput) {
         try {
             Command parsedCommand = parser.parseInput(rawInput);
-            parsedCommand.execute(storage, buffer, taskList);
+            parsedCommand.execute(storage, buffer, taskList, configLoader);
 
             if (parsedCommand.shouldTerminate()) {
                 Platform.exit();

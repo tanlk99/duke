@@ -23,7 +23,7 @@ class AddCommandTest {
         TaskListStub taskListStub = new TaskListStub(5);
         TaskStub dummyTask = new TaskStub("do dishes");
         AddCommand addCommand = new AddCommand(dummyTask);
-        addCommand.execute(storageStub, bufferStub, taskListStub);
+        addCommand.execute(storageStub, bufferStub, taskListStub, null);
 
         assertEquals("Got it. I've added this task:#  X do dishes#"
                 + "Now you have 6 tasks in the list.#", bufferStub.getOutputString());
@@ -34,7 +34,7 @@ class AddCommandTest {
         TaskListStub taskListStub = new TaskListStub(0);
         TaskStub dummyTask = new TaskStub("do dishes");
         AddCommand addCommand = new AddCommand(dummyTask);
-        addCommand.execute(storageStub, bufferStub, taskListStub);
+        addCommand.execute(storageStub, bufferStub, taskListStub, null);
 
         assertEquals("Got it. I've added this task:#  X do dishes#"
                 + "Now you have 1 task in the list.#", bufferStub.getOutputString());
@@ -47,7 +47,7 @@ class AddCommandTest {
         TaskListStub taskListStub = new TaskListStub(5);
         TaskStub dummyTask = new TaskStub("do dishes");
         AddCommand addCommand = new AddCommand(dummyTask);
-        addCommand.execute(storageStub, bufferStub, taskListStub);
+        addCommand.execute(storageStub, bufferStub, taskListStub, null);
 
         assertEquals("Got it. I've added this task:#  X do dishes#"
                 + "Now you have 6 tasks in the list.##Sorry! I was unable to save "
@@ -61,7 +61,7 @@ class AddCommandTest {
         TaskListStub taskListStub = new TaskListStub(0);
         TaskStub dummyTask = new TaskStub("do dishes");
         AddCommand addCommand = new AddCommand(dummyTask);
-        addCommand.execute(storageStub, bufferStub, taskListStub);
+        addCommand.execute(storageStub, bufferStub, taskListStub, null);
 
         assertEquals("Got it. I've added this task:#  X do dishes#"
                 + "Now you have 1 task in the list.##Sorry! I was unable to save "
