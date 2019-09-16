@@ -48,7 +48,8 @@ public class ArchiveCommand extends Command {
      * @param taskList    A {@link TaskList} object which stores the task list
      * @param configLoader  A {@link ConfigLoader} object to write changes to configuration
      */
-    public void execute(Storage storage, Buffer buffer, TaskList taskList, ConfigLoader configLoader) throws DuckException {
+    public void execute(Storage storage, Buffer buffer, TaskList taskList,
+                        ConfigLoader configLoader) throws DuckException {
         //Validate indexes
         for (int index : indexesToArchive) {
             if (index <= 0 || index > taskList.getSize()) {

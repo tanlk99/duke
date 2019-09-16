@@ -47,7 +47,8 @@ public class DeleteCommand extends Command {
      * @param configLoader  A {@link ConfigLoader} object to write changes to configuration
      * @throws  DuckException   If index is invalid
      */
-    public void execute(Storage storage, Buffer buffer, TaskList taskList, ConfigLoader configLoader) throws DuckException {
+    public void execute(Storage storage, Buffer buffer, TaskList taskList,
+                        ConfigLoader configLoader) throws DuckException {
         if (index <= 0 || index > taskList.getSize()) {
             throw new DuckException(DELETE_COMMAND_INVALID_INDEX);
         }

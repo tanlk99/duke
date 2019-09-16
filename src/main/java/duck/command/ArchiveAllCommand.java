@@ -22,7 +22,8 @@ public class ArchiveAllCommand extends ArchiveCommand {
      * @param taskList    A {@link TaskList} object which stores the task list
      * @param configLoader  A {@link ConfigLoader} object to write changes to configuration
      */
-    public void execute(Storage storage, Buffer buffer, TaskList taskList, ConfigLoader configLoader) throws DuckException {
+    public void execute(Storage storage, Buffer buffer, TaskList taskList,
+                        ConfigLoader configLoader) throws DuckException {
         int size = taskList.getSize();
         if (size == 0) {
             buffer.formatLine(ARCHIVE_ALL_COMMAND_EMPTY_TASK_LIST);

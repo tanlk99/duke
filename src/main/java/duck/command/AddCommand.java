@@ -45,7 +45,8 @@ public class AddCommand extends Command {
      * @param taskList    A {@link TaskList} object which stores the task list
      * @param configLoader  A {@link ConfigLoader} object to write changes to configuration
      */
-    public void execute(Storage storage, Buffer buffer, TaskList taskList, ConfigLoader configLoader) {
+    public void execute(Storage storage, Buffer buffer, TaskList taskList,
+                        ConfigLoader configLoader) {
         taskList.addNewTask(toAdd);
 
         buffer.formatLine(ADD_COMMAND_SUCCESS_1);
