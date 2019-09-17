@@ -14,7 +14,7 @@ import duck.util.TaskList;
  */
 public class ArchiveRemoveCommand extends Command {
     private static final String ARCHIVE_REMOVE_COMMAND_INVALID_INDEX = "%1$d is not a valid task number.";
-    private static final String ARCHIVE_REMOVE_COMMAND_SUCCESS = "I moved the following files from"
+    private static final String ARCHIVE_REMOVE_COMMAND_SUCCESS = "I moved the following files from "
             + "the archive to the task list:";
     private static final String ARCHIVE_REMOVE_COMMAND_LIST = "  %1$s";
     private static final String ARCHIVE_REMOVE_COMMAND_READ_FAILED = "I was unable to retrieve your task(s) "
