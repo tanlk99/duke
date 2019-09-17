@@ -3,7 +3,7 @@
 Duck is a portable lightweight task manager. You can manage your tasks in Duck using only
 a command line, without any need for complex GUI interfaces.
 
-##Table of Contents
+## Table of Contents
 
 - [Requirements](#requirements)
 - [Features](#features)
@@ -68,13 +68,13 @@ Adds a new task to your task list.
 
 <strong>Usage examples</strong>
 
-- `todo wash dishes`\
+- `todo wash dishes`<br>
 Adds a new to-do with description `wash dishes`.
 
-- `deadline math homework /by 10-10-2019`\
+- `deadline math homework /by 10-10-2019`<br>
 Adds a new deadline with description `math homework` by time `10-10-2019`.
 
-- `event team meeting /at 13-10-2019`\
+- `event team meeting /at 13-10-2019`<br>
 Adds a new event with description `team meeting` at time `13-10-2019`.
 
 ***
@@ -99,7 +99,7 @@ Marks a task in your list as done.
 
 <strong>Usage example</strong>
 
-- `done 1`\
+- `done 1`<br>
 Marks the first task in your list as done.
 
 ***
@@ -116,7 +116,7 @@ Deletes a task in your list.
 
 <strong>Usage example</strong>
 
-- `delete 1`\
+- `delete 1`<br>
 Deletes the first task in your list.
 
 ***
@@ -131,7 +131,7 @@ Finds all tasks in your list whose description contains a search string.
 
 <strong>Usage example</strong>
 
-- `find project`\
+- `find project`<br>
 Finds all tasks in your list whose description contains the string
 `project`, and displays them in a list.
 
@@ -144,18 +144,18 @@ and saved in the archive file.
 
 <strong>Command format</strong>
 
-`archive add [index1] [index2] ...`\
-`archive add *`\
+`archive add [index1] [index2] ...`<br>
+`archive add *`<br>
 `archive add all`
 
 > Duck also accepts `insert` as a command word instead of `add`.
 
 <strong>Usage examples</strong>
 
-- `archive add 1 3 4`\
+- `archive add 1 3 4`<br>
 Archives the 1st, 3rd and 4th task in your list.
 
-- `archive add *` or `archive add all`\
+- `archive add *` or `archive add all`<br>
 Archives all the tasks in your list. In other words, it transfers your task list to the archive file.
 
 ***
@@ -178,15 +178,15 @@ Changes Duck's configuration settings.
 
 <strong>Command format</strong>
 
-`set cachePath [new-cache-path]`\
+`set cachePath [new-cache-path]`<br>
 `set archivePath [new-archive-path]`
 
 <strong>Usage examples</strong>
 
-- `set cachePath new-cache-file.txt`\
+- `set cachePath new-cache-file.txt`<br>
 Sets the cache location to `new-cache-file.txt`.
 
-- `set archivePath new-archive-file.txt`\
+- `set archivePath new-archive-file.txt`<br>
 Sets the archive location to `new-cache-file.txt`.
 
 > Note: Paths are given relative to the root directory, i.e. the directory where the
