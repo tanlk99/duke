@@ -11,7 +11,7 @@ import duck.util.ConfigLoader;
 /**
  * Represents a command to archive a list of tasks in the task list.
  */
-public class ArchiveCommand extends Command {
+public class ArchiveAddCommand extends Command {
     private static final String ARCHIVE_COMMAND_INVALID_INDEX = "%1$d is not a valid task number.";
     private static final String ARCHIVE_COMMAND_SUCCESS = "I saved the following tasks to the archive file:";
     private static final String ARCHIVE_COMMAND_LIST = "  %1$s";
@@ -23,18 +23,18 @@ public class ArchiveCommand extends Command {
     protected ArrayList<Integer> indexesToArchive = new ArrayList<>();
 
     /**
-     * Protected constructor for ArchiveAllCommand.
+     * Protected constructor for ArchiveAddAllCommand.
      */
-    protected ArchiveCommand() {
+    protected ArchiveAddCommand() {
 
     }
 
     /**
-     * Creates an new ArchiveCommand with a list of indexes to archive.
+     * Creates an new ArchiveAddCommand with a list of indexes to archive.
      *
      * @param indexesToArchive  List of indexes to archive
      */
-    public ArchiveCommand(ArrayList<Integer> indexesToArchive) {
+    public ArchiveAddCommand(ArrayList<Integer> indexesToArchive) {
         this.indexesToArchive = indexesToArchive;
     }
 

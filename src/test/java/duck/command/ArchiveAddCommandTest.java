@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ArchiveCommandTest {
+class ArchiveAddCommandTest {
     private StorageHandlerStub archiveHandlerStub;
     private StorageHandlerStub cacheHandlerStub;
     private BufferStub bufferStub;
@@ -26,10 +26,10 @@ class ArchiveCommandTest {
     void execute_indexesValid_successful() {
         TaskListStub taskListStub = new TaskListStub(5);
         ArrayList<Integer> indexesToArchive = new ArrayList<>(Arrays.asList(1, 3));
-        ArchiveCommand archiveCommand = new ArchiveCommand(indexesToArchive);
+        ArchiveAddCommand archiveAddCommand = new ArchiveAddCommand(indexesToArchive);
 
         try {
-            archiveCommand.execute(cacheHandlerStub, archiveHandlerStub, bufferStub, taskListStub, null);
+            archiveAddCommand.execute(cacheHandlerStub, archiveHandlerStub, bufferStub, taskListStub, null);
             assertEquals("I saved the following tasks to the archive file:#  X task1#"
                     + "  X task3#", bufferStub.getOutputString());
         } catch (DuckException e) {
@@ -41,10 +41,10 @@ class ArchiveCommandTest {
     void execute_indexInvalid_exceptionThrown() {
         TaskListStub taskListStub = new TaskListStub(5);
         ArrayList<Integer> indexesToArchive = new ArrayList<>(Arrays.asList(1, -1, 2));
-        ArchiveCommand archiveCommand = new ArchiveCommand(indexesToArchive);
+        ArchiveAddCommand archiveAddCommand = new ArchiveAddCommand(indexesToArchive);
 
         try {
-            archiveCommand.execute(cacheHandlerStub, archiveHandlerStub, bufferStub, taskListStub, null);
+            archiveAddCommand.execute(cacheHandlerStub, archiveHandlerStub, bufferStub, taskListStub, null);
             assertEquals(1, 0);
         } catch (DuckException e) {
             assertEquals("-1 is not a valid task number.", e.getMessage());
@@ -56,10 +56,10 @@ class ArchiveCommandTest {
         archiveHandlerStub.setWillThrowStorageException(true);
         TaskListStub taskListStub = new TaskListStub(5);
         ArrayList<Integer> indexesToArchive = new ArrayList<>(Arrays.asList(1, 3));
-        ArchiveCommand archiveCommand = new ArchiveCommand(indexesToArchive);
+        ArchiveAddCommand archiveAddCommand = new ArchiveAddCommand(indexesToArchive);
 
         try {
-            archiveCommand.execute(cacheHandlerStub, archiveHandlerStub, bufferStub, taskListStub, null);
+            archiveAddCommand.execute(cacheHandlerStub, archiveHandlerStub, bufferStub, taskListStub, null);
             assertEquals(1, 0);
         } catch (DuckException e) {
             assertEquals("I was unable to save your task(s) to the archive location. "
@@ -72,10 +72,10 @@ class ArchiveCommandTest {
         cacheHandlerStub.setWillThrowStorageException(true);
         TaskListStub taskListStub = new TaskListStub(5);
         ArrayList<Integer> indexesToArchive = new ArrayList<>(Arrays.asList(1, 3));
-        ArchiveCommand archiveCommand = new ArchiveCommand(indexesToArchive);
+        ArchiveAddCommand archiveAddCommand = new ArchiveAddCommand(indexesToArchive);
 
         try {
-            archiveCommand.execute(cacheHandlerStub, archiveHandlerStub, bufferStub, taskListStub, null);
+            archiveAddCommand.execute(cacheHandlerStub, archiveHandlerStub, bufferStub, taskListStub, null);
             assertEquals("I saved the following tasks to the archive file:#  X task1#"
                     + "  X task3##Sorry! I was unable to save this update "
                     + "in storage. I'll try again next time.#", bufferStub.getOutputString());
@@ -85,9 +85,9 @@ class ArchiveCommandTest {
     }
 
     @Test
-    void executeArchiveAll_taskListEmpty_exceptionThrown() {
+    void executeAll_taskListEmpty_warningPrinted() {
         TaskListStub taskListStub = new TaskListStub(0);
-        ArchiveAllCommand archiveCommand = new ArchiveAllCommand();
+        ArchiveAddAllCommand archiveCommand = new ArchiveAddAllCommand();
 
         try {
             archiveCommand.execute(cacheHandlerStub, archiveHandlerStub, bufferStub, taskListStub, null);

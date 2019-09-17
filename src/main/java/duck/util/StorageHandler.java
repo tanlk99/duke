@@ -10,8 +10,8 @@ import duck.exception.DuckException;
 import duck.task.Task;
 
 /**
- * Handles I/O between Duck and an external cache file. StorageHandler instances can load the
- * task list from the cache file, or write the task list to the cache file.
+ * Handles I/O between Duck and an external cache file. StorageHandler instances can load a
+ * task list from the cache file, or write a task list to the cache file.
  */
 public class StorageHandler {
     private static final String CACHE_INITIALIZE_FAILED = "Could not initialize cache file.";

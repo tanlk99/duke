@@ -9,7 +9,7 @@ import duck.util.TaskList;
 /**
  * Represents a command to archive all tasks in the task list.
  */
-public class ArchiveAllCommand extends ArchiveCommand {
+public class ArchiveAddAllCommand extends ArchiveAddCommand {
     private static final String ARCHIVE_ALL_COMMAND_EMPTY_TASK_LIST = "You have no tasks in your task list right now.";
 
     /**
