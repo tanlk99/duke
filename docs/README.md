@@ -179,7 +179,7 @@ and re-added to the back of the task list.
 - `archive remove 1 3 4`<br>
 Un-archives the 1st, 3rd and 4th task in your archive.
 
-- `archive add *` or `archive add all`<br>
+- `archive remove *` or `archive remove all`<br>
 Adds the whole archive back to the task list, and clears the archive.
 
 ***
