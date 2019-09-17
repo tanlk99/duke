@@ -30,6 +30,6 @@ public abstract class Command {
      * @param taskList         A {@link TaskList} object which stores the task list
      * @param configLoader     A {@link ConfigLoader} object to write changes to configuration
      */
-    public abstract void execute(StorageHandler cacheHandler, StorageHandler archiveHandler, Buffer buffer, TaskList taskList,
-                                 ConfigLoader configLoader) throws DuckException;
+    public abstract void execute(StorageHandler cacheHandler, StorageHandler archiveHandler, Buffer buffer,
+                                 TaskList taskList, ConfigLoader configLoader) throws DuckException;
 }
