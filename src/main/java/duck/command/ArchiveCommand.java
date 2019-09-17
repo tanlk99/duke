@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import duck.exception.DuckException;
 import duck.task.Task;
 import duck.util.Buffer;
-import duck.util.Storage;
+import duck.util.StorageHandler;
 import duck.util.TaskList;
 import duck.util.ConfigLoader;
 
@@ -43,12 +43,13 @@ public class ArchiveCommand extends Command {
      * the tasks are not deleted from the task list (to prevent loss of data).
      * Archive location is [project-root]/archive/duck-archive.txt by default.
      *
-     * @param storage     A {@link Storage} object to cache task list*
-     * @param buffer      A {@link Buffer} object to buffer Duck's output
-     * @param taskList    A {@link TaskList} object which stores the task list
-     * @param configLoader  A {@link ConfigLoader} object to write changes to configuration
+     * @param cacheHandler     A {@link StorageHandler} object to cache task list
+     * @param archiveHandler   A {@link StorageHandler} object to archive tasks
+     * @param buffer           A {@link Buffer} object to buffer Duck's output
+     * @param taskList         A {@link TaskList} object which stores the task list
+     * @param configLoader     A {@link ConfigLoader} object to write changes to configuration
      */
-    public void execute(Storage storage, Buffer buffer, TaskList taskList,
+    public void execute(StorageHandler cacheHandler, StorageHandler archiveHandler, Buffer buffer, TaskList taskList,
                         ConfigLoader configLoader) throws DuckException {
         //Validate indexes
         for (int index : indexesToArchive) {
@@ -59,7 +60,8 @@ public class ArchiveCommand extends Command {
 
         try {
             ArrayList<Task> tasksToArchive = taskList.getTasks(indexesToArchive);
-            storage.writeArchive(tasksToArchive);
+            archiveHandler.appendCache(tasksToArchive);
+
             buffer.formatLine(ARCHIVE_COMMAND_SUCCESS);
             for (Task task : tasksToArchive) {
                 buffer.formatLine(String.format(ARCHIVE_COMMAND_LIST, task.toString()));
@@ -71,7 +73,7 @@ public class ArchiveCommand extends Command {
         taskList.deleteTasks(indexesToArchive);
 
         try {
-            storage.writeCache(taskList);
+            cacheHandler.writeCache(taskList);
         } catch (DuckException e) {
             buffer.formatLine(""); //Insert empty line for readability
             buffer.formatLine(STORAGE_UPDATE_SAVE_FAILED);

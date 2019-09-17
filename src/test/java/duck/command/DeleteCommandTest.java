@@ -2,19 +2,19 @@ package duck.command;
 
 import duck.exception.DuckException;
 import duck.stubs.BufferStub;
-import duck.stubs.StorageStub;
+import duck.stubs.StorageHandlerStub;
 import duck.stubs.TaskListStub;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class DeleteCommandTest {
-    private StorageStub storageStub;
+    private StorageHandlerStub cacheHandlerStub;
     private BufferStub bufferStub;
 
     @BeforeEach
     void initTests() {
-        storageStub = new StorageStub();
+        cacheHandlerStub = new StorageHandlerStub();
         bufferStub = new BufferStub();
     }
 
@@ -24,7 +24,7 @@ class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(3);
 
         try {
-            deleteCommand.execute(storageStub, bufferStub, taskListStub, null);
+            deleteCommand.execute(cacheHandlerStub, null, bufferStub, taskListStub, null);
 
             assertEquals("Noted. I've removed this task.#  X task3#"
                     + "Now you have 4 tasks in the list.#", bufferStub.getOutputString());
@@ -39,7 +39,7 @@ class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(2);
 
         try {
-            deleteCommand.execute(storageStub, bufferStub, taskListStub, null);
+            deleteCommand.execute(cacheHandlerStub, null, bufferStub, taskListStub, null);
             assertEquals("Noted. I've removed this task.#  X task2#"
                     + "Now you have 1 task in the list.#", bufferStub.getOutputString());
         } catch (DuckException e) { //shouldn't throw this exception
@@ -49,13 +49,13 @@ class DeleteCommandTest {
 
     @Test
     void execute_storageErrorPrinted() {
-        storageStub.setWillThrowStorageException(true);
+        cacheHandlerStub.setWillThrowStorageException(true);
 
         TaskListStub taskListStub = new TaskListStub(5);
         DeleteCommand deleteCommand = new DeleteCommand(3);
 
         try {
-            deleteCommand.execute(storageStub, bufferStub, taskListStub, null);
+            deleteCommand.execute(cacheHandlerStub, null, bufferStub, taskListStub, null);
             assertEquals("Noted. I've removed this task.#  X task3#"
                     + "Now you have 4 tasks in the list.##Sorry! I was unable to save "
                     + "this update in storage. I'll try again next time.#", bufferStub.getOutputString());
@@ -66,13 +66,13 @@ class DeleteCommandTest {
 
     @Test
     void execute_negativeIndex_exceptionThrown() {
-        storageStub.setWillThrowStorageException(true);
+        cacheHandlerStub.setWillThrowStorageException(true);
 
         TaskListStub taskListStub = new TaskListStub(5);
         DeleteCommand deleteCommand = new DeleteCommand(-1);
 
         try {
-            deleteCommand.execute(storageStub, bufferStub, taskListStub, null);
+            deleteCommand.execute(cacheHandlerStub, null, bufferStub, taskListStub, null);
             assertEquals(1, 0);
         } catch (DuckException e) { //should always throw this exception
             assertEquals("", bufferStub.getOutputString());
@@ -82,13 +82,13 @@ class DeleteCommandTest {
 
     @Test
     void execute_tooLargeIndex_exceptionThrown() {
-        storageStub.setWillThrowStorageException(true);
+        cacheHandlerStub.setWillThrowStorageException(true);
 
         TaskListStub taskListStub = new TaskListStub(5);
         DeleteCommand deleteCommand = new DeleteCommand(9);
 
         try {
-            deleteCommand.execute(storageStub, bufferStub, taskListStub, null);
+            deleteCommand.execute(cacheHandlerStub, null, bufferStub, taskListStub, null);
             assertEquals(1, 0);
         } catch (DuckException e) { //should always throw this exception
             assertEquals("", bufferStub.getOutputString());

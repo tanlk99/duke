@@ -1,21 +1,20 @@
 package duck.stubs;
 
 import java.util.ArrayList;
-import duck.util.Storage;
-import duck.util.TaskList;
-import duck.task.Task;
 import duck.exception.DuckException;
+import duck.task.Task;
+import duck.util.StorageHandler;
+import duck.util.TaskList;
 
 /**
- * Simplified version of {@link duck.util.Storage Storage} that does not do any file I/O.
+ * Simplified version of {@link StorageHandler StorageHandler} that does not do any file I/O.
  * Can be set whether or not to throw a exception (to simulate file I/O erros).
  */
-public class StorageStub extends Storage {
+public class StorageHandlerStub extends StorageHandler {
     private boolean willThrowStorageException = false;
-    private boolean willThrowArchiveException = false;
 
-    public StorageStub() {
-        super("nullity", "nullity");
+    public StorageHandlerStub() {
+        super("nullity");
     }
 
     /**
@@ -27,15 +26,6 @@ public class StorageStub extends Storage {
         this.willThrowStorageException = willThrowStorageException;
     }
 
-    /**
-     * Sets if {@link #writeArchive} will throw a {@link DuckException}.
-     *
-     * @param willThrowArchiveException    True if {@link #writeArchive} is to throw exception
-     */
-    public void setWillThrowArchiveException(boolean willThrowArchiveException) {
-        this.willThrowArchiveException = willThrowArchiveException;
-    }
-
     @Override
     public void writeCache(TaskList taskList) throws DuckException {
         if (willThrowStorageException) {
@@ -44,8 +34,8 @@ public class StorageStub extends Storage {
     }
 
     @Override
-    public void writeArchive(ArrayList<Task> taskList) throws DuckException {
-        if (willThrowArchiveException) {
+    public void appendCache(ArrayList<Task> taskList) throws DuckException {
+        if (willThrowStorageException) {
             throw new DuckException("");
         }
     }

@@ -1,12 +1,12 @@
 package duck.application;
 
-import duck.util.Buffer;
-import duck.util.Storage;
-import duck.util.TaskList;
-import duck.util.ConfigLoader;
-import duck.util.parser.InputParser;
 import duck.command.Command;
 import duck.exception.DuckException;
+import duck.util.Buffer;
+import duck.util.StorageHandler;
+import duck.util.ConfigLoader;
+import duck.util.TaskList;
+import duck.util.parser.InputParser;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -33,7 +33,8 @@ public class Duck {
     private Image duck = new Image(getClass().getResourceAsStream("/images/DaDuck.png"));
 
     private ConfigLoader configLoader;
-    private Storage storage;
+    private StorageHandler cacheHandler;
+    private StorageHandler archiveHandler;
     private InputParser parser;
     private Buffer buffer;
     private TaskList taskList;
@@ -58,11 +59,10 @@ public class Duck {
 
         try {
             configLoader.loadConfig();
-            storage = new Storage(configLoader.getConfig("cachePath"),
-                    configLoader.getConfig("archivePath"));
+            cacheHandler = new StorageHandler(configLoader.getConfig("cachePath"));
+            archiveHandler = new StorageHandler(configLoader.getConfig("archivePath"));
 
-            storage.initializeCacheIfNotExists();
-            taskList = new TaskList(storage.readCache());
+            taskList = new TaskList(cacheHandler.readCache());
         } catch (DuckException e) {
             buffer.addLoadingError();
             taskList = new TaskList();
@@ -87,7 +87,7 @@ public class Duck {
     String getResponse(String rawInput) {
         try {
             Command parsedCommand = parser.parseInput(rawInput);
-            parsedCommand.execute(storage, buffer, taskList, configLoader);
+            parsedCommand.execute(cacheHandler, archiveHandler, buffer, taskList, configLoader);
 
             if (parsedCommand.shouldTerminate()) {
                 Platform.exit();

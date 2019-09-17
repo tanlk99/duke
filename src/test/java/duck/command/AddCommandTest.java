@@ -1,7 +1,7 @@
 package duck.command;
 
 import duck.stubs.BufferStub;
-import duck.stubs.StorageStub;
+import duck.stubs.StorageHandlerStub;
 import duck.stubs.TaskListStub;
 import duck.stubs.TaskStub;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,12 +9,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class AddCommandTest {
-    private StorageStub storageStub;
+    private StorageHandlerStub cacheHandlerStub;
     private BufferStub bufferStub;
 
     @BeforeEach
     void initTests() {
-        storageStub = new StorageStub();
+        cacheHandlerStub = new StorageHandlerStub();
         bufferStub = new BufferStub();
     }
 
@@ -23,7 +23,7 @@ class AddCommandTest {
         TaskListStub taskListStub = new TaskListStub(5);
         TaskStub dummyTask = new TaskStub("do dishes");
         AddCommand addCommand = new AddCommand(dummyTask);
-        addCommand.execute(storageStub, bufferStub, taskListStub, null);
+        addCommand.execute(cacheHandlerStub, null, bufferStub, taskListStub, null);
 
         assertEquals("Got it. I've added this task:#  X do dishes#"
                 + "Now you have 6 tasks in the list.#", bufferStub.getOutputString());
@@ -34,7 +34,7 @@ class AddCommandTest {
         TaskListStub taskListStub = new TaskListStub(0);
         TaskStub dummyTask = new TaskStub("do dishes");
         AddCommand addCommand = new AddCommand(dummyTask);
-        addCommand.execute(storageStub, bufferStub, taskListStub, null);
+        addCommand.execute(cacheHandlerStub, null, bufferStub, taskListStub, null);
 
         assertEquals("Got it. I've added this task:#  X do dishes#"
                 + "Now you have 1 task in the list.#", bufferStub.getOutputString());
@@ -42,12 +42,12 @@ class AddCommandTest {
 
     @Test
     void execute_taskListNotEmpty_storageErrorPrinted() {
-        storageStub.setWillThrowStorageException(true);
+        cacheHandlerStub.setWillThrowStorageException(true);
 
         TaskListStub taskListStub = new TaskListStub(5);
         TaskStub dummyTask = new TaskStub("do dishes");
         AddCommand addCommand = new AddCommand(dummyTask);
-        addCommand.execute(storageStub, bufferStub, taskListStub, null);
+        addCommand.execute(cacheHandlerStub, null, bufferStub, taskListStub, null);
 
         assertEquals("Got it. I've added this task:#  X do dishes#"
                 + "Now you have 6 tasks in the list.##Sorry! I was unable to save "
@@ -56,12 +56,12 @@ class AddCommandTest {
 
     @Test
     void execute_taskListEmpty_storageErrorPrinted() {
-        storageStub.setWillThrowStorageException(true);
+        cacheHandlerStub.setWillThrowStorageException(true);
 
         TaskListStub taskListStub = new TaskListStub(0);
         TaskStub dummyTask = new TaskStub("do dishes");
         AddCommand addCommand = new AddCommand(dummyTask);
-        addCommand.execute(storageStub, bufferStub, taskListStub, null);
+        addCommand.execute(cacheHandlerStub, null, bufferStub, taskListStub, null);
 
         assertEquals("Got it. I've added this task:#  X do dishes#"
                 + "Now you have 1 task in the list.##Sorry! I was unable to save "

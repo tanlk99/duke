@@ -2,9 +2,9 @@ package duck.command;
 
 import duck.exception.DuckException;
 import duck.util.Buffer;
-import duck.util.Storage;
-import duck.util.TaskList;
+import duck.util.StorageHandler;
 import duck.util.ConfigLoader;
+import duck.util.TaskList;
 
 /**
  * Represents a command given by the user. Can have a variety of functions,
@@ -24,11 +24,12 @@ public abstract class Command {
     /**
      * Executes the command.
      *
-     * @param storage     A {@link Storage} object to cache task list
-     * @param buffer      A {@link Buffer} object to buffer Duck's output
-     * @param taskList    A {@link TaskList} object which stores the task list
-     * @param configLoader  A {@link ConfigLoader} object to write changes to configuration
+     * @param cacheHandler     A {@link StorageHandler} object to cache task list
+     * @param archiveHandler   A {@link StorageHandler} object to archive tasks
+     * @param buffer           A {@link Buffer} object to buffer Duck's output
+     * @param taskList         A {@link TaskList} object which stores the task list
+     * @param configLoader     A {@link ConfigLoader} object to write changes to configuration
      */
-    public abstract void execute(Storage storage, Buffer buffer, TaskList taskList,
+    public abstract void execute(StorageHandler cacheHandler, StorageHandler archiveHandler, Buffer buffer, TaskList taskList,
                                  ConfigLoader configLoader) throws DuckException;
 }

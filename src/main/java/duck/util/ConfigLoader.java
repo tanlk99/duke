@@ -10,7 +10,7 @@ import duck.exception.DuckException;
 
 public class ConfigLoader {
     private static final String DEFAULT_CACHE_PATH = "data/duck-cache.txt";
-    private static final String DEFAULT_ARCHIVE_PATH = "archive/duck-archive.txt";
+    private static final String DEFAULT_ARCHIVE_PATH = "data/archive/duck-archive.txt";
 
     private static final String CONFIG_INITIALIZE_FAILED = "Could not initialize config file.";
     private static final String CONFIG_READ_FAILED = "Could not read config file.";

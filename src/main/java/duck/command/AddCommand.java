@@ -1,11 +1,11 @@
 package duck.command;
 
-import duck.util.Storage;
-import duck.util.TaskList;
-import duck.util.Buffer;
-import duck.task.Task;
 import duck.exception.DuckException;
+import duck.task.Task;
+import duck.util.Buffer;
+import duck.util.StorageHandler;
 import duck.util.ConfigLoader;
+import duck.util.TaskList;
 
 /**
  * Represents a command to add a task to the task list.
@@ -40,12 +40,13 @@ public class AddCommand extends Command {
     /**
      * Adds the task to the task list.
      *
-     * @param storage     A {@link Storage} object to cache task list
-     * @param buffer      A {@link Buffer} object to buffer Duck's output
-     * @param taskList    A {@link TaskList} object which stores the task list
-     * @param configLoader  A {@link ConfigLoader} object to write changes to configuration
+     * @param cacheHandler     A {@link StorageHandler} object to cache task list
+     * @param archiveHandler   A {@link StorageHandler} object to archive tasks
+     * @param buffer           A {@link Buffer} object to buffer Duck's output
+     * @param taskList         A {@link TaskList} object which stores the task list
+     * @param configLoader     A {@link ConfigLoader} object to write changes to configuration
      */
-    public void execute(Storage storage, Buffer buffer, TaskList taskList,
+    public void execute(StorageHandler cacheHandler, StorageHandler archiveHandler, Buffer buffer, TaskList taskList,
                         ConfigLoader configLoader) {
         taskList.addNewTask(toAdd);
 
@@ -56,7 +57,7 @@ public class AddCommand extends Command {
                 taskList.getSize() == 1 ? "" : "s"));
 
         try {
-            storage.writeCache(taskList);
+            cacheHandler.writeCache(taskList);
         } catch (DuckException e) {
             buffer.formatLine(""); //Insert empty line for readability
             buffer.formatLine(STORAGE_UPDATE_SAVE_FAILED);

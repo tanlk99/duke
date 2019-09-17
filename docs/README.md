@@ -29,7 +29,7 @@ a file like below:
 
 ![](Config.png)
 
-Change `data/duck-cache.txt` to your preferred storage location, and Duck will know to save your tasks there
+Change `data/duck-cache.txt` to your preferred storageHandler location, and Duck will know to save your tasks there
 next time you run Duck.
 
 ### Archives your tasks
