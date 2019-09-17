@@ -16,8 +16,9 @@ a command line, without any need for complex GUI interfaces.
    - [Listing all tasks](#listing-all-tasks)
    - [Marking a task as done](#marking-a-task-as-done)
    - [Deleting a task](#deleting-a-task)
-   - [Finding a task by description](#find-a-task-by-description)
-   - [Archiving multiple tasks](#archiving-multiple-tasks)
+   - [Finding a task](#finding-a-task)
+   - [Archiving tasks](#archiving-tasks)
+   - [Un-archiving tasks](#un-archiving-tasks)
    - [Listing all archived tasks](#listing-all-archived-tasks)
    - [Changing configuration settings](#changing-configuration-settings)
    - [Exiting Duck](#exiting-duck)
@@ -121,7 +122,7 @@ Deletes the first task in your list.
 
 ***
 
-### Finding a task by description
+### Finding a task
 
 Finds all tasks in your list whose description contains a search string.
 
@@ -137,7 +138,7 @@ Finds all tasks in your list whose description contains the string
 
 ***
 
-### Archiving multiple tasks
+### Archiving tasks
 
 Archives some tasks in your list. These tasks are deleted from your task list
 and saved in the archive file.
@@ -157,6 +158,29 @@ Archives the 1st, 3rd and 4th task in your list.
 
 - `archive add *` or `archive add all`<br>
 Archives all the tasks in your list. In other words, it transfers your task list to the archive file.
+
+***
+
+### Un-archiving tasks
+
+Un-archives some tasks in your list. These tasks are deleted from your archive
+and re-added to the back of the task list.
+
+<strong>Command format</strong>
+
+`archive remove [index1] [index2] ...`<br>
+`archive remove *`<br>
+`archive remove all`
+
+> Duck also accepts `pull`, `retrieve` and `unarchive` as command words instead of `add`.
+
+<strong>Usage examples</strong>
+
+- `archive remove 1 3 4`<br>
+Un-archives the 1st, 3rd and 4th task in your archive.
+
+- `archive add *` or `archive add all`<br>
+Adds the whole archive back to the task list, and clears the archive.
 
 ***
 
@@ -187,7 +211,7 @@ Changes Duck's configuration settings.
 Sets the cache location to `new-cache-file.txt`.
 
 - `set archivePath new-archive-file.txt`<br>
-Sets the archive location to `new-cache-file.txt`.
+Sets the archive location to `new-archive-file.txt`.
 
 > Note: Paths are given relative to the root directory, i.e. the directory where the
 > JAR file is placed.

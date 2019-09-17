@@ -12,10 +12,10 @@ import duck.util.ConfigLoader;
  * Represents a command to archive a list of tasks in the task list.
  */
 public class ArchiveAddCommand extends Command {
-    private static final String ARCHIVE_COMMAND_INVALID_INDEX = "%1$d is not a valid task number.";
-    private static final String ARCHIVE_COMMAND_SUCCESS = "I saved the following tasks to the archive file:";
-    private static final String ARCHIVE_COMMAND_LIST = "  %1$s";
-    private static final String ARCHIVE_COMMAND_FAILED = "I was unable to save your task(s) "
+    private static final String ARCHIVE_ADD_COMMAND_INVALID_INDEX = "%1$d is not a valid task number.";
+    private static final String ARCHIVE_ADD_COMMAND_SUCCESS = "I saved the following tasks to the archive file:";
+    private static final String ARCHIVE_ADD_COMMAND_LIST = "  %1$s";
+    private static final String ARCHIVE_ADD_COMMAND_FAILED = "I was unable to save your task(s) "
             + "to the archive location. Your task(s) will not be deleted.";
     private static final String STORAGE_UPDATE_SAVE_FAILED = "Sorry! I was unable to save this update "
             + "in storage. I'll try again next time.";
@@ -41,7 +41,6 @@ public class ArchiveAddCommand extends Command {
     /**
      * Archives a list of tasks given by index. If Duck is unable to write to the archive file,
      * the tasks are not deleted from the task list (to prevent loss of data).
-     * Archive location is [project-root]/archive/duck-archive.txt by default.
      *
      * @param cacheHandler     A {@link StorageHandler} object to cache task list
      * @param archiveHandler   A {@link StorageHandler} object to archive tasks
@@ -54,7 +53,7 @@ public class ArchiveAddCommand extends Command {
         //Validate indexes
         for (int index : indexesToArchive) {
             if (index <= 0 || index > taskList.getSize()) {
-                throw new DuckException(String.format(ARCHIVE_COMMAND_INVALID_INDEX, index));
+                throw new DuckException(String.format(ARCHIVE_ADD_COMMAND_INVALID_INDEX, index));
             }
         }
 
@@ -62,12 +61,12 @@ public class ArchiveAddCommand extends Command {
             ArrayList<Task> tasksToArchive = taskList.getTasks(indexesToArchive);
             archiveHandler.appendCache(tasksToArchive);
 
-            buffer.formatLine(ARCHIVE_COMMAND_SUCCESS);
+            buffer.formatLine(ARCHIVE_ADD_COMMAND_SUCCESS);
             for (Task task : tasksToArchive) {
-                buffer.formatLine(String.format(ARCHIVE_COMMAND_LIST, task.toString()));
+                buffer.formatLine(String.format(ARCHIVE_ADD_COMMAND_LIST, task.toString()));
             }
         } catch (DuckException e) {
-            throw new DuckException(ARCHIVE_COMMAND_FAILED);
+            throw new DuckException(ARCHIVE_ADD_COMMAND_FAILED);
         }
 
         taskList.deleteTasks(indexesToArchive);

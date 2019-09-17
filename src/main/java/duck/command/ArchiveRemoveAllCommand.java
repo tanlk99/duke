@@ -1,17 +1,16 @@
 package duck.command;
 
-import java.util.ArrayList;
 import duck.exception.DuckException;
-import duck.task.Task;
 import duck.util.Buffer;
 import duck.util.ConfigLoader;
 import duck.util.StorageHandler;
 import duck.util.TaskList;
 
-public class ArchiveListCommand extends Command {
-    private static final String ARCHIVE_LIST_COMMAND_NO_TASKS = "Your archive is empty.";
-    private static final String ARCHIVE_LIST_COMMAND_SUCCESS = "Here are the tasks in your archive:";
-    private static final String ARCHIVE_LIST_COMMAND_LIST = "%1$d.%2$s";
+public class ArchiveRemoveAllCommand extends ArchiveRemoveCommand {
+    private static final String ARCHIVE_REMOVE_COMMAND_READ_FAILED = "I was unable to retrieve your task(s) "
+            + "from the archive location.";
+    private static final String ARCHIVE_REMOVE_ALL_COMMAND_EMPTY_ARCHIVE =
+            "You have no tasks in your archive right now.";
 
     /**
      * Archives all tasks. If Duck is unable to write to the archive file,
@@ -25,16 +24,22 @@ public class ArchiveListCommand extends Command {
      */
     public void execute(StorageHandler cacheHandler, StorageHandler archiveHandler, Buffer buffer, TaskList taskList,
                         ConfigLoader configLoader) throws DuckException {
-        ArrayList<Task> archiveList = archiveHandler.readCache();
+        int size;
 
-        if (archiveList.size() == 0) {
-            buffer.formatLine(ARCHIVE_LIST_COMMAND_NO_TASKS);
-        } else {
-            buffer.formatLine(ARCHIVE_LIST_COMMAND_SUCCESS);
-            for (int i = 1; i <= archiveList.size(); i++) {
-                buffer.formatLine(String.format(ARCHIVE_LIST_COMMAND_LIST,
-                        i, archiveList.get(i - 1).toString()));
-            }
+        try {
+            size = archiveHandler.readCache().size();
+        } catch (DuckException e) {
+            throw new DuckException(ARCHIVE_REMOVE_COMMAND_READ_FAILED);
         }
+
+        if (size == 0) {
+            buffer.formatLine(ARCHIVE_REMOVE_ALL_COMMAND_EMPTY_ARCHIVE);
+            return;
+        }
+
+        for (int i = 1; i <= size; i++) {
+            super.indexesToUnarchive.add(i);
+        }
+        super.execute(cacheHandler, archiveHandler, buffer, taskList, configLoader);
     }
 }

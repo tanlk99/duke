@@ -1,5 +1,9 @@
 package duck.util.parser;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Utility class for duck.util.parser package.
  */
@@ -35,5 +39,29 @@ class ParserUtil {
      */
     static String getArticle(String string) {
         return isBeginWithVowel(string) ? "an" : "a";
+    }
+
+    /**
+     * Parses a string containing a list of whitespace-separated integers. This method
+     * filters duplicate elements.
+     *
+     * @param integerList A String containing a list of integers
+     * @return An ArrayList containing parsed integers
+     * @throws NumberFormatException If at least one of the integers is invalid
+     */
+    static ArrayList<Integer> parseUniqueIntegerList(String integerList) throws NumberFormatException {
+        String[] integers = integerList.split(" ");
+        Set<Integer> integerSet = new HashSet<>(); //to filter duplicates
+
+        for (String untrimmedIndexString : integers) {
+            String indexString = untrimmedIndexString.trim();
+            if (indexString.length() == 0) {
+                continue;
+            }
+
+            integerSet.add(Integer.parseInt(indexString));
+        }
+
+        return new ArrayList<>(integerSet);
     }
 }
